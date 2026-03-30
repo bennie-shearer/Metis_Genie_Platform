@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="img/icon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transactions - Metis Genie Platform v5.5.8</title>
+    <link rel="stylesheet" href="css/main.css?v=5.5.8">
+    <style>
+        .txn-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:1.25rem;padding:1.5rem}
+        .tx-card{background:var(--card-bg,#fff);border:1px solid var(--border,#e2e8f0);border-radius:12px;overflow:hidden}
+        .tx-card .card-head{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.25rem;border-bottom:1px solid var(--border,#e2e8f0)}
+        .tx-card .card-head h3{margin:0;font-size:.95rem;font-weight:600}
+        .tx-card .card-body{padding:1.25rem}
+        .metric-row{display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;border-bottom:1px solid var(--border-light,#f1f5f9)}
+        .metric-row:last-child{border-bottom:none}
+        .metric-label{font-size:.85rem;color:var(--text-muted,#64748b)}
+        .metric-value{font-size:.95rem;font-weight:600;font-variant-numeric:tabular-nums}
+        .positive{color:#16a34a}.negative{color:#dc2626}.neutral{color:#2563eb}
+        .page-header{padding:1.5rem 1.5rem 0;display:flex;justify-content:space-between;align-items:center}
+        .page-header h2{margin:0;font-size:1.4rem;font-weight:700}
+        .badge-tag{display:inline-block;padding:2px 10px;border-radius:12px;font-size:.75rem;font-weight:600}
+        .badge-tag.pass{background:#dcfce7;color:#166534}
+        .back-link{display:inline-flex;align-items:center;gap:.375rem;color:var(--text-muted,#64748b);text-decoration:none;font-size:.85rem;padding:.5rem 0}
+        .back-link:hover{color:var(--primary,#2563eb)}
+        .back-link svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
+        .btn-sm{padding:4px 12px;border:1px solid var(--border,#e2e8f0);border-radius:6px;background:var(--card-bg,#fff);cursor:pointer;font-size:.8rem}
+        .btn-sm:hover{background:var(--primary,#2563eb);color:#fff;border-color:var(--primary,#2563eb)}
+        .txn-table{width:100%;border-collapse:collapse;font-size:.85rem}
+        .txn-table th,.txn-table td{padding:.5rem .75rem;text-align:left;border-bottom:1px solid var(--border-light,#f1f5f9)}
+        .txn-table th{color:var(--text-muted,#64748b);font-weight:500;font-size:.8rem}
+        .side-buy{color:#16a34a;font-weight:600}.side-sell{color:#dc2626;font-weight:600}
+        .filter-bar{display:flex;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap}
+        .filter-bar select,.filter-bar input{padding:6px 10px;border:1px solid var(--border,#e2e8f0);border-radius:6px;font-size:.85rem}
+    </style>
+</head>
+<body>
+    <div class="page-header">
+        <div>
+            <a href="index.html" class="back-link"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back to Dashboard</a>
+            <h2>Transactions</h2>
+        </div>
+        <span class="badge-tag pass" id="statusBadge">Loading...</span>
+    </div>
+    <div class="txn-grid" id="txnGrid">
+        <div class="tx-card" style="grid-column:1/-1"><div class="card-head"><h3>Transaction History</h3><button class="btn-sm" onclick="refreshTxns()">Refresh</button></div><div class="card-body">
+            <div class="filter-bar">
+                <select id="filterSide"><option value="">All Sides</option><option value="buy">Buy</option><option value="sell">Sell</option></select>
+                <input type="text" id="filterSymbol" placeholder="Symbol filter...">
+                <input type="date" id="filterFrom" value="2026-01-01">
+                <input type="date" id="filterTo" value="2026-02-06">
+                <button class="btn-sm" onclick="refreshTxns()">Filter</button>
+            </div>
+            <div id="txnTable"><span class="metric-label">Loading...</span></div>
+        </div></div>
+        <div class="tx-card"><div class="card-head"><h3>Transaction Summary</h3></div><div class="card-body" id="txnSummary"><span class="metric-label">Loading...</span></div></div>
+        <div class="tx-card"><div class="card-head"><h3>Settlement Status</h3></div><div class="card-body" id="settlement"><span class="metric-label">Loading...</span></div></div>
+    </div>
+    <script src="js/utils.js?v=5.5.8"></script>
+    <script src="js/config.js?v=5.5.8"></script>
+    <script src="js/connection.js?v=5.5.8"></script>
+    <script>
+    (function() {
+        const token = sessionStorage.getItem('genie_token');
+        const _sv = localStorage.getItem('mg_serverUrl');
+        const base = (_sv ? JSON.parse(_sv) : 'http://localhost:8080') + '/api/v1';
+        const hdr = { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' };
+
+        async function loadTxns() {
+            try {
+                const res = await fetch(base + '/transactions', { headers: hdr });
+                const data = await res.json();
+                renderTxns(data);
+                document.getElementById('statusBadge').textContent = 'Connected';
+            } catch(e) {
+                document.getElementById('statusBadge').textContent = 'Demo Mode';
+                renderDemo();
+            }
+        }
+
+        function renderTxns(data) {
+            const txns = data.transactions || [];
+            const demo = txns.length ? txns : [
+                { date: '2026-02-06', symbol: 'AAPL', side: 'buy', qty: 50, price: 198.50, total: 9925, commission: 0.50, status: 'Settled' },
+                { date: '2026-02-06', symbol: 'MSFT', side: 'buy', qty: 20, price: 425.30, total: 8506, commission: 0.50, status: 'Settled' },
+                { date: '2026-02-05', symbol: 'GOOGL', side: 'sell', qty: 15, price: 178.90, total: 2683.50, commission: 0.50, status: 'Settled' },
+                { date: '2026-02-05', symbol: 'TSLA', side: 'buy', qty: 30, price: 245.00, total: 7350, commission: 0.50, status: 'Pending' },
+                { date: '2026-02-04', symbol: 'AMZN', side: 'sell', qty: 25, price: 195.80, total: 4895, commission: 0.50, status: 'Settled' },
+                { date: '2026-02-03', symbol: 'BND', side: 'buy', qty: 100, price: 72.15, total: 7215, commission: 0, status: 'Settled' }
+            ];
+            let html = '<table class="txn-table"><thead><tr><th>Date</th><th>Symbol</th><th>Side</th><th>Qty</th><th>Price</th><th>Total</th><th>Commission</th><th>Status</th></tr></thead><tbody>';
+            demo.forEach(t => {
+                html += '<tr><td>' + t.date + '</td><td><strong>' + t.symbol + '</strong></td><td class="side-' + t.side + '">' + t.side.toUpperCase() + '</td><td>' + t.qty + '</td><td>$' + Number(t.price).toFixed(2) + '</td><td>$' + Number(t.total).toLocaleString() + '</td><td>$' + Number(t.commission).toFixed(2) + '</td><td>' + t.status + '</td></tr>';
+            });
+            html += '</tbody></table>';
+            document.getElementById('txnTable').innerHTML = html;
+        }
+
+        function renderDemo() {
+            renderTxns({});
+            document.getElementById('txnSummary').innerHTML = '<div class="metric-row"><span class="metric-label">Total Transactions</span><span class="metric-value">156</span></div><div class="metric-row"><span class="metric-label">Buy Volume</span><span class="metric-value positive">$245,800</span></div><div class="metric-row"><span class="metric-label">Sell Volume</span><span class="metric-value negative">$128,400</span></div><div class="metric-row"><span class="metric-label">Total Commissions</span><span class="metric-value">$78.00</span></div><div class="metric-row"><span class="metric-label">Avg Trade Size</span><span class="metric-value">$2,398</span></div>';
+            document.getElementById('settlement').innerHTML = '<div class="metric-row"><span class="metric-label">Settled</span><span class="metric-value positive">152</span></div><div class="metric-row"><span class="metric-label">Pending (T+1)</span><span class="metric-value neutral">3</span></div><div class="metric-row"><span class="metric-label">Failed</span><span class="metric-value positive">0</span></div><div class="metric-row"><span class="metric-label">Settlement Rate</span><span class="metric-value positive">100%</span></div>';
+        }
+
+        window.refreshTxns = loadTxns;
+        loadTxns();
+    })();
+    </script>
+</body>
+</html>

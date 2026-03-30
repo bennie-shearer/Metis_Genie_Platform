@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="img/icon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compliance - Metis Genie Platform v5.5.8</title>
+    <link rel="stylesheet" href="css/main.css?v=5.5.8">
+    <style>
+        .comp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:1.25rem;padding:1.5rem}
+        .comp-card{background:var(--card-bg,#fff);border:1px solid var(--border,#e2e8f0);border-radius:12px;overflow:hidden}
+        .comp-card .card-head{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.25rem;border-bottom:1px solid var(--border,#e2e8f0)}
+        .comp-card .card-head h3{margin:0;font-size:.95rem;font-weight:600}
+        .comp-card .card-body{padding:1.25rem}
+        .rule-item{display:flex;justify-content:space-between;align-items:flex-start;padding:.75rem 0;border-bottom:1px solid #f1f5f9;gap:1rem}
+        .rule-item:last-child{border-bottom:none}
+        .rule-info{flex:1}
+        .rule-name{font-weight:600;font-size:.9rem;margin-bottom:.25rem}
+        .rule-desc{font-size:.8rem;color:#64748b}
+        .rule-threshold{font-size:.8rem;color:#94a3b8;margin-top:.125rem}
+        .badge{display:inline-block;padding:2px 10px;border-radius:12px;font-size:.75rem;font-weight:600;white-space:nowrap}
+        .badge.pass{background:#dcfce7;color:#166534}.badge.warn{background:#fef9c3;color:#854d0e}.badge.fail{background:#fee2e2;color:#991b1b}
+        .reg-item{display:flex;justify-content:space-between;padding:.5rem 0;border-bottom:1px solid #f1f5f9}
+        .reg-item:last-child{border-bottom:none}
+        .reg-name{font-size:.9rem;font-weight:500}
+        .page-header{padding:1.5rem 1.5rem 0;display:flex;justify-content:space-between;align-items:center}
+        .page-header h2{margin:0;font-size:1.4rem;font-weight:700}
+        .status-pill{display:inline-flex;align-items:center;gap:.375rem;padding:4px 14px;border-radius:20px;font-size:.85rem;font-weight:600}
+        .status-pill.ok{background:#dcfce7;color:#166534}
+        .status-pill.warn{background:#fef9c3;color:#854d0e}
+        .back-link{display:inline-flex;align-items:center;gap:.375rem;color:var(--text-muted,#64748b);text-decoration:none;font-size:.85rem;padding:.5rem 0}
+        .back-link:hover{color:var(--primary,#2563eb)}
+        .back-link svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
+    </style>
+</head>
+<body>
+    <div class="page-header">
+        <div>
+            <a href="index.html" class="back-link"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back to Dashboard</a>
+            <h2>Compliance</h2>
+        </div>
+        <span class="status-pill ok" id="overallStatus">Loading...</span>
+    </div>
+    <div class="comp-grid">
+        <div class="comp-card" style="grid-column:1/-1">
+            <div class="card-head"><h3>Compliance Rules</h3></div>
+            <div class="card-body" id="rulesBody"><span>Loading...</span></div>
+        </div>
+        <div class="comp-card">
+            <div class="card-head"><h3>Regulatory Status</h3></div>
+            <div class="card-body" id="regBody"><span>Loading...</span></div>
+        </div>
+        <div class="comp-card">
+            <div class="card-head"><h3>Last Check</h3></div>
+            <div class="card-body" id="checkBody"><span>Loading...</span></div>
+        </div>
+    </div>
+
+    <!-- ESG Scoring Section -->
+    <div style="margin-top:32px;">
+        <h2 style="color:var(--text,#e2e8f0);font-size:20px;margin-bottom:16px;">ESG Scoring</h2>
+        <div class="comp-grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr));">
+            <div class="comp-card">
+                <div class="card-head"><h3>Portfolio ESG Summary</h3></div>
+                <div class="card-body" id="esgSummary">
+                    <div style="text-align:center;padding:12px;">
+                        <div style="font-size:2.5rem;font-weight:700;color:#60a5fa;" id="esgScore">77.4</div>
+                        <div style="font-size:14px;color:#94a3b8;margin-top:4px;">Weighted ESG Score</div>
+                        <div style="margin-top:8px;"><span style="background:#1e3a5f;color:#60a5fa;padding:4px 12px;border-radius:12px;font-size:13px;font-weight:600;" id="esgRating">Rating: A</span></div>
+                        <div style="margin-top:12px;display:flex;justify-content:center;gap:24px;font-size:13px;">
+                            <div><div style="color:#4ade80;font-weight:600;">42.3</div><div style="color:#94a3b8;">Carbon Intensity</div></div>
+                            <div><div style="color:#fbbf24;font-weight:600;">1</div><div style="color:#94a3b8;">Controversy Flags</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="comp-card" style="grid-column:span 2;">
+                <div class="card-head"><h3>Holdings ESG Breakdown</h3></div>
+                <div class="card-body" id="esgBreakdown">
+                    <table style="width:100%;border-collapse:collapse;font-size:13px;">
+                        <thead><tr style="border-bottom:1px solid var(--border,#334155);">
+                            <th style="text-align:left;padding:8px;color:#94a3b8;font-weight:500;">Symbol</th>
+                            <th style="text-align:center;padding:8px;color:#94a3b8;">Environment</th>
+                            <th style="text-align:center;padding:8px;color:#94a3b8;">Social</th>
+                            <th style="text-align:center;padding:8px;color:#94a3b8;">Governance</th>
+                            <th style="text-align:center;padding:8px;color:#94a3b8;">Total</th>
+                            <th style="text-align:center;padding:8px;color:#94a3b8;">Rating</th>
+                            <th style="text-align:center;padding:8px;color:#94a3b8;">Trend</th>
+                        </tr></thead>
+                        <tbody id="esgTable">
+                            <tr><td style="padding:8px;">AAPL</td><td style="text-align:center;">82</td><td style="text-align:center;">78</td><td style="text-align:center;">85</td><td style="text-align:center;font-weight:600;">81.7</td><td style="text-align:center;"><span style="background:#1e3a5f;color:#60a5fa;padding:2px 8px;border-radius:8px;font-size:11px;">AA</span></td><td style="text-align:center;color:#4ade80;">Improving</td></tr>
+                            <tr><td style="padding:8px;">MSFT</td><td style="text-align:center;">88</td><td style="text-align:center;">82</td><td style="text-align:center;">90</td><td style="text-align:center;font-weight:600;">86.7</td><td style="text-align:center;"><span style="background:#064e3b;color:#4ade80;padding:2px 8px;border-radius:8px;font-size:11px;">AAA</span></td><td style="text-align:center;color:#94a3b8;">Stable</td></tr>
+                            <tr><td style="padding:8px;">NVDA</td><td style="text-align:center;">71</td><td style="text-align:center;">74</td><td style="text-align:center;">79</td><td style="text-align:center;font-weight:600;">74.7</td><td style="text-align:center;"><span style="background:#1e3a5f;color:#60a5fa;padding:2px 8px;border-radius:8px;font-size:11px;">A</span></td><td style="text-align:center;color:#4ade80;">Improving</td></tr>
+                            <tr><td style="padding:8px;">GOOGL</td><td style="text-align:center;">79</td><td style="text-align:center;">70</td><td style="text-align:center;">72</td><td style="text-align:center;font-weight:600;">73.7</td><td style="text-align:center;"><span style="background:#1e3a5f;color:#60a5fa;padding:2px 8px;border-radius:8px;font-size:11px;">A</span></td><td style="text-align:center;color:#94a3b8;">Stable</td></tr>
+                            <tr><td style="padding:8px;">AMZN</td><td style="text-align:center;">65</td><td style="text-align:center;">60</td><td style="text-align:center;">68</td><td style="text-align:center;font-weight:600;">64.3</td><td style="text-align:center;"><span style="background:#78350f;color:#fbbf24;padding:2px 8px;border-radius:8px;font-size:11px;">BBB</span></td><td style="text-align:center;color:#fbbf24;">Watch</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ESG Scoring - /api/v1/esg -->
+    <section class="card" style="margin:1.5rem;">
+        <h2>ESG Scoring</h2>
+        <div id="esg-container"><p>Loading ESG data...</p></div>
+    </section>
+
+    <!-- Regulatory Reporting - /api/v1/compliance/regulatory -->
+    <section class="card" style="margin:1.5rem;">
+        <h2>Regulatory Reporting</h2>
+        <div id="regulatory-container"><p>Loading regulatory data...</p></div>
+    </section>
+
+    <script src="js/config.js?v=5.5.8"></script>
+    <script src="js/api-bridge.js?v=5.5.8"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        ApiBridge.loadEsg('esg-container').catch(e => console.error('ESG:', e));
+        ApiBridge.loadRegulatory('regulatory-container').catch(e => console.error('Regulatory:', e));
+    });
+    </script>
+    <script>
+    (function(){
+        const token=sessionStorage.getItem('genie_token');
+        if(!token){window.location.href='index.html';return;}
+        const _sv=localStorage.getItem('mg_serverUrl');const cfg={serverUrl:(_sv?JSON.parse(_sv):'http://localhost:8080'),apiVersion:'v1'};
+        const base=cfg.serverUrl+'/api/'+cfg.apiVersion;
+        const badgeCls=s=>s==='Pass'?'pass':s==='Warning'?'warn':'fail';
+        fetch(base+'/compliance',{headers:{'Authorization':'Bearer '+token}})
+        .then(r=>r.json()).then(d=>{
+            document.getElementById('overallStatus').textContent=d.status||'Unknown';
+            if(d.status==='Compliant')document.getElementById('overallStatus').className='status-pill ok';
+            else document.getElementById('overallStatus').className='status-pill warn';
+            const rules=d.rules||[];
+            document.getElementById('rulesBody').innerHTML=rules.map(r=>'<div class="rule-item"><div class="rule-info"><div class="rule-name">'+r.id+': '+r.name+'</div><div class="rule-desc">'+r.description+'</div><div class="rule-threshold">Threshold: '+r.threshold+'%</div></div><span class="badge '+badgeCls(r.status)+'">'+r.status+'</span></div>').join('');
+            const reg=d.regulatory||{};
+            document.getElementById('regBody').innerHTML=Object.entries(reg).map(([k,v])=>'<div class="reg-item"><span class="reg-name">'+k.replace(/_/g,' ').toUpperCase()+'</span><span class="badge pass">'+v+'</span></div>').join('');
+            document.getElementById('checkBody').innerHTML='<div style="text-align:center;padding:1rem"><div style="font-size:2rem;font-weight:700;color:#16a34a">'+rules.filter(r=>r.status==='Pass').length+'/'+rules.length+'</div><div style="color:#64748b;font-size:.85rem;margin-top:.5rem">Rules Passing</div><div style="color:#94a3b8;font-size:.8rem;margin-top:.75rem">Last checked: '+(d.last_check?new Date(d.last_check).toLocaleString():'N/A')+'</div></div>';
+        }).catch(()=>{document.getElementById('overallStatus').textContent='Offline';document.getElementById('overallStatus').className='status-pill warn';});
+        // Fetch dedicated ESG endpoint
+        fetch(base+'/esg',{headers:{'Authorization':'Bearer '+token}})
+        .then(r=>r.json()).then(d=>{
+            const el=document.getElementById('esgScore');if(el)el.textContent=(d.portfolio_score||d.score||77.4).toFixed(1);
+            const rt=document.getElementById('esgRating');if(rt)rt.textContent='Rating: '+(d.rating||'A');
+            const tbl=document.getElementById('esgTable');
+            if(tbl&&d.holdings){tbl.innerHTML=d.holdings.map(h=>'<tr><td>'+h.symbol+'</td><td>'+(h.environmental||0).toFixed(0)+'</td><td>'+(h.social||0).toFixed(0)+'</td><td>'+(h.governance||0).toFixed(0)+'</td><td style="font-weight:600">'+(h.total||0).toFixed(0)+'</td></tr>').join('');}
+        }).catch(()=>{});
+        // Fetch dedicated regulatory endpoint
+        fetch(base+'/compliance/regulatory',{headers:{'Authorization':'Bearer '+token}})
+        .then(r=>r.json()).then(d=>{
+            const el=document.getElementById('regBody');
+            if(el&&d.frameworks){el.innerHTML=d.frameworks.map(f=>'<div class="reg-item"><span class="reg-name">'+f.name+'</span><span class="badge '+(f.status==='Compliant'?'pass':'warn')+'">'+f.status+'</span></div>').join('');}
+        }).catch(()=>{});
+    })();
+    </script>
+    <script>
+    /* API endpoint wiring - auto-generated */
+    (function(){
+        const base = (typeof CONFIG !== 'undefined' && CONFIG.API_BASE) ? CONFIG.API_BASE : 'http://localhost:8080';
+        const token = sessionStorage.getItem('genie_token') || localStorage.getItem('genie_token') || '';
+        const headers = token ? {'Authorization':'Bearer '+token} : {};
+        window.genieAPI = window.genieAPI || {};
+        window.genieAPI.compliance_surveillance = function() {
+            return fetch(base+'/api/v1/compliance/surveillance', {headers:headers}).then(r=>r.json());
+        };
+    })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <link rel="icon" type="image/svg+xml" href="img/icon.svg"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="css/main.css?v=5.5.8">
+<style>
+.pg-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:1.25rem;padding:1.5rem}
+.pg-card{background:var(--card-bg,#fff);border:1px solid var(--border,#e2e8f0);border-radius:12px;overflow:hidden}
+.pg-card .card-head{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.25rem;border-bottom:1px solid var(--border,#e2e8f0)}
+.pg-card .card-head h3{margin:0;font-size:.95rem;font-weight:600}
+.pg-card .card-body{padding:1.25rem}
+.metric-row{display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;border-bottom:1px solid var(--border-light,#f1f5f9)}
+.metric-row:last-child{border-bottom:none}
+.metric-label{font-size:.85rem;color:var(--text-muted,#64748b)}
+.metric-value{font-size:.95rem;font-weight:600;font-variant-numeric:tabular-nums}
+.positive{color:#16a34a}.negative{color:#dc2626}.neutral{color:#2563eb}.future{color:#8b5cf6}
+.page-header{padding:1.5rem 1.5rem 0;display:flex;justify-content:space-between;align-items:center}
+.page-header h2{margin:0;font-size:1.4rem;font-weight:700}
+.badge-tag{display:inline-block;padding:2px 10px;border-radius:12px;font-size:.75rem;font-weight:600}
+.badge-tag.pass{background:#dcfce7;color:#166534}.badge-tag.warn{background:#fef3c7;color:#92400e}
+.back-link{display:inline-flex;align-items:center;gap:.375rem;color:var(--text-muted,#64748b);text-decoration:none;font-size:.85rem;padding:.5rem 0}
+.back-link:hover{color:var(--primary,#2563eb)}
+.back-link svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
+.btn-sm{padding:4px 12px;border:1px solid var(--border,#e2e8f0);border-radius:6px;background:var(--card-bg,#fff);cursor:pointer;font-size:.8rem}
+.btn-sm:hover{background:var(--primary,#2563eb);color:#fff;border-color:var(--primary,#2563eb)}
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th{text-align:left;padding:8px;color:var(--text-muted,#64748b);border-bottom:1px solid var(--border,#e2e8f0);font-weight:600}
+.tbl td{padding:8px;border-bottom:1px solid var(--border-light,#f1f5f9)}
+.status-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}
+.status-dot.green{background:#16a34a}.status-dot.red{background:#dc2626}.status-dot.yellow{background:#eab308}
+</style></head><body>
+<div class="page-header"><div>
+<a href="index.html" class="back-link"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back to Dashboard</a>
+<h2>Data Pipeline</h2></div><span class="badge-tag warn">Demo Mode</span></div>
+<div class="pg-grid">
+    <div class="pg-card" style="grid-column:1/-1"><div class="card-head"><h3>Active Pipelines</h3></div><div class="card-body">
+        <table class="tbl"><thead><tr><th>Pipeline</th><th>Rules</th><th>Transforms</th><th>Processed</th><th>Rejected</th><th>Rejection Rate</th></tr></thead><tbody>
+        <tr><td><strong>market_data</strong></td><td>8</td><td>3</td><td>125,000</td><td>42</td><td>0.034%</td></tr>
+        <tr><td><strong>trade_import</strong></td><td>12</td><td>5</td><td>8,900</td><td>3</td><td>0.034%</td></tr>
+        <tr><td><strong>position_sync</strong></td><td>6</td><td>2</td><td>2,400</td><td>0</td><td class="positive">0.000%</td></tr>
+        </tbody></table>
+    </div></div>
+    <div class="pg-card"><div class="card-head"><h3>Pipeline Summary</h3></div><div class="card-body">
+        <div class="metric-row"><span class="metric-label">Total Processed</span><span class="metric-value">136,300</span></div>
+        <div class="metric-row"><span class="metric-label">Total Rejected</span><span class="metric-value negative">45</span></div>
+        <div class="metric-row"><span class="metric-label">Overall Rejection Rate</span><span class="metric-value positive">0.033%</span></div>
+        <div class="metric-row"><span class="metric-label">Status</span><span class="metric-value positive">All Healthy</span></div>
+    </div></div>
+    <div class="pg-card"><div class="card-head"><h3>Validation Rules</h3></div><div class="card-body">
+        <div class="metric-row"><span class="metric-label">Required Fields</span><span class="metric-value positive">Active</span></div>
+        <div class="metric-row"><span class="metric-label">Range Checks</span><span class="metric-value positive">Active</span></div>
+        <div class="metric-row"><span class="metric-label">Finite (NaN/Inf)</span><span class="metric-value positive">Active</span></div>
+        <div class="metric-row"><span class="metric-label">Type Validation</span><span class="metric-value positive">Active</span></div>
+    </div></div></div>
+<script src="js/config.js?v=5.5.8"></script>
+    <script>
+    /* API endpoint wiring - auto-generated */
+    (function(){
+        const base = (typeof CONFIG !== 'undefined' && CONFIG.API_BASE) ? CONFIG.API_BASE : 'http://localhost:8080';
+        const token = sessionStorage.getItem('genie_token') || localStorage.getItem('genie_token') || '';
+        const headers = token ? {'Authorization':'Bearer '+token} : {};
+        window.genieAPI = window.genieAPI || {};
+        window.genieAPI.pipeline_status = function() {
+            return fetch(base+'/api/v1/pipeline/status', {headers:headers}).then(r=>r.json());
+        };
+        window.genieAPI.pipeline_stages = function() {
+            return fetch(base+'/api/v1/pipeline/stages', {headers:headers}).then(r=>r.json());
+        };
+    })();
+    </script>
+</body></html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="img/icon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benchmarks - Metis Genie Platform v5.5.8</title>
+    <link rel="stylesheet" href="css/main.css?v=5.5.8">
+    <style>
+        .bench-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:1.25rem;padding:1.5rem}
+        .bn-card{background:var(--card-bg,#fff);border:1px solid var(--border,#e2e8f0);border-radius:12px;overflow:hidden}
+        .bn-card .card-head{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.25rem;border-bottom:1px solid var(--border,#e2e8f0)}
+        .bn-card .card-head h3{margin:0;font-size:.95rem;font-weight:600;color:var(--text,#1a202c)}
+        .bn-card .card-body{padding:1.25rem}
+        .metric-row{display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;border-bottom:1px solid var(--border-light,#f1f5f9)}
+        .metric-row:last-child{border-bottom:none}
+        .metric-label{font-size:.85rem;color:var(--text-muted,#64748b)}
+        .metric-value{font-size:.95rem;font-weight:600;font-variant-numeric:tabular-nums}
+        .positive{color:#16a34a}.negative{color:#dc2626}.neutral{color:#2563eb}
+        .page-header{padding:1.5rem 1.5rem 0;display:flex;justify-content:space-between;align-items:center}
+        .page-header h2{margin:0;font-size:1.4rem;font-weight:700}
+        .badge-tag{display:inline-block;padding:2px 10px;border-radius:12px;font-size:.75rem;font-weight:600}
+        .badge-tag.pass{background:#dcfce7;color:#166534}
+        .badge-tag.fail{background:#fee2e2;color:#991b1b}
+        .back-link{display:inline-flex;align-items:center;gap:.375rem;color:var(--text-muted,#64748b);text-decoration:none;font-size:.85rem;padding:.5rem 0}
+        .back-link:hover{color:var(--primary,#2563eb)}
+        .back-link svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
+        .bench-table{width:100%;border-collapse:collapse;font-size:.85rem}
+        .bench-table th,.bench-table td{padding:.5rem .75rem;text-align:left;border-bottom:1px solid var(--border-light,#f1f5f9)}
+        .bench-table th{color:var(--text-muted,#64748b);font-weight:500;font-size:.8rem}
+        .btn-sm{padding:4px 12px;border:1px solid var(--border,#e2e8f0);border-radius:6px;background:var(--card-bg,#fff);cursor:pointer;font-size:.8rem}
+        .btn-sm:hover{background:var(--primary,#2563eb);color:#fff;border-color:var(--primary,#2563eb)}
+        .custom-form{display:grid;gap:.75rem;margin-top:.5rem}
+        .custom-form input,.custom-form select{padding:6px 10px;border:1px solid var(--border,#e2e8f0);border-radius:6px;font-size:.85rem}
+    </style>
+</head>
+<body>
+    <div class="page-header">
+        <div>
+            <a href="index.html" class="back-link"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back to Dashboard</a>
+            <h2>Benchmarks</h2>
+        </div>
+        <span class="badge-tag pass" id="statusBadge">Loading...</span>
+    </div>
+    <div class="bench-grid" id="benchGrid">
+        <div class="bn-card"><div class="card-head"><h3>Standard Benchmarks</h3><button class="btn-sm" onclick="refreshBenchmarks()">Refresh</button></div><div class="card-body" id="standardBenchmarks"><span class="metric-label">Loading...</span></div></div>
+        <div class="bn-card"><div class="card-head"><h3>Portfolio vs Benchmark</h3></div><div class="card-body" id="comparison"><span class="metric-label">Loading...</span></div></div>
+        <div class="bn-card"><div class="card-head"><h3>Custom Benchmarks</h3></div><div class="card-body" id="customBenchmarks"><span class="metric-label">Loading...</span></div></div>
+        <div class="bn-card"><div class="card-head"><h3>Create Custom Benchmark</h3></div><div class="card-body" id="createBenchmark">
+            <div class="custom-form">
+                <input type="text" id="benchName" placeholder="Benchmark name">
+                <select id="benchType"><option value="weighted">Weighted Index</option><option value="equal">Equal Weight</option><option value="sector">Sector Blend</option></select>
+                <input type="text" id="benchComponents" placeholder="Components (e.g. SPY:60,AGG:40)">
+                <button class="btn-sm" onclick="createBenchmark()">Create</button>
+            </div>
+        </div></div>
+        <div class="bn-card"><div class="card-head"><h3>Tracking Error Analysis</h3></div><div class="card-body" id="trackingError"><span class="metric-label">Loading...</span></div></div>
+        <div class="bn-card"><div class="card-head"><h3>Attribution vs Benchmark</h3></div><div class="card-body" id="attribution"><span class="metric-label">Loading...</span></div></div>
+    </div>
+    <script src="js/utils.js?v=5.5.8"></script>
+    <script src="js/config.js?v=5.5.8"></script>
+    <script src="js/connection.js?v=5.5.8"></script>
+    <script>
+    (function() {
+        const token = sessionStorage.getItem('genie_token');
+        const _sv = localStorage.getItem('mg_serverUrl');
+        const base = (_sv ? JSON.parse(_sv) : 'http://localhost:8080') + '/api/v1';
+        const hdr = { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' };
+
+        async function loadBenchmarks() {
+            try {
+                const [bRes, cRes] = await Promise.all([
+                    fetch(base + '/benchmark', { headers: hdr }),
+                    fetch(base + '/benchmark/custom', { headers: hdr })
+                ]);
+                const benchmarks = await bRes.json();
+                const custom = await cRes.json();
+                renderStandard(benchmarks);
+                renderCustom(custom);
+                renderComparison(benchmarks);
+                renderTracking();
+                renderAttribution();
+                document.getElementById('statusBadge').textContent = 'Connected';
+            } catch(e) {
+                document.getElementById('statusBadge').textContent = 'Demo Mode';
+                renderDemo();
+            }
+        }
+
+        function renderStandard(data) {
+            const benchmarks = data.benchmarks || [
+                { name: 'S&P 500', ticker: 'SPX', ytd_return: 0.1245, daily_change: 0.0032 },
+                { name: 'Russell 2000', ticker: 'RUT', ytd_return: 0.0834, daily_change: -0.0018 },
+                { name: 'MSCI EAFE', ticker: 'EFA', ytd_return: 0.0612, daily_change: 0.0015 },
+                { name: 'Bloomberg US Agg', ticker: 'AGG', ytd_return: 0.0189, daily_change: 0.0004 }
+            ];
+            let html = '<table class="bench-table"><thead><tr><th>Benchmark</th><th>Ticker</th><th>YTD</th><th>Daily</th></tr></thead><tbody>';
+            benchmarks.forEach(b => {
+                const ytdCls = (b.ytd_return||0) >= 0 ? 'positive' : 'negative';
+                const dCls = (b.daily_change||0) >= 0 ? 'positive' : 'negative';
+                html += '<tr><td><strong>' + b.name + '</strong></td><td>' + b.ticker + '</td><td class="' + ytdCls + '">' + ((b.ytd_return||0)*100).toFixed(2) + '%</td><td class="' + dCls + '">' + ((b.daily_change||0)*100).toFixed(2) + '%</td></tr>';
+            });
+            html += '</tbody></table>';
+            document.getElementById('standardBenchmarks').innerHTML = html;
+        }
+
+        function renderCustom(data) {
+            const customs = data.benchmarks || [
+                { name: 'Tech Growth Blend', components: 'QQQ:50, ARKK:30, SMH:20', created: '2026-01-15' },
+                { name: 'Income Focus', components: 'AGG:40, HYG:30, VNQ:30', created: '2026-01-20' }
+            ];
+            let html = '';
+            customs.forEach(c => {
+                html += '<div class="metric-row"><span class="metric-label">' + c.name + '<br><small>' + c.components + '</small></span><span class="metric-value neutral">' + c.created + '</span></div>';
+            });
+            document.getElementById('customBenchmarks').innerHTML = html || '<span class="metric-label">No custom benchmarks</span>';
+        }
+
+        function renderComparison(data) {
+            document.getElementById('comparison').innerHTML = '<div class="metric-row"><span class="metric-label">Portfolio Return (YTD)</span><span class="metric-value positive">14.82%</span></div><div class="metric-row"><span class="metric-label">Benchmark Return (YTD)</span><span class="metric-value positive">12.45%</span></div><div class="metric-row"><span class="metric-label">Active Return</span><span class="metric-value positive">+2.37%</span></div><div class="metric-row"><span class="metric-label">Information Ratio</span><span class="metric-value neutral">0.85</span></div>';
+        }
+
+        function renderTracking() {
+            document.getElementById('trackingError').innerHTML = '<div class="metric-row"><span class="metric-label">Tracking Error (annualized)</span><span class="metric-value">2.78%</span></div><div class="metric-row"><span class="metric-label">R-Squared</span><span class="metric-value">0.94</span></div><div class="metric-row"><span class="metric-label">Beta</span><span class="metric-value">1.08</span></div><div class="metric-row"><span class="metric-label">Active Share</span><span class="metric-value neutral">34.2%</span></div>';
+        }
+
+        function renderAttribution() {
+            document.getElementById('attribution').innerHTML = '<div class="metric-row"><span class="metric-label">Allocation Effect</span><span class="metric-value positive">+1.12%</span></div><div class="metric-row"><span class="metric-label">Selection Effect</span><span class="metric-value positive">+0.98%</span></div><div class="metric-row"><span class="metric-label">Interaction Effect</span><span class="metric-value positive">+0.27%</span></div><div class="metric-row"><span class="metric-label">Total Active Return</span><span class="metric-value positive">+2.37%</span></div>';
+        }
+
+        function renderDemo() {
+            renderStandard({});
+            renderCustom({});
+            renderComparison({});
+            renderTracking();
+            renderAttribution();
+        }
+
+        window.refreshBenchmarks = loadBenchmarks;
+        window.createBenchmark = function() {
+            const name = document.getElementById('benchName').value;
+            if (!name) return;
+            fetch(base + '/benchmark/custom', { method: 'POST', headers: hdr, body: JSON.stringify({ name, type: document.getElementById('benchType').value, components: document.getElementById('benchComponents').value }) }).then(() => loadBenchmarks()).catch(() => {});
+            document.getElementById('benchName').value = '';
+            document.getElementById('benchComponents').value = '';
+        };
+
+        loadBenchmarks();
+    })();
+    </script>
+</body>
+</html>

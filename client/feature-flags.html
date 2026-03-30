@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="img/icon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metis Genie Platform - Feature Flags</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0e17; color: #e2e8f0; }
+        .header { background: linear-gradient(135deg, #1a1f2e 0%, #0d1117 100%); padding: 16px 24px; border-bottom: 1px solid #2d3748; display: flex; align-items: center; justify-content: space-between; }
+        .header h1 { font-size: 20px; color: #60a5fa; }
+        .header .version { font-size: 12px; color: #64748b; }
+        .nav { background: #111827; padding: 8px 24px; border-bottom: 1px solid #1e293b; overflow-x: auto; white-space: nowrap; }
+        .nav a { color: #94a3b8; text-decoration: none; padding: 8px 12px; font-size: 13px; border-radius: 6px; margin-right: 4px; display: inline-block; }
+        .nav a:hover { background: #1e293b; color: #e2e8f0; }
+        .nav a.active { background: #1e3a5f; color: #60a5fa; }
+        .content { padding: 24px; max-width: 1400px; margin: 0 auto; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-bottom: 24px; }
+        .card { background: #111827; border: 1px solid #1e293b; border-radius: 12px; padding: 20px; }
+        .card h3 { color: #60a5fa; margin-bottom: 12px; font-size: 16px; }
+        .card p { color: #94a3b8; font-size: 14px; line-height: 1.6; }
+        .stat { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #1e293b; }
+        .stat:last-child { border-bottom: none; }
+        .stat-label { color: #94a3b8; font-size: 13px; }
+        .stat-value { color: #e2e8f0; font-weight: 600; font-size: 14px; }
+        .badge { padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+        .badge-green { background: #064e3b; color: #34d399; }
+        .badge-blue { background: #1e3a5f; color: #60a5fa; }
+        .badge-yellow { background: #713f12; color: #fbbf24; }
+        .badge-red { background: #7f1d1d; color: #f87171; }
+        .badge-purple { background: #4c1d95; color: #a78bfa; }
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        th { text-align: left; padding: 10px 12px; color: #64748b; border-bottom: 2px solid #1e293b; font-weight: 600; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
+        td { padding: 10px 12px; border-bottom: 1px solid #1e293b; }
+        .big-number { font-size: 32px; font-weight: 700; color: #60a5fa; }
+        .sub-text { font-size: 12px; color: #64748b; margin-top: 4px; }
+        .progress-bar { height: 6px; background: #1e293b; border-radius: 3px; overflow: hidden; margin-top: 8px; }
+        .progress-fill { height: 100%; border-radius: 3px; }
+        .pill-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+        .pill { background: #1e293b; padding: 4px 10px; border-radius: 12px; font-size: 12px; color: #94a3b8; }
+        #status { font-size: 12px; color: #64748b; padding: 8px 24px; text-align: right; }
+        .negative { color: #f87171; }
+        .positive { color: #34d399; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Metis Genie Platform - Feature Flags</h1>
+        <span class="version">v5.5.8</span>
+    </div>
+    <nav class="nav">
+        <a href="index.html">Dashboard</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="trading.html">Trading</a>
+        <a href="risk.html">Risk</a>
+        <a href="analytics.html">Analytics</a>
+        <a href="market-data.html">Market</a>
+        <a href="compliance.html">Compliance</a>
+        <a href="reporting.html">Reporting</a>
+        <a href="operations.html">Operations</a>
+        <a href="admin.html">Admin</a>
+        <a href="feature-flags.html" class="active">Feature Flags</a>
+    </nav>
+    <div class="content">
+
+        <div class="grid">
+            <div class="card">
+                <h3>Flag Management</h3>
+                <div class="big-number">8</div>
+                <div class="sub-text">Total feature flags registered</div>
+                <div style="margin-top:16px">
+                    <div class="stat"><span class="stat-label">Enabled</span><span class="stat-value">7</span></div>
+                    <div class="stat"><span class="stat-label">Disabled</span><span class="stat-value">1</span></div>
+                    <div class="stat"><span class="stat-label">Full Rollout</span><span class="stat-value">4</span></div>
+                    <div class="stat"><span class="stat-label">Partial Rollout</span><span class="stat-value">3</span></div>
+                </div>
+            </div>
+            <div class="card">
+                <h3>Rollout Distribution</h3>
+                <div class="stat"><span class="stat-label">100% Rollout</span><span class="stat-value">4 flags</span></div>
+                <div class="stat"><span class="stat-label">75-99% Rollout</span><span class="stat-value">2 flags</span></div>
+                <div class="stat"><span class="stat-label">25-74% Rollout</span><span class="stat-value">1 flag</span></div>
+                <div class="stat"><span class="stat-label">0% (Disabled)</span><span class="stat-value">1 flag</span></div>
+            </div>
+        </div>
+        <div class="card">
+            <h3>Feature Flags</h3>
+            <table>
+                <thead><tr><th>Flag Key</th><th>Description</th><th>Status</th><th>Rollout</th></tr></thead>
+                <tbody>
+                    <tr><td>dark_pool_routing</td><td>Enable dark pool smart routing</td><td><span class="badge badge-green">ON</span></td><td>50%</td></tr>
+                    <tr><td>ml_alpha_signals</td><td>ML-driven alpha signal generation</td><td><span class="badge badge-green">ON</span></td><td>25%</td></tr>
+                    <tr><td>real_time_risk</td><td>Real-time risk computation</td><td><span class="badge badge-green">ON</span></td><td>100%</td></tr>
+                    <tr><td>crypto_trading</td><td>Cryptocurrency trading support</td><td><span class="badge badge-red">OFF</span></td><td>0%</td></tr>
+                    <tr><td>esg_screening_v2</td><td>Enhanced ESG screening engine</td><td><span class="badge badge-green">ON</span></td><td>75%</td></tr>
+                    <tr><td>batch_optimization</td><td>Batch order optimization</td><td><span class="badge badge-green">ON</span></td><td>100%</td></tr>
+                    <tr><td>advanced_analytics</td><td>Advanced analytics dashboard</td><td><span class="badge badge-green">ON</span></td><td>90%</td></tr>
+                    <tr><td>websocket_streaming</td><td>WebSocket real-time streaming</td><td><span class="badge badge-green">ON</span></td><td>100%</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div id="status">Last updated: <span id="timestamp"></span></div>
+    <script src="js/config.js?v=5.5.8"></script>
+    <script>
+        document.getElementById('timestamp').textContent = new Date().toLocaleString();
+    </script>
+    <script>
+    /* API endpoint wiring - auto-generated */
+    (function(){
+        const base = (typeof CONFIG !== 'undefined' && CONFIG.API_BASE) ? CONFIG.API_BASE : 'http://localhost:8080';
+        const token = sessionStorage.getItem('genie_token') || localStorage.getItem('genie_token') || '';
+        const headers = token ? {'Authorization':'Bearer '+token} : {};
+        window.genieAPI = window.genieAPI || {};
+        window.genieAPI.feature_flags = function() {
+            return fetch(base+'/api/v1/feature-flags', {headers:headers}).then(r=>r.json());
+        };
+    })();
+    </script>
+</body>
+</html>

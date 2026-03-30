@@ -1,0 +1,570 @@
+// =============================================================================
+// Metis Genie Platform v5.3.4 - Configuration (PSON Format)
+// =============================================================================
+// PSON (Permissive Structured Object Notation) is JSON extended with:
+//   - Single-line comments beginning with //
+//   - Trailing commas before } or ]
+//   - Fully compatible with standard JSON parsers after comment stripping
+//
+// USAGE:
+//   Copy this file to config.pson in the same directory as the executable.
+//   The server reads config.pson on startup. All parameters are documented.
+//   Values shown are defaults. Edit to match your environment.
+// =============================================================================
+{
+    // -------------------------------------------------------------------------
+    // Application Identity
+    // -------------------------------------------------------------------------
+    "application": {
+        "name": "Metis Genie Platform",
+        "version": "5.5.8",
+        "logo": "img/logo.svg",
+        "icon": "img/icon.svg",
+        "description": "Enterprise Investment Management Platform Prototype"
+    },
+
+    // -------------------------------------------------------------------------
+    // Server
+    // -------------------------------------------------------------------------
+    "server": {
+        "mode": "server",               // server | interactive | cli
+        "port": 8080,
+        "host": "0.0.0.0",
+        "cors_origin": "*",             // Set to specific origin in production
+        "static_dir": "web",             // Client files relative to exe (CMake syncs client/ -> bin/web/)
+        "max_request_body_bytes": 1048576,
+        "worker_threads": 4,
+        "keep_alive": true,
+        "keep_alive_timeout_seconds": 30,
+        "request_timeout_seconds": 60,
+        "shutdown_timeout_seconds": 30,
+    },
+
+    // -------------------------------------------------------------------------
+    // Storage
+    // -------------------------------------------------------------------------
+    "storage": {
+        "persistent": true,
+        "users_db": "users.db",
+        "audit_db": "audit.db",
+        "prices_db": "prices.db",
+    },
+
+    // -------------------------------------------------------------------------
+    // Logging
+    // -------------------------------------------------------------------------
+    "logging": {
+        "enabled": true,
+        "level": "INFO",                // DEBUG | INFO | WARN | ERROR
+        "console": true,
+        "file": true,
+        "directory": "logs",
+        "filename": "metis-genie-platform.log",
+        "max_file_size_mb": 50,
+        "max_files": 10,
+        "structured_json": false,
+        "request_logging": false,
+        "sql_logging": false,
+    },
+
+    // -------------------------------------------------------------------------
+    // Database (SQLite3 - bundled, zero external dependency)
+    // -------------------------------------------------------------------------
+    "database": {
+        "path": "metis-genie-platform.db",
+        "wal_mode": true,
+        "busy_timeout_ms": 5000,
+        "pool_size": 5,
+        "migration_auto": true,
+    },
+
+    // -------------------------------------------------------------------------
+    // Authentication and Session Management
+    // -------------------------------------------------------------------------
+    "auth": {
+        "session_timeout_minutes": 1440,    // 24 hours
+        "require_auth": true,
+        "create_demo_users": true,
+        "demo_admin_user": "admin",       // Demo admin username
+        "demo_admin_pass": "demo",         // Demo admin password
+        "demo_trader_user": "trader",      // Demo trader username
+        "demo_trader_pass": "trade",       // Demo trader password
+        "demo_analyst_user": "user",       // Demo analyst username
+        "demo_analyst_pass": "user",       // Demo analyst password
+        "max_login_attempts": 5,
+        "lockout_minutes": 15,
+        "password_min_length": 8,
+        "two_factor_enabled": false,
+    },
+
+    // -------------------------------------------------------------------------
+    // REST API
+    // -------------------------------------------------------------------------
+    "api": {
+        "rate_limit_requests": 100,
+        "rate_limit_window_seconds": 60,
+        "pagination_default_limit": 50,
+        "pagination_max_limit": 500,
+        "versioning_enabled": true,
+        "current_version": "v1",
+        "deprecated_versions": [],
+        // Response caching (implemented v5.3.4)
+        "cache_enabled": true,
+        "cache_default_ttl_seconds": 300,
+        "cache_max_entries": 10000,
+        // Request validation (implemented v5.3.4)
+        "validation_enabled": true,
+        "validation_max_body_bytes": 1048576,
+        // Structured error responses (implemented v5.3.4)
+        "structured_errors": true,
+        // Graceful shutdown (implemented v5.3.4)
+        "graceful_shutdown_enabled": true,
+        "graceful_drain_timeout_seconds": 30,
+    },
+
+    // -------------------------------------------------------------------------
+    // Response Cache TTLs per endpoint prefix (seconds, 0 = no cache)
+    // -------------------------------------------------------------------------
+    "cache_ttl": {
+        "health": 10,
+        "portfolios": 60,
+        "positions": 30,
+        "risk": 30,
+        "market": 10,
+        "orders": 15,
+        "analytics": 120,
+        "benchmarks": 300,
+        "compliance": 60,
+        "reporting": 300,
+        "tax": 300,
+        "performance": 120,
+    },
+
+    // -------------------------------------------------------------------------
+    // Backup
+    // -------------------------------------------------------------------------
+    "backup": {
+        "enabled": true,
+        "directory": "backups",
+        "interval_hours": 24,
+        "retention_days": 30,
+        "compress": true,
+    },
+
+    // -------------------------------------------------------------------------
+    // Health Monitoring
+    // -------------------------------------------------------------------------
+    "health": {
+        "check_interval_seconds": 60,
+        "disk_warning_pct": 85,
+        "memory_warning_pct": 90,
+        "sla_target_uptime_pct": 99.9,
+    },
+
+    // -------------------------------------------------------------------------
+    // Trading
+    // -------------------------------------------------------------------------
+    "trading": {
+        "default_currency": "USD",
+        "settlement_cycle": "T+1",
+        "position_sizing_method": "HALF_KELLY",
+        "max_order_value": 1000000,
+        "commission_per_share": 0.01,
+        "slippage_bps": 5,
+        "pre_trade_compliance": true,
+        "order_routing": "SMART",       // SMART | DIRECT | MANUAL
+    },
+
+    // -------------------------------------------------------------------------
+    // Risk
+    // -------------------------------------------------------------------------
+    "risk": {
+        "var_confidence_level": 0.95,
+        "var_holding_period_days": 1,
+        "monte_carlo_simulations": 10000,
+        "stress_test_enabled": true,
+        "max_portfolio_var_pct": 5.0,
+        "max_single_position_pct": 10.0,
+        "max_leverage": 1.5,
+        "liquidity_threshold_days": 5,
+    },
+
+    // -------------------------------------------------------------------------
+    // Portfolio
+    // -------------------------------------------------------------------------
+    "portfolio": {
+        "base_currency": "USD",
+        "rebalancing_method": "DRIFT_BAND",
+        "drift_band_pct": 5.0,
+        "tax_lot_method": "HIFO",       // FIFO | LIFO | HIFO | AVERAGE
+        "benchmark": "SPX",
+        "performance_attribution": "BRINSON",
+        "ibor_enabled": true,
+    },
+
+    // -------------------------------------------------------------------------
+    // Compliance
+    // -------------------------------------------------------------------------
+    "compliance": {
+        "pre_trade_enabled": true,
+        "esg_scoring_enabled": false,
+        "regulatory_reporting": true,
+        "trade_surveillance": true,
+        "single_position_limit_pct": 10.0,
+        "sector_limit_pct": 30.0,
+        "leverage_limit": 1.5,
+    },
+
+    // -------------------------------------------------------------------------
+    // Tax Optimization
+    // -------------------------------------------------------------------------
+    "tax": {
+        "lot_optimization": true,
+        "wash_sale_detection": true,
+        "short_term_rate": 0.37,
+        "long_term_rate": 0.20,
+        "harvest_threshold_usd": 500,
+        "calendar_year_end": "12-31",
+    },
+
+    // -------------------------------------------------------------------------
+    // Reporting
+    // -------------------------------------------------------------------------
+    "reporting": {
+        "default_format": "PDF",        // PDF | CSV | XLSX | HTML | JSON
+        "auto_schedule": false,
+        "include_charts": true,
+        "watermark": "",
+        "logo_in_reports": true,
+    },
+
+    // -------------------------------------------------------------------------
+    // Analytics
+    // -------------------------------------------------------------------------
+    "analytics": {
+        "ml_alpha_enabled": false,
+        "regime_detection_enabled": true,
+        "factor_model": "FF5",          // FF3 | FF5 | CUSTOM
+        "backtesting_enabled": true,
+        "rolling_window_days": 252,
+    },
+
+    // -------------------------------------------------------------------------
+    // Market Data Providers
+    // -------------------------------------------------------------------------
+    "market_data": {
+        "primary_provider": "YAHOO",    // YAHOO | ALPHA_VANTAGE | IEX | POLYGON | FINNHUB
+        "fallback_provider": "YAHOO",
+        "auto_refresh_seconds": 0,      // 0 = manual refresh
+        "historical_lookback_days": 365,
+        "data_quality_check": true,
+        "replay_enabled": true,
+        "corporate_actions_auto_adjust": true,
+    },
+
+    // -------------------------------------------------------------------------
+    // Notifications
+    // -------------------------------------------------------------------------
+    "notifications": {
+        "enabled": true,
+        "channels": ["UI", "LOG"],      // UI | LOG | EMAIL | SMS | SLACK
+        "alert_threshold_warning": "MEDIUM",
+        "digest_interval_minutes": 60,
+    },
+
+    // -------------------------------------------------------------------------
+    // GPU Compute (future native C++20 implementation)
+    // When enabled, Monte Carlo and matrix operations use the platform GPU.
+    // Implementation will use: CUDA (Linux/Windows), Metal (macOS),
+    //   DirectCompute (Windows), Vulkan (cross-platform), OpenCL (fallback).
+    // No Docker required -- native OS GPU APIs only.
+    // -------------------------------------------------------------------------
+    "compute": {
+        "gpu_enabled": false,           // Set true when C++20 GPU impl is available
+        "gpu_backend": "CPU",           // CPU | CUDA | METAL | DIRECTCOMPUTE | VULKAN | OPENCL
+        "gpu_fallback_to_cpu": true,    // Always fall back gracefully
+        "gpu_device_index": 0,          // For multi-GPU systems
+        "gpu_memory_limit_mb": 0,       // 0 = no limit
+        // Implementation status:
+        //   Windows:  DirectCompute via D3D11 / CUDA via NVAPI (planned)
+        //   Linux:    CUDA via libcuda / Vulkan compute (planned)
+        //   macOS:    Metal Performance Shaders (planned)
+    },
+
+    // -------------------------------------------------------------------------
+    // Container Orchestration (future native C++20 implementation)
+    // Implementation will use native OS APIs -- no Docker daemon required.
+    //   Linux:   cgroups v2 + namespaces (unshare/clone syscalls)
+    //   Windows: Job Objects + Hyper-V Isolated Processes (planned)
+    //   macOS:   sandbox-exec + launchd (planned)
+    // -------------------------------------------------------------------------
+    "containers": {
+        "enabled": false,               // Set true when C++20 container impl is available
+        "runtime": "NATIVE",            // NATIVE (future) | NONE
+        "orchestrator": "NATIVE",       // NATIVE (future) | NONE
+        "max_containers": 10,
+        "container_memory_limit_mb": 512,
+        "container_cpu_shares": 1024,
+        // Implementation status: stub headers present, C++20 impl planned
+    },
+
+    // -------------------------------------------------------------------------
+    // Kubernetes API Client (future native C++20 implementation)
+    // Uses existing HttpClient to speak to the K8s REST API directly.
+    // No kubectl or external library required.
+    // -------------------------------------------------------------------------
+    "kubernetes": {
+        "enabled": false,               // Set true when K8s client impl is available
+        "api_url": "",                  // e.g. https://k8s-api.example.com
+        "namespace": "default",
+        "service_account_token": "",    // Bearer token for K8s API auth
+        "tls_verify": true,
+        "deployment_name": "metis-genie-platform",
+        "replica_count": 1,
+        // Implementation status: stub headers present, HttpClient-based impl planned
+    },
+
+    // -------------------------------------------------------------------------
+    // ETL Data Pipeline
+    // -------------------------------------------------------------------------
+    "pipeline": {
+        "enabled": true,
+        "stages": ["INGEST", "VALIDATE", "TRANSFORM", "ENRICH", "AGGREGATE", "LOAD"],
+        "max_concurrent": 4,
+    },
+
+    // -------------------------------------------------------------------------
+    // Approval Workflows
+    // -------------------------------------------------------------------------
+    "workflow": {
+        "enabled": true,
+        "approval_chain": ["Trader", "Portfolio Manager", "Compliance", "Risk Manager", "Executive"],
+        "sla_target_hours": 8,
+        "auto_approve_threshold": 10000,
+        "escalation_timeout_hours": 4,
+    },
+
+    // -------------------------------------------------------------------------
+    // Data Export
+    // -------------------------------------------------------------------------
+    "export": {
+        "formats": ["PDF", "CSV", "XLSX", "HTML", "JSON"],
+        "max_rows": 100000,
+        "directory": "exports",
+    },
+
+    // -------------------------------------------------------------------------
+    // Feature Flags
+    // -------------------------------------------------------------------------
+    "feature_flags": {
+        "enabled": true,
+        "dark_launch": false,
+        "rollout_pct": 100,
+    },
+
+    // -------------------------------------------------------------------------
+    // Multi-Tenancy
+    // -------------------------------------------------------------------------
+    "multi_tenant": {
+        "enabled": false,
+        "isolation_level": "SCHEMA",    // SCHEMA | DATABASE | PROCESS
+    },
+
+    // -------------------------------------------------------------------------
+    // WebSocket (live data push)
+    // -------------------------------------------------------------------------
+    "websocket": {
+        "enabled": true,
+        "port": 8081,
+        "heartbeat_interval_seconds": 30,
+        "max_connections": 100,
+    },
+
+    // -------------------------------------------------------------------------
+    // Circuit Breaker (resilience)
+    // -------------------------------------------------------------------------
+    "circuit_breaker": {
+        "enabled": true,
+        "failure_threshold": 5,
+        "recovery_timeout_seconds": 60,
+        "half_open_max_requests": 3,
+    },
+
+    // -------------------------------------------------------------------------
+    // Debug
+    // -------------------------------------------------------------------------
+    "debug": {
+        "startup_logging": true,
+        "request_logging": false,
+        "sql_logging": false,
+        "performance_tracing": false,
+    },
+
+    // -------------------------------------------------------------------------
+    // External API Keys (leave empty to disable that provider)
+    // -------------------------------------------------------------------------
+    "api_keys": {
+        "alpha_vantage": {
+            "key": "",
+            // Free tier: 25 requests/day. Get key at alphavantage.co
+        },
+        "yahoo_finance": {
+            "enabled": true,
+            // No API key required. Uses public endpoints.
+        },
+        "alpaca": {
+            "key_id": "",
+            "secret": "",
+            "paper": true,
+            // Paper trading by default. Set paper=false for live.
+            // Get keys at alpaca.markets
+        },
+        "iex_cloud": {
+            "token": "",
+            "sandbox": true,
+            // Sandbox for testing. Get token at iexcloud.io
+        },
+        "finnhub": {
+            "token": "",
+            // Free tier: 60 calls/min. Get token at finnhub.io
+        },
+        "polygon": {
+            "key": "",
+            // Free tier: 5 calls/min. Get key at polygon.io
+        },
+        "fred": {
+            "key": "",
+            // Free. Get key at fred.stlouisfed.org/docs/api/api_key.html
+        },
+        "sec_edgar": {
+            "user_agent": "Metis Genie Platform contact@example.com",
+            // SEC requires a User-Agent with company name and email
+        },
+        "ibkr": {
+            "host": "127.0.0.1",
+            "port": 7497,
+            "client_id": 1,
+            "account_id": "",
+            // Requires TWS or IB Gateway running. Port 7497=paper, 7496=live
+        },
+        "tradier": {
+            "access_token": "",
+            "account_id": "",
+            "sandbox": true,
+            // Get token at developer.tradier.com
+        },
+        "twilio": {
+            "account_sid": "",
+            "auth_token": "",
+            "from_number": "",
+            // For SMS alerts. Get at twilio.com
+        },
+        "sendgrid": {
+            "api_key": "",
+            "from_email": "alerts@example.com",
+            // For email alerts via SendGrid. Get at sendgrid.com
+        },
+        "smtp": {
+            "host": "smtp.gmail.com",
+            "port": 587,
+            "use_tls": true,
+            "username": "",
+            "password": "",
+            "from_email": "",
+            // Direct SMTP. For Gmail, use App Password (not regular password).
+        },
+        "slack": {
+            "webhook_url": "",
+            "channel": "#trading-alerts",
+            // Slack incoming webhook for notifications
+        },
+    },
+
+    // -------------------------------------------------------------------------
+    // Server-Sent Events (v5.3.4)
+    // -------------------------------------------------------------------------
+    "sse": {
+        "enabled": true,
+        "keep_alive_seconds": 15,
+        "max_clients": 200,
+        // SSE uses HTTP long-poll bridge -- EventSource API compatible
+        // Future: true streaming when HttpServer gains streaming callbacks
+    },
+
+    // -------------------------------------------------------------------------
+    // Prometheus Metrics (v5.3.4)
+    // -------------------------------------------------------------------------
+    "prometheus": {
+        "enabled": true,
+        "path": "/metrics",           // also at /api/v1/metrics/prometheus
+        "namespace": "metis_genie",   // prefix for all metric names
+        // Scrapeable by Prometheus, Grafana Agent, VictoriaMetrics, etc.
+        // No external library -- pure C++20 text exposition format
+    },
+
+    // -------------------------------------------------------------------------
+    // File Watcher / Config Hot-Reload (v5.3.4)
+    // -------------------------------------------------------------------------
+    "file_watcher": {
+        "enabled": true,
+        "poll_fallback_ms": 2000,     // polling interval when native API unavailable
+        // Native APIs used when available (no polling overhead):
+        //   Linux:   inotify (IN_CLOSE_WRITE)
+        //   Windows: ReadDirectoryChangesW (FILE_NOTIFY_CHANGE_LAST_WRITE)
+        //   macOS:   kqueue / kevent (EVFILT_VNODE + NOTE_WRITE)
+    },
+
+    // -------------------------------------------------------------------------
+    // Response Compression (v5.3.4)
+    // -------------------------------------------------------------------------
+    "compression": {
+        "enabled": true,
+        "min_size_bytes": 1024,       // don't compress small responses
+        "level": 6,                   // 1-9 (zlib) or 0 (store-only C++20 path)
+        "prefer_gzip": true,          // gzip over deflate when both accepted
+        // Uses zlib when linked (GENIE_USE_ZLIB=1) or pure C++20 store-only deflate
+        // Store-only deflate is valid RFC 1951 -- decompressible but uncompressed
+    },
+
+    // -------------------------------------------------------------------------
+    // HTTP/2 (v5.3.4 stub, planned v6.x)
+    // -------------------------------------------------------------------------
+    "http2": {
+        "enabled": false,             // Set true when C++20 implementation is complete
+        "h2c_upgrade": true,          // Advertise h2c via Alt-Svc header now
+        "push_enabled": false,
+        "max_concurrent_streams": 100,
+        "initial_window_size": 65535,
+        // Implementation plan (C++20, no external SDK):
+        //   Windows: Schannel for TLS
+        //   Linux:   OpenSSL (if available) or stub
+        //   macOS:   SecureTransport / Network.framework
+    },
+
+    // -------------------------------------------------------------------------
+    // FIX Protocol Engine v2 (v5.3.4 session layer implemented, TCP planned v7.x)
+    // -------------------------------------------------------------------------
+    "fix": {
+        "enabled": false,
+        "version": "FIX.4.4",         // FIX.4.4 | FIX.5.0SP2
+        "sender_comp_id": "METIS",
+        "target_comp_id": "BROKER",
+        "host": "",                   // FIX gateway host
+        "port": 9876,
+        "heartbeat_interval": 30,
+        // Message parser + session state machine implemented in fix_engine_v2.hpp
+        // TCP session + persistent store planned v7.x
+    },
+
+    // -------------------------------------------------------------------------
+    // WebAssembly Client (v5.3.4 stub, planned v7.x)
+    // -------------------------------------------------------------------------
+    "wasm": {
+        "enabled": false,
+        "serve_wasm": true,           // Serve .wasm files with correct MIME type
+        "coop_coep_headers": true,    // Cross-Origin-Opener/Embedder-Policy headers
+        // COOP/COEP required for SharedArrayBuffer (multi-threaded WASM)
+        // Emscripten compilation of analytics modules planned v7.x
+    },
+
+}

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="img/icon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metis Genie Platform - Trade Journal</title>
+    <link rel="stylesheet" href="css/main.css?v=5.5.8">
+</head>
+<body>
+<nav class="sidebar">
+    <div class="logo"><a href="index.html"><img src="img/logo.svg" alt="Metis Genie Platform" width="32" height="32"> Metis Genie Platform</a></div>
+    <ul>
+        <li><a href="index.html">Dashboard</a></li>
+        <li><a href="portfolio.html">Portfolio</a></li>
+        <li><a href="trading.html">Trading</a></li>
+        <li><a href="risk.html">Risk</a></li>
+        <li><a href="analytics.html">Analytics</a></li>
+        <li><a href="market-data.html">Market Data</a></li>
+        <li><a href="assets.html">Assets</a></li>
+        <li><a href="performance.html">Performance</a></li>
+        <li><a href="compliance.html">Compliance</a></li>
+        <li><a href="reporting.html">Reporting</a></li>
+        <li><a href="tax.html">Tax</a></li>
+        <li><a href="whatif.html">What-If</a></li>
+        <li><a href="operations.html">Operations</a></li>
+        <li><a href="security.html">Security</a></li>
+    </ul>
+    <div class="version-tag">v5.5.8</div>
+</nav>
+<main class="content">
+    <header><h1>Trade Journal</h1></header>
+
+    <section class="card">
+        <h2>Trading Performance</h2>
+        <div class="grid-4">
+            <div class="stat-card"><div class="stat-label">Total Trades</div><div class="stat-value" id="journal-total">--</div></div>
+            <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value" id="journal-winrate">--</div></div>
+            <div class="stat-card"><div class="stat-label">Avg Grade</div><div class="stat-value" id="journal-avg-grade">--</div></div>
+            <div class="stat-card"><div class="stat-label">Plan Adherence</div><div class="stat-value" id="journal-adherence">--</div></div>
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>Journal Entries</h2>
+        <table class="data-table" id="journal-table">
+            <thead><tr><th>Date</th><th>Symbol</th><th>Strategy</th><th>Setup</th><th>Entry</th><th>Exit</th><th>P&amp;L</th><th>Grade</th><th>Emotion</th><th>Notes</th></tr></thead>
+            <tbody></tbody>
+        </table>
+    </section>
+
+    <section class="card">
+        <h2>Performance by Strategy</h2>
+        <table class="data-table" id="journal-strategy-table">
+            <thead><tr><th>Strategy</th><th>Trades</th><th>Win Rate</th><th>Avg P&amp;L</th><th>Total P&amp;L</th><th>Avg Grade</th><th>Expectancy</th></tr></thead>
+            <tbody></tbody>
+        </table>
+    </section>
+
+    <section class="card">
+        <h2>Streak Analysis</h2>
+        <div class="grid-2">
+            <div>
+                <div class="stat-card"><div class="stat-label">Current Streak</div><div class="stat-value" id="journal-streak">--</div></div>
+                <div class="stat-card"><div class="stat-label">Best Win Streak</div><div class="stat-value" id="journal-best-streak">--</div></div>
+            </div>
+            <div>
+                <div class="stat-card"><div class="stat-label">Worst Loss Streak</div><div class="stat-value" id="journal-worst-streak">--</div></div>
+                <div class="stat-card"><div class="stat-label">Avg Hold Time</div><div class="stat-value" id="journal-hold-time">--</div></div>
+            </div>
+        </div>
+    </section>
+
+</main>
+<script src="js/config.js?v=5.5.8"></script>
+<script src="js/connection.js?v=5.5.8"></script>
+<script src="js/utils.js?v=5.5.8"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const page = location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('.sidebar li').forEach(li => {
+        const a = li.querySelector('a');
+        if (a && a.getAttribute('href') === page) li.classList.add('active');
+    });
+    if (typeof initPage === 'function') initPage();
+});
+</script>
+<script>
+    // API bindings for this page (v5.5.8)
+    (function() {
+        const base = (window.Connection && Connection.baseUrl) || localStorage.getItem('serverUrl') || 'http://localhost:8080';
+        const token = (window.Connection && Connection.token) || localStorage.getItem('authToken') || '';
+        const headers = token ? {'Authorization': 'Bearer ' + token} : {};
+        if (!window.genieAPI) window.genieAPI = {};
+        window.genieAPI.trade_journal = function() {
+            return fetch(base+'/api/v1/trading/journal', {headers:headers}).then(r=>r.json());
+        };
+    })();
+
+    // Page initialization
+    document.addEventListener('DOMContentLoaded', () => {
+        // Wait for connection to be ready
+        const initWhenReady = () => {
+            if (window.Connection && (Connection.connected || Connection.demoMode)) {
+                
+    async function loadJournal() {
+        try {
+            const data = Connection.demoMode
+                ? await window.genieAPI.trade_journal()
+                : await Connection.fetchJSON('/trading/journal');
+            const stats = data.statistics||{};
+            if (document.getElementById('tj-winrate')) document.getElementById('tj-winrate').textContent = (stats.win_rate_pct||0)+'%';
+            if (document.getElementById('tj-avgwin')) document.getElementById('tj-avgwin').textContent = (stats.avg_win_pct||0)+'%';
+            if (document.getElementById('tj-avgloss')) document.getElementById('tj-avgloss').textContent = (stats.avg_loss_pct||0)+'%';
+            if (document.getElementById('tj-pf')) document.getElementById('tj-pf').textContent = (stats.profit_factor||0).toFixed(2);
+            const tbody = document.querySelector('#journal-table tbody');
+            if (tbody) { tbody.innerHTML = ''; (data.entries||[]).forEach(e => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = '<td>'+e.date+'</td><td>'+e.symbol+'</td><td>'+e.strategy+'</td><td>$'+e.entry_price+'</td><td>$'+e.exit_price+'</td><td>'+e.qty+'</td><td class="'+(e.pnl>=0?'positive':'negative')+'">$'+e.pnl.toLocaleString()+'</td><td>'+e.return_pct+'%</td><td><span class="badge">'+e.grade+'</span></td>';
+                tbody.appendChild(tr);
+            }); }
+        } catch(e) { console.error('Journal error:', e); }
+    }
+    loadJournal();
+            } else {
+                setTimeout(initWhenReady, 500);
+            }
+        };
+        setTimeout(initWhenReady, 300);
+    });
+    </script>
+</body>
+</html>

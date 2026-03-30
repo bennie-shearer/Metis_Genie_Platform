@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="img/icon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporting - Metis Genie Platform v5.5.8</title>
+    <link rel="stylesheet" href="css/main.css?v=5.5.8">
+    <style>
+        .rpt-wrap{padding:1.5rem;max-width:1200px}
+        .rpt-card{background:var(--card-bg,#fff);border:1px solid var(--border,#e2e8f0);border-radius:12px;overflow:hidden;margin-bottom:1.25rem}
+        .rpt-card .card-head{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.25rem;border-bottom:1px solid var(--border,#e2e8f0)}
+        .rpt-card .card-head h3{margin:0;font-size:.95rem;font-weight:600}
+        .tbl{width:100%;border-collapse:collapse}
+        .tbl th,.tbl td{padding:.625rem 1rem;text-align:left;border-bottom:1px solid #f1f5f9;font-size:.85rem}
+        .tbl th{font-weight:600;color:#64748b;font-size:.8rem;text-transform:uppercase;letter-spacing:.04em}
+        .tbl tr:hover{background:#f8fafc}
+        .badge{display:inline-block;padding:2px 10px;border-radius:12px;font-size:.75rem;font-weight:600}
+        .badge.pdf{background:#dbeafe;color:#1e40af}.badge.csv{background:#dcfce7;color:#166534}
+        .btn{display:inline-flex;align-items:center;gap:.375rem;padding:6px 14px;border-radius:8px;font-size:.8rem;font-weight:600;cursor:pointer;border:none}
+        .btn-primary{background:#2563eb;color:#fff}.btn-primary:hover{background:#1d4ed8}
+        .btn-sm{padding:4px 10px;font-size:.75rem;border-radius:6px}
+        .btn-outline{background:transparent;border:1px solid #e2e8f0;color:#374151}.btn-outline:hover{background:#f1f5f9}
+        .gen-status{padding:1rem;text-align:center;color:#64748b;font-size:.85rem;display:none}
+        .gen-status.show{display:block}
+        .page-header{padding:1.5rem 1.5rem 0;display:flex;justify-content:space-between;align-items:center}
+        .page-header h2{margin:0;font-size:1.4rem;font-weight:700}
+        .back-link{display:inline-flex;align-items:center;gap:.375rem;color:var(--text-muted,#64748b);text-decoration:none;font-size:.85rem;padding:.5rem 0}
+        .back-link:hover{color:var(--primary,#2563eb)}
+        .back-link svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
+        .exp-card{background:var(--card-bg,#fff);border:1px solid var(--border,#e2e8f0);border-radius:12px;padding:1rem 1.25rem;margin-bottom:1rem}
+        .exp-card h4{margin:0 0 .75rem;font-size:.9rem;font-weight:600}
+        .exp-formats{display:flex;gap:.5rem;flex-wrap:wrap}
+        .exp-formats .badge{cursor:pointer;padding:4px 14px}
+    </style>
+</head>
+<body>
+    <div class="page-header">
+        <div>
+            <a href="index.html" class="back-link"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back to Dashboard</a>
+            <h2>Reporting</h2>
+        </div>
+    </div>
+    <div class="rpt-wrap">
+        <div class="rpt-card">
+            <div class="card-head"><h3>Report Templates</h3><span id="rptCount" style="font-size:.8rem;color:#64748b"></span></div>
+            <table class="tbl"><thead><tr><th>ID</th><th>Report Name</th><th>Format</th><th>Frequency</th><th>Last Generated</th><th>Actions</th></tr></thead><tbody id="rptBody"><tr><td colspan="6" style="text-align:center;color:#94a3b8">Loading...</td></tr></tbody></table>
+        </div>
+        <div class="gen-status" id="genStatus"></div>
+
+        <!-- Scheduled Reports -->
+        <div style="margin-top:24px;">
+            <div class="card-head" style="border-bottom:1px solid var(--border,#e2e8f0);padding:1rem 1.25rem;"><h3 style="margin:0;font-size:.95rem;font-weight:600;">Scheduled Reports</h3></div>
+            <table class="tbl"><thead><tr><th>ID</th><th>Report</th><th>Frequency</th><th>Time</th><th>Format</th><th>Last Run</th><th>Status</th></tr></thead><tbody id="schedBody">
+                <tr><td colspan="7" style="text-align:center;color:#94a3b8;">Loading...</td></tr>
+            </tbody></table>
+        </div>
+
+        <!-- Data Export -->
+        <div style="margin-top:24px;">
+            <div class="card-head" style="border-bottom:1px solid var(--border,#e2e8f0);padding:1rem 1.25rem;"><h3 style="margin:0;font-size:.95rem;font-weight:600;">Data Export</h3></div>
+            <div class="exp-card">
+                <h4>Available Formats</h4>
+                <div class="exp-formats" id="exportFormats"><span class="badge csv">Loading...</span></div>
+            </div>
+            <div class="exp-card">
+                <h4>CSV Templates</h4>
+                <div id="csvTemplates" style="font-size:.85rem;color:#64748b;">Loading...</div>
+            </div>
+        </div>
+    </div>
+    <script src="js/config.js?v=5.5.8"></script>
+    <script>
+    (function(){
+        const token=sessionStorage.getItem('genie_token');
+        if(!token){window.location.href='index.html';return;}
+        const _sv=localStorage.getItem('mg_serverUrl');const cfg={serverUrl:(_sv?JSON.parse(_sv):'http://localhost:8080'),apiVersion:'v1'};
+        const base=cfg.serverUrl+'/api/'+cfg.apiVersion;
+        function genReport(id){
+            const st=document.getElementById('genStatus');
+            st.className='gen-status show';st.textContent='Generating report '+id+'...';
+            fetch(base+'/reporting/generate',{method:'POST',headers:{'Authorization':'Bearer '+token,'Content-Type':'application/json'},body:JSON.stringify({template_id:id})})
+            .then(r=>r.json()).then(d=>{st.textContent='Report job '+d.job_id+' submitted (status: '+d.status+')';setTimeout(()=>st.className='gen-status',4000);}).catch(()=>{st.textContent='Error generating report';});
+        }
+        window._genReport=genReport;
+        fetch(base+'/reporting',{headers:{'Authorization':'Bearer '+token}})
+        .then(r=>r.json()).then(d=>{
+            document.getElementById('rptCount').textContent=(d.available||0)+' templates, '+(d.scheduled||0)+' scheduled';
+            const tpl=d.templates||[];
+            document.getElementById('rptBody').innerHTML=tpl.map(t=>'<tr><td>'+t.id+'</td><td style="font-weight:600">'+t.name+'</td><td><span class="badge '+(t.format==='PDF'?'pdf':'csv')+'">'+t.format+'</span></td><td>'+t.frequency+'</td><td style="font-size:.8rem;color:#64748b">'+(t.last_generated?new Date(t.last_generated).toLocaleDateString():'Never')+'</td><td><button class="btn btn-sm btn-primary" onclick="_genReport(\''+t.id+'\')">Generate</button></td></tr>').join('');
+        }).catch(()=>{document.getElementById('rptBody').innerHTML='<tr><td colspan="6" style="text-align:center;color:#dc2626">Failed to load</td></tr>';});
+        // Fetch scheduled reports
+        fetch(base+'/reporting/schedules',{headers:{'Authorization':'Bearer '+token}})
+        .then(r=>r.json()).then(d=>{
+            const sched=d.schedules||d||[];const arr=Array.isArray(sched)?sched:[];
+            document.getElementById('schedBody').innerHTML=arr.map(s=>'<tr><td>'+s.id+'</td><td style="font-weight:600">'+s.report_name+'</td><td>'+s.frequency+'</td><td>'+s.time+'</td><td><span class="badge '+(s.format==='PDF'?'pdf':'csv')+'">'+s.format+'</span></td><td style="font-size:.8rem;color:#64748b">'+(s.last_run||'Never')+'</td><td><span class="badge" style="background:#dcfce7;color:#16a34a;">'+s.status+'</span></td></tr>').join('')||'<tr><td colspan="7" style="text-align:center;color:#94a3b8">No scheduled reports</td></tr>';
+        }).catch(()=>{document.getElementById('schedBody').innerHTML='<tr><td colspan="7" style="text-align:center;color:#94a3b8">No scheduled reports</td></tr>';});
+        // Fetch export formats
+        fetch(base+'/export/formats',{headers:{'Authorization':'Bearer '+token}})
+        .then(r=>r.json()).then(d=>{
+            const fmts=d.formats||[];document.getElementById('exportFormats').innerHTML=fmts.map(f=>'<span class="badge '+(f.id==='PDF'||f.id==='pdf'?'pdf':'csv')+'">'+f.name+'</span>').join('')||'<span class="badge csv">JSON</span><span class="badge csv">CSV</span><span class="badge pdf">PDF</span>';
+        }).catch(()=>{document.getElementById('exportFormats').innerHTML='<span class="badge csv">JSON</span><span class="badge csv">CSV</span><span class="badge pdf">PDF</span>';});
+        // Fetch CSV templates
+        fetch(base+'/export/csv/templates',{headers:{'Authorization':'Bearer '+token}})
+        .then(r=>r.json()).then(d=>{
+            const tpls=d.templates||[];document.getElementById('csvTemplates').innerHTML=tpls.map(t=>'<div style="padding:4px 0">'+t.name+' - <span style="color:#94a3b8">'+t.description+'</span></div>').join('')||'Positions, Transactions, Tax Lots, Risk Metrics';
+        }).catch(()=>{document.getElementById('csvTemplates').textContent='Positions, Transactions, Tax Lots, Risk Metrics';});
+    })();
+    </script>
+<script>
+    // API bindings for this page (v5.5.8)
+    (function() {
+        const base = (window.Connection && Connection.baseUrl) || localStorage.getItem('serverUrl') || 'http://localhost:8080';
+        const token = (window.Connection && Connection.token) || localStorage.getItem('authToken') || '';
+        const headers = token ? {'Authorization': 'Bearer ' + token} : {};
+        if (!window.genieAPI) window.genieAPI = {};
+        window.genieAPI.reporting = function() {
+            return fetch(base+'/api/v1/reporting', {headers:headers}).then(r=>r.json());
+        };
+        window.genieAPI.reporting_templates = function() {
+            return fetch(base+'/api/v1/reporting/templates', {headers:headers}).then(r=>r.json());
+        };
+        window.genieAPI.reporting_generate = function(params) {
+            return fetch(base+'/api/v1/reporting/generate', {method:'POST',headers:{...headers,'Content-Type':'application/json'},body:JSON.stringify(params||{})}).then(r=>r.json());
+        };
+    })();
+
+    // Page initialization
+    document.addEventListener('DOMContentLoaded', () => {
+        // Wait for connection to be ready
+        const initWhenReady = () => {
+            if (window.Connection && (Connection.connected || Connection.demoMode)) {
+                
+    async function loadReporting() {
+        try {
+            const data = Connection.demoMode
+                ? await window.genieAPI.reporting_templates()
+                : await Connection.fetchJSON('/reporting/templates');
+            const tbody = document.querySelector('#templates-table tbody');
+            if (tbody) { tbody.innerHTML = ''; (data.templates||[]).forEach(t => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = '<td>'+t.id+'</td><td>'+t.name+'</td><td>'+t.format+'</td><td>'+(t.sections||[]).join(', ')+'</td><td><button class="btn btn-sm btn-primary">Generate</button></td>';
+                tbody.appendChild(tr);
+            }); }
+        } catch(e) { console.error('Reporting error:', e); }
+    }
+    loadReporting();
+            } else {
+                setTimeout(initWhenReady, 500);
+            }
+        };
+        setTimeout(initWhenReady, 300);
+    });
+    </script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="img/icon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metis Genie Platform - Approval Workflows</title>
+    <link rel="stylesheet" href="css/main.css?v=5.5.8">
+</head>
+<body>
+<nav class="sidebar">
+    <div class="logo"><a href="index.html"><img src="img/logo.svg" alt="Metis Genie Platform" width="32" height="32"> Metis Genie Platform</a></div>
+    <ul>
+        <li><a href="index.html">Dashboard</a></li>
+        <li><a href="portfolio.html">Portfolio</a></li>
+        <li><a href="trading.html">Trading</a></li>
+        <li><a href="risk.html">Risk</a></li>
+        <li><a href="analytics.html">Analytics</a></li>
+        <li><a href="market-data.html">Market Data</a></li>
+        <li><a href="assets.html">Assets</a></li>
+        <li><a href="performance.html">Performance</a></li>
+        <li><a href="compliance.html">Compliance</a></li>
+        <li><a href="reporting.html">Reporting</a></li>
+        <li><a href="tax.html">Tax</a></li>
+        <li><a href="whatif.html">What-If</a></li>
+        <li><a href="operations.html">Operations</a></li>
+        <li><a href="security.html">Security</a></li>
+    </ul>
+    <div class="version-tag">v5.5.8</div>
+</nav>
+<main class="content">
+    <header><h1>Approval Workflows</h1></header>
+
+    <section class="card">
+        <h2>Workflow Overview</h2>
+        <div class="grid-4">
+            <div class="stat-card"><div class="stat-label">Pending Approvals</div><div class="stat-value" id="wf-pending">--</div></div>
+            <div class="stat-card"><div class="stat-label">Approved Today</div><div class="stat-value" id="wf-approved">--</div></div>
+            <div class="stat-card"><div class="stat-label">Rejected</div><div class="stat-value" id="wf-rejected">--</div></div>
+            <div class="stat-card"><div class="stat-label">Avg SLA (min)</div><div class="stat-value" id="wf-avg-sla">--</div></div>
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>Pending Approvals</h2>
+        <table class="data-table" id="wf-pending-table">
+            <thead><tr><th>Request ID</th><th>Type</th><th>Submitted By</th><th>Amount</th><th>Current Stage</th><th>Approver</th><th>Submitted</th><th>SLA</th><th>Actions</th></tr></thead>
+            <tbody></tbody>
+        </table>
+    </section>
+
+    <section class="card">
+        <h2>Workflow Chains</h2>
+        <table class="data-table" id="wf-chains-table">
+            <thead><tr><th>Chain</th><th>Stages</th><th>Mode</th><th>Auto-Approve Threshold</th><th>Escalation</th><th>Active</th></tr></thead>
+            <tbody></tbody>
+        </table>
+    </section>
+
+    <section class="card">
+        <h2>Recent Activity</h2>
+        <table class="data-table" id="wf-activity-table">
+            <thead><tr><th>Time</th><th>Request</th><th>Action</th><th>By</th><th>Stage</th><th>Comments</th></tr></thead>
+            <tbody></tbody>
+        </table>
+    </section>
+
+</main>
+<script src="js/config.js?v=5.5.8"></script>
+<script src="js/connection.js?v=5.5.8"></script>
+<script src="js/utils.js?v=5.5.8"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const page = location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('.sidebar li').forEach(li => {
+        const a = li.querySelector('a');
+        if (a && a.getAttribute('href') === page) li.classList.add('active');
+    });
+    if (typeof initPage === 'function') initPage();
+});
+</script>
+<script>
+    // API bindings for this page (v5.5.8)
+    (function() {
+        const base = (window.Connection && Connection.baseUrl) || localStorage.getItem('serverUrl') || 'http://localhost:8080';
+        const token = (window.Connection && Connection.token) || localStorage.getItem('authToken') || '';
+        const headers = token ? {'Authorization': 'Bearer ' + token} : {};
+        if (!window.genieAPI) window.genieAPI = {};
+        window.genieAPI.workflows = function() {
+            return fetch(base+'/api/v1/workflows', {headers:headers}).then(r=>r.json());
+        };
+    })();
+
+    // Page initialization
+    document.addEventListener('DOMContentLoaded', () => {
+        // Wait for connection to be ready
+        const initWhenReady = () => {
+            if (window.Connection && (Connection.connected || Connection.demoMode)) {
+                
+    async function loadWorkflows() {
+        try {
+            const data = Connection.demoMode
+                ? await window.genieAPI.workflows()
+                : await Connection.fetchJSON('/workflows');
+            if (document.getElementById('wf-active')) document.getElementById('wf-active').textContent = data.active_workflows||0;
+            if (document.getElementById('wf-pending')) document.getElementById('wf-pending').textContent = data.pending_approvals||0;
+            if (document.getElementById('wf-sla')) document.getElementById('wf-sla').textContent = (data.sla?.sla_compliance_pct||0)+'%';
+            const tbody = document.querySelector('#wf-table tbody');
+            if (tbody) { tbody.innerHTML = ''; (data.workflows||[]).forEach(w => {
+                const pct = Math.round(w.steps_completed/w.steps_total*100);
+                const tr = document.createElement('tr');
+                tr.innerHTML = '<td>'+w.id+'</td><td>'+w.name+'</td><td><span class="badge badge-'+(w.status==='IN_PROGRESS'?'primary':w.status==='PENDING_APPROVAL'?'warning':'info')+'">'+w.status+'</span></td><td>'+w.current_step+'</td><td><div class="progress-bar"><div style="width:'+pct+'%">'+pct+'%</div></div></td><td>'+w.assigned_to+'</td><td><span class="badge badge-'+(w.priority==='URGENT'?'danger':w.priority==='HIGH'?'warning':'info')+'">'+w.priority+'</span></td>';
+                tbody.appendChild(tr);
+            }); }
+        } catch(e) { console.error('Workflows error:', e); }
+    }
+    loadWorkflows();
+            } else {
+                setTimeout(initWhenReady, 500);
+            }
+        };
+        setTimeout(initWhenReady, 300);
+    });
+    </script>
+</body>
+</html>

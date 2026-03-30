@@ -1,0 +1,83 @@
+/* Metis Genie Platform Security Page Styles v5.3.1 */
+
+.security-layout { max-width:1200px; margin:0 auto; padding:1rem; }
+.sec-tabs { display:flex; gap:2px; border-bottom:2px solid var(--border,#e0e0e0); margin-bottom:1.5rem; overflow-x:auto; }
+.sec-tab { padding:0.6rem 1.2rem; border:none; background:transparent; cursor:pointer; font-size:0.9rem; font-weight:500; color:var(--muted,#888); border-bottom:2px solid transparent; margin-bottom:-2px; white-space:nowrap; }
+.sec-tab.active { color:var(--accent,#00d4aa); border-bottom-color:var(--accent,#00d4aa); }
+.sec-content { display:none; }
+.sec-content.active { display:block; }
+.sec-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; }
+.sec-header h2 { margin:0; }
+.sec-desc { color:var(--muted,#888); margin-bottom:1rem; font-size:0.9rem; }
+
+/* Security Score */
+.sec-score-card { display:flex; align-items:center; gap:2rem; padding:1.5rem; background:var(--card-bg,#fff); border-radius:8px; margin-bottom:1.5rem; box-shadow:0 1px 3px rgba(0,0,0,0.08); }
+.score-circle svg { width:120px; height:120px; }
+.score-details h3 { margin:0 0 0.5rem; }
+.score-details p { color:var(--muted,#888); margin:0; }
+
+/* Security Checklist */
+.sec-checklist { display:flex; flex-direction:column; gap:0.5rem; margin-bottom:1.5rem; }
+.sec-check { display:flex; align-items:center; gap:0.75rem; padding:0.75rem 1rem; background:var(--card-bg,#fff); border-radius:6px; border-left:3px solid transparent; }
+.sec-check.done { border-left-color:#00b894; }
+.sec-check.warn { border-left-color:#fdcb6e; }
+.check-icon { width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:bold; }
+.sec-check.done .check-icon { background:rgba(0,184,148,0.15); color:#00b894; }
+.sec-check.warn .check-icon { background:rgba(253,203,110,0.3); color:#e67e22; }
+.check-action { margin-left:auto; font-size:0.85rem; color:var(--accent,#00d4aa); }
+
+/* 2FA Setup */
+.tfa-status { text-align:center; padding:2rem; }
+.tfa-badge { display:flex; flex-direction:column; align-items:center; gap:0.5rem; }
+.tfa-badge svg { color:var(--muted,#888); }
+.tfa-badge.disabled h3 { color:var(--text,#333); }
+.tfa-setup { margin:1.5rem 0; }
+.tfa-step { margin-bottom:1.5rem; padding:1rem; background:var(--card-bg,#fff); border-radius:8px; }
+.tfa-step h4 { margin:0 0 0.5rem; }
+.tfa-qr { text-align:center; margin:1rem 0; }
+.qr-placeholder { display:inline-block; border:1px solid var(--border,#ddd); border-radius:8px; padding:1rem; }
+.tfa-manual { margin-top:0.75rem; }
+.tfa-manual code { display:inline-block; padding:0.5rem 1rem; background:var(--bg,#f5f5f5); border-radius:4px; font-size:1rem; letter-spacing:2px; margin:0.5rem 0; }
+.tfa-verify { display:flex; gap:0.5rem; align-items:center; }
+.tfa-input { width:160px; text-align:center; font-size:1.5rem; letter-spacing:8px; padding:0.5rem; border:2px solid var(--border,#ddd); border-radius:8px; }
+.tfa-input:focus { border-color:var(--accent,#00d4aa); outline:none; }
+.backup-codes { display:grid; grid-template-columns:repeat(3,1fr); gap:0.5rem; margin:0.75rem 0; }
+.backup-codes code { padding:0.5rem; background:var(--bg,#f5f5f5); border-radius:4px; text-align:center; font-size:0.95rem; }
+
+/* Sessions */
+.session-settings { padding:1rem; background:var(--card-bg,#fff); border-radius:8px; margin-bottom:1.5rem; }
+.current-session { background:rgba(0,212,170,0.05); }
+
+/* IP Whitelist */
+.ip-toggle { display:flex; align-items:center; gap:0.75rem; margin-bottom:1.5rem; padding:1rem; background:var(--card-bg,#fff); border-radius:8px; }
+
+/* Audit Log */
+.audit-controls { display:flex; gap:0.5rem; align-items:center; }
+.audit-pagination { display:flex; justify-content:center; align-items:center; gap:1rem; padding:1rem; }
+.page-info { font-size:0.85rem; color:var(--muted,#888); }
+.tbl-compact td,.tbl-compact th { padding:0.4rem 0.6rem; font-size:0.85rem; }
+
+/* Badges */
+.badge { display:inline-block; padding:0.15rem 0.5rem; border-radius:4px; font-size:0.75rem; font-weight:600; }
+.badge-ok { background:rgba(0,184,148,0.15); color:#00b894; }
+.badge-err { background:rgba(214,48,49,0.15); color:#d63031; }
+.badge-warn { background:rgba(253,203,110,0.3); color:#e67e22; }
+.badge-info { background:rgba(59,130,246,0.15); color:#3b82f6; }
+.badge-cat { padding:0.2rem 0.4rem; font-size:0.7rem; }
+.badge-cat.auth { background:#e8f5e9; color:#2e7d32; }
+.badge-cat.trade { background:#e3f2fd; color:#1565c0; }
+.badge-cat.config { background:#fff3e0; color:#e65100; }
+.badge-cat.admin { background:#f3e5f5; color:#7b1fa2; }
+.badge-cat.security { background:#fce4ec; color:#c62828; }
+
+/* Recent Events */
+.sec-recent { margin-top:1.5rem; }
+.sec-recent h3 { margin-bottom:0.75rem; }
+
+@media(max-width:768px) {
+    .sec-score-card { flex-direction:column; text-align:center; }
+    .audit-controls { flex-wrap:wrap; }
+    .backup-codes { grid-template-columns:repeat(2,1fr); }
+    .sec-tabs { gap:0; }
+    .sec-tab { padding:0.5rem 0.8rem; font-size:0.8rem; }
+}

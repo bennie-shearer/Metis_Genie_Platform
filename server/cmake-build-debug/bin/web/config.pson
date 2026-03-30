@@ -1,0 +1,40 @@
+// =============================================================================
+// Metis Genie Platform v5.3.4 - Client Configuration (PSON Format)
+// =============================================================================
+// This file is loaded by the browser (client/js/config.js).
+// Edit server/config.pson for all server-side parameters.
+// PSON supports // comments and trailing commas.
+// =============================================================================
+{
+    // Server connection
+    "server": {
+        "url": "http://localhost:8080",       // Change to your server host/port
+        "timeout_ms": 30000,
+        "retry_attempts": 3,
+        "retry_delay_ms": 1000,
+    },
+
+    // UI preferences
+    "ui": {
+        "theme": "light",                     // light | dark
+        "refresh_interval_seconds": 30,
+        "chart_animation": true,
+        "rows_per_page": 25,
+    },
+
+    // Logging (browser console)
+    "logging": {
+        "enabled": true,
+        "level": "INFO",                      // DEBUG | INFO | WARN | ERROR | NONE
+        "console": true,
+        "timestamps": true,
+    },
+
+    // Application identity (shown in UI header)
+    "application": {
+        "name": "Metis Genie Platform",
+        "version": "5.5.8",
+        "logo": "img/logo.svg",
+        "icon": "img/icon.svg",
+    },
+}

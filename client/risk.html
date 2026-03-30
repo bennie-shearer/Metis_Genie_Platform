@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="img/icon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Metis Genie Platform v5.5.8 -->
+    <title>Metis Genie Platform - Risk Analytics</title>
+    <link rel="stylesheet" href="css/main.css?v=5.5.8">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <style>
+        .risk-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin: 20px 0; }
+        .risk-card { background: var(--card-bg, #1e293b); border-radius: 12px; padding: 20px; border: 1px solid var(--border, #334155); }
+        .risk-card h3 { margin: 0 0 16px 0; color: var(--accent, #60a5fa); font-size: 16px; }
+        .metric-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border, #334155); }
+        .metric-row:last-child { border-bottom: none; }
+        .metric-label { color: var(--text-muted, #94a3b8); font-size: 14px; }
+        .metric-value { color: var(--text, #e2e8f0); font-weight: 600; font-size: 14px; }
+        .metric-value.positive { color: #4ade80; }
+        .metric-value.negative { color: #f87171; }
+        .var-table { width: 100%; border-collapse: collapse; margin: 12px 0; }
+        .var-table th, .var-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border, #334155); font-size: 13px; }
+        .var-table th { color: var(--text-muted, #94a3b8); font-weight: 500; text-transform: uppercase; font-size: 11px; }
+        .var-bar { height: 8px; border-radius: 4px; background: var(--accent, #60a5fa); display: inline-block; vertical-align: middle; margin-left: 8px; }
+        .gpu-badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+        .gpu-badge.ready { background: #1e3a5f; color: #60a5fa; }
+        .gpu-badge.active { background: #064e3b; color: #4ade80; }
+        .gpu-badge.fallback { background: #78350f; color: #fbbf24; }
+        .factor-bar-container { display: flex; align-items: center; gap: 8px; }
+        .factor-bar { height: 20px; border-radius: 4px; min-width: 2px; }
+        .factor-bar.positive { background: #4ade80; }
+        .factor-bar.negative { background: #f87171; }
+        .chart-container { height: 250px; margin: 12px 0; }
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin: 32px 0 16px 0; }
+        .section-header h2 { margin: 0; color: var(--text, #e2e8f0); font-size: 20px; }
+        .refresh-btn { background: var(--accent, #60a5fa); color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 13px; }
+        .refresh-btn:hover { opacity: 0.9; }
+    </style>
+</head>
+<body>
+    <nav class="main-nav">
+        <div class="nav-brand"><a href="index.html">Metis Genie Platform</a></div>
+        <div class="nav-links">
+            <a href="index.html">Dashboard</a>
+            <a href="trading.html">Trading</a>
+            <a href="risk.html" class="active">Risk</a>
+            <a href="analytics.html">Analytics</a>
+            <a href="compliance.html">Compliance</a>
+            <a href="reporting.html">Reporting</a>
+            <a href="charts.html">Charts</a>
+            <a href="whatif.html">What-If</a>
+            <a href="operations.html">Operations</a>
+            <a href="security.html">Security</a>
+            <a href="tax.html">Tax</a>
+        </div>
+    </nav>
+
+    <main class="content">
+        <div class="section-header">
+            <h2>Risk Analytics Dashboard</h2>
+            <button class="refresh-btn" onclick="loadAllRiskData()">Refresh Data</button>
+        </div>
+
+        <!-- VaR Summary -->
+        <div class="risk-grid">
+            <div class="risk-card">
+                <h3>Value at Risk (VaR)</h3>
+                <div id="var-summary">
+                    <div class="metric-row"><span class="metric-label">VaR (95%)</span><span class="metric-value negative" id="var95">$28,750</span></div>
+                    <div class="metric-row"><span class="metric-label">VaR (99%)</span><span class="metric-value negative" id="var99">$41,200</span></div>
+                    <div class="metric-row"><span class="metric-label">CVaR (95%)</span><span class="metric-value negative" id="cvar95">$35,100</span></div>
+                    <div class="metric-row"><span class="metric-label">CVaR (99%)</span><span class="metric-value negative" id="cvar99">$48,900</span></div>
+                    <div class="metric-row"><span class="metric-label">Expected Return</span><span class="metric-value positive" id="expret">$42,000</span></div>
+                    <div class="metric-row"><span class="metric-label">Std Deviation</span><span class="metric-value" id="stddev">$18,500</span></div>
+                </div>
+            </div>
+
+            <div class="risk-card">
+                <h3>Monte Carlo Configuration</h3>
+                <div id="mc-config">
+                    <div class="metric-row"><span class="metric-label">Simulations</span><span class="metric-value">100,000</span></div>
+                    <div class="metric-row"><span class="metric-label">Time Horizon</span><span class="metric-value">252 days</span></div>
+                    <div class="metric-row"><span class="metric-label">Model</span><span class="metric-value">GBM</span></div>
+                    <div class="metric-row"><span class="metric-label">Correlation</span><span class="metric-value">Cholesky</span></div>
+                    <div class="metric-row"><span class="metric-label">Skewness</span><span class="metric-value">-0.32</span></div>
+                    <div class="metric-row"><span class="metric-label">Kurtosis</span><span class="metric-value">3.21</span></div>
+                </div>
+            </div>
+
+            <div class="risk-card">
+                <h3>GPU Compute Status</h3>
+                <div id="gpu-status">
+                    <div class="metric-row"><span class="metric-label">CUDA</span><span class="gpu-badge ready">Architecture Ready</span></div>
+                    <div class="metric-row"><span class="metric-label">OpenCL</span><span class="gpu-badge ready">Architecture Ready</span></div>
+                    <div class="metric-row"><span class="metric-label">Active Device</span><span class="gpu-badge fallback">CPU Fallback</span></div>
+                    <div class="metric-row"><span class="metric-label">Threads</span><span class="metric-value">8</span></div>
+                    <div class="metric-row"><span class="metric-label">Compute Time</span><span class="metric-value">1,250 ms</span></div>
+                    <div class="metric-row"><span class="metric-label">GPU Note</span><span class="metric-value" style="font-size:11px;">Future release</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Incremental VaR -->
+        <div class="section-header"><h2>Incremental VaR Decomposition</h2></div>
+        <div class="risk-card">
+            <table class="var-table">
+                <thead><tr><th>Symbol</th><th>Marginal VaR</th><th>Component VaR</th><th>% Contribution</th><th>Visual</th></tr></thead>
+                <tbody id="ivar-body">
+                    <tr><td>AAPL</td><td>$3,200</td><td>$7,800</td><td>27.1%</td><td><span class="var-bar" style="width:81px;"></span></td></tr>
+                    <tr><td>MSFT</td><td>$2,800</td><td>$9,100</td><td>31.7%</td><td><span class="var-bar" style="width:95px;"></span></td></tr>
+                    <tr><td>NVDA</td><td>$4,100</td><td>$8,500</td><td>29.6%</td><td><span class="var-bar" style="width:89px;"></span></td></tr>
+                    <tr><td>GOOGL</td><td>$1,200</td><td>$2,400</td><td>8.3%</td><td><span class="var-bar" style="width:25px;"></span></td></tr>
+                    <tr><td>JPM</td><td>$450</td><td>$950</td><td>3.3%</td><td><span class="var-bar" style="width:10px;"></span></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Factor Exposure -->
+        <div class="section-header"><h2>Factor Risk Model</h2></div>
+        <div class="risk-grid">
+            <div class="risk-card">
+                <h3>Factor Exposures</h3>
+                <div id="factor-exposures">
+                    <div class="metric-row">
+                        <span class="metric-label">Market Beta</span>
+                        <div class="factor-bar-container">
+                            <span class="factor-bar positive" style="width:56px;"></span>
+                            <span class="metric-value">1.12</span>
+                        </div>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Size (SMB)</span>
+                        <div class="factor-bar-container">
+                            <span class="factor-bar negative" style="width:15px;"></span>
+                            <span class="metric-value">-0.15</span>
+                        </div>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Value (HML)</span>
+                        <div class="factor-bar-container">
+                            <span class="factor-bar negative" style="width:32px;"></span>
+                            <span class="metric-value">-0.32</span>
+                        </div>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Momentum (UMD)</span>
+                        <div class="factor-bar-container">
+                            <span class="factor-bar positive" style="width:28px;"></span>
+                            <span class="metric-value">0.28</span>
+                        </div>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Quality</span>
+                        <div class="factor-bar-container">
+                            <span class="factor-bar positive" style="width:41px;"></span>
+                            <span class="metric-value">0.41</span>
+                        </div>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Volatility</span>
+                        <div class="factor-bar-container">
+                            <span class="factor-bar negative" style="width:18px;"></span>
+                            <span class="metric-value">-0.18</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="risk-card">
+                <h3>Factor Returns (YTD %)</h3>
+                <div class="chart-container"><canvas id="factorChart"></canvas></div>
+            </div>
+
+            <div class="risk-card">
+                <h3>Model Statistics</h3>
+                <div class="metric-row"><span class="metric-label">R-Squared</span><span class="metric-value">0.87</span></div>
+                <div class="metric-row"><span class="metric-label">Tracking Error</span><span class="metric-value">4.2%</span></div>
+                <div class="metric-row"><span class="metric-label">Style Drift</span><span class="metric-value">Growth Tilt</span></div>
+                <div class="metric-row"><span class="metric-label">Previous Quarter</span><span class="metric-value">Balanced</span></div>
+                <div class="metric-row"><span class="metric-label">Drift Magnitude</span><span class="metric-value">0.15</span></div>
+            </div>
+        </div>
+
+        <!-- Liquidity Risk -->
+        <div class="section-header"><h2>Liquidity Risk</h2></div>
+        <div class="risk-card" style="margin-bottom:24px;">
+            <div id="liquidityData" style="padding:12px 16px;"><span style="color:#94a3b8;">Loading...</span></div>
+        </div>
+
+        <div class="section-header"><h2>VaR Distribution</h2></div>
+        <div class="risk-card">
+            <div style="height:300px;"><canvas id="varDistChart"></canvas></div>
+        </div>
+    </main>
+
+    <script src="js/config.js?v=5.5.8"></script>
+    <script src="js/connection.js?v=5.5.8"></script>
+    <script>
+        function loadAllRiskData() {
+            const base = window.GENIE_CONFIG ? window.GENIE_CONFIG.apiUrl : 'http://localhost:8080';
+            const token = localStorage.getItem('genie_token') || '';
+            const headers = token ? {'Authorization': 'Bearer ' + token} : {};
+
+            // Load GPU Monte Carlo
+            fetch(base + '/api/v1/risk/gpu', {headers}).then(r => r.json()).then(data => {
+                if (data.monte_carlo && data.monte_carlo.results) {
+                    const r = data.monte_carlo.results;
+                    document.getElementById('var95').textContent = '$' + r.var_95.toLocaleString();
+                    document.getElementById('var99').textContent = '$' + r.var_99.toLocaleString();
+                    document.getElementById('cvar95').textContent = '$' + r.cvar_95.toLocaleString();
+                    document.getElementById('cvar99').textContent = '$' + r.cvar_99.toLocaleString();
+                    document.getElementById('expret').textContent = '$' + r.expected_return.toLocaleString();
+                    document.getElementById('stddev').textContent = '$' + r.std_dev.toLocaleString();
+                }
+            }).catch(() => {});
+
+            // Load Incremental VaR
+            fetch(base + '/api/v1/risk/incremental', {headers}).then(r => r.json()).then(data => {
+                if (data.incremental_var) {
+                    const tbody = document.getElementById('ivar-body');
+                    tbody.innerHTML = data.incremental_var.map(v =>
+                        '<tr><td>' + v.symbol + '</td><td>$' + v.marginal_var.toLocaleString() +
+                        '</td><td>$' + v.component_var.toLocaleString() + '</td><td>' +
+                        v.pct_contribution.toFixed(1) + '%</td><td><span class="var-bar" style="width:' +
+                        (v.pct_contribution * 3) + 'px;"></span></td></tr>'
+                    ).join('');
+                }
+            }).catch(() => {});
+
+            // Load Factor Risk Model
+            fetch(base + '/api/v1/risk/factors', {headers}).then(r => r.json()).then(data => {
+                const el = document.getElementById('factor-exposures');
+                if (el && data.factors) {
+                    el.innerHTML = data.factors.map(f =>
+                        '<div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #1e293b;">' +
+                        '<span style="color:#94a3b8;">' + f.name + '</span>' +
+                        '<div class="factor-bar-container"><span class="factor-bar ' + (f.exposure >= 0 ? 'positive' : 'negative') +
+                        '" style="width:' + Math.abs(f.exposure * 40) + 'px;"></span>' +
+                        '<span style="color:' + (f.exposure >= 0 ? '#4ade80' : '#f87171') + ';">' + f.exposure.toFixed(3) + '</span></div></div>'
+                    ).join('');
+                }
+            }).catch(() => {});
+
+            // Load Liquidity Risk
+            fetch(base + '/api/v1/risk/liquidity', {headers}).then(r => r.json()).then(data => {
+                const el = document.getElementById('liquidityData');
+                if (el && data) {
+                    el.innerHTML =
+                        '<div style="display:flex;justify-content:space-between;padding:8px 0;"><span style="color:#94a3b8;">Liquidity Score</span><span style="color:#4ade80;">' + (data.liquidity_score || 0).toFixed(1) + '</span></div>' +
+                        '<div style="display:flex;justify-content:space-between;padding:8px 0;"><span style="color:#94a3b8;">Days to Liquidate (95%)</span><span>' + (data.days_to_liquidate_95 || 0).toFixed(1) + '</span></div>' +
+                        '<div style="display:flex;justify-content:space-between;padding:8px 0;"><span style="color:#94a3b8;">Illiquid Positions</span><span>' + (data.illiquid_count || 0) + '</span></div>' +
+                        '<div style="display:flex;justify-content:space-between;padding:8px 0;"><span style="color:#94a3b8;">Avg Bid-Ask Spread</span><span>' + (data.avg_spread_bps || 0).toFixed(1) + ' bps</span></div>';
+                }
+            }).catch(() => {});
+        }
+
+        // Factor Returns Chart
+        const factorCtx = document.getElementById('factorChart');
+        if (factorCtx) {
+            new Chart(factorCtx.getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: ['Market', 'Size', 'Value', 'Momentum', 'Quality', 'Volatility'],
+                    datasets: [{
+                        data: [12.5, -2.1, 3.8, 5.2, 4.1, -1.5],
+                        backgroundColor: [12.5, -2.1, 3.8, 5.2, 4.1, -1.5].map(v => v >= 0 ? '#4ade80' : '#f87171')
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { y: { grid: { color: '#334155' }, ticks: { color: '#94a3b8', callback: v => v + '%' } }, x: { grid: { display: false }, ticks: { color: '#94a3b8' } } }
+                }
+            });
+        }
+
+        // VaR Distribution Chart (simulated normal)
+        const varCtx = document.getElementById('varDistChart');
+        if (varCtx) {
+            const labels = []; const values = [];
+            for (let x = -60000; x <= 80000; x += 2000) {
+                labels.push(x >= 0 ? '+$' + (x/1000) + 'K' : '-$' + (-x/1000) + 'K');
+                const z = (x - 42000) / 18500;
+                values.push(Math.exp(-0.5 * z * z) / (18500 * Math.sqrt(2 * Math.PI)) * 2000);
+            }
+            new Chart(varCtx.getContext('2d'), {
+                type: 'line',
+                data: {
+                    labels,
+                    datasets: [{
+                        data: values, fill: true,
+                        backgroundColor: 'rgba(96,165,250,0.2)', borderColor: '#60a5fa', borderWidth: 2, pointRadius: 0, tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        annotation: {}
+                    },
+                    scales: {
+                        y: { display: false },
+                        x: { grid: { color: '#334155' }, ticks: { color: '#94a3b8', maxTicksLimit: 10 } }
+                    }
+                }
+            });
+        }
+
+        loadAllRiskData();
+    </script>
+    <script>
+    /* API endpoint wiring - auto-generated */
+    (function(){
+        const base = (typeof CONFIG !== 'undefined' && CONFIG.API_BASE) ? CONFIG.API_BASE : 'http://localhost:8080';
+        const token = sessionStorage.getItem('genie_token') || localStorage.getItem('genie_token') || '';
+        const headers = token ? {'Authorization':'Bearer '+token} : {};
+        window.genieAPI = window.genieAPI || {};
+        window.genieAPI.risk = function() {
+            return fetch(base+'/api/v1/risk', {headers:headers}).then(r=>r.json());
+        };
+    })();
+    </script>
+</body>
+</html>

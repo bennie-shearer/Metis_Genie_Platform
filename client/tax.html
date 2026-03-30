@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="img/icon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tax - Metis Genie Platform v5.5.8</title>
+    <link rel="stylesheet" href="css/main.css?v=5.5.8">
+    <style>
+        .tax-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.25rem;padding:1.5rem}
+        .tax-card{background:var(--card-bg,#fff);border:1px solid var(--border,#e2e8f0);border-radius:12px;overflow:hidden}
+        .tax-card .card-head{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.25rem;border-bottom:1px solid var(--border,#e2e8f0)}
+        .tax-card .card-head h3{margin:0;font-size:.95rem;font-weight:600}
+        .tax-card .card-body{padding:1.25rem}
+        .tax-stat{text-align:center;padding:.75rem 0}
+        .tax-stat .value{font-size:1.5rem;font-weight:700;font-variant-numeric:tabular-nums}
+        .tax-stat .label{font-size:.8rem;color:#64748b;margin-top:.25rem}
+        .positive{color:#16a34a}.negative{color:#dc2626}.neutral{color:#2563eb}
+        .metric-row{display:flex;justify-content:space-between;padding:.5rem 0;border-bottom:1px solid #f1f5f9}
+        .metric-row:last-child{border-bottom:none}
+        .metric-label{font-size:.85rem;color:#64748b}
+        .metric-value{font-size:.9rem;font-weight:600;font-variant-numeric:tabular-nums}
+        .tbl{width:100%;border-collapse:collapse}
+        .tbl th,.tbl td{padding:.5rem .75rem;text-align:left;border-bottom:1px solid #f1f5f9;font-size:.85rem}
+        .tbl th{font-weight:600;color:#64748b;font-size:.8rem;text-transform:uppercase}
+        .tbl .r{text-align:right}
+        .badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:.7rem;font-weight:600}
+        .badge.long{background:#dbeafe;color:#1e40af}.badge.short{background:#fef3c7;color:#92400e}
+        .harvest-card{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:12px;padding:1.25rem;margin-top:1.25rem}
+        .harvest-card h4{margin:0 0 .5rem;font-size:.95rem;color:#166534}
+        .page-header{padding:1.5rem 1.5rem 0;display:flex;justify-content:space-between;align-items:center}
+        .page-header h2{margin:0;font-size:1.4rem;font-weight:700}
+        .page-header .sub{font-size:.85rem;color:#64748b}
+        .back-link{display:inline-flex;align-items:center;gap:.375rem;color:var(--text-muted,#64748b);text-decoration:none;font-size:.85rem;padding:.5rem 0}
+        .back-link:hover{color:var(--primary,#2563eb)}
+        .back-link svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
+    </style>
+</head>
+<body>
+    <div class="page-header">
+        <div>
+            <a href="index.html" class="back-link"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back to Dashboard</a>
+            <h2>Tax Management</h2>
+        </div>
+        <div id="taxYear" class="sub"></div>
+    </div>
+    <div class="tax-grid" id="summaryGrid">
+        <div class="tax-card"><div class="card-body"><div class="tax-stat"><div class="value positive" id="stGains">--</div><div class="label">Short-Term Gains</div></div></div></div>
+        <div class="tax-card"><div class="card-body"><div class="tax-stat"><div class="value positive" id="ltGains">--</div><div class="label">Long-Term Gains</div></div></div></div>
+        <div class="tax-card"><div class="card-body"><div class="tax-stat"><div class="value neutral" id="netGain">--</div><div class="label">Net Gain</div></div></div></div>
+        <div class="tax-card"><div class="card-body"><div class="tax-stat"><div class="value negative" id="estTax">--</div><div class="label">Estimated Tax</div></div></div></div>
+    </div>
+    <div style="padding:0 1.5rem">
+        <div class="tax-card">
+            <div class="card-head"><h3>Tax Summary</h3></div>
+            <div class="card-body" id="taxSummary"><span>Loading...</span></div>
+        </div>
+        <div class="tax-card" style="margin-top:1.25rem">
+            <div class="card-head"><h3>Tax Lots</h3></div>
+            <table class="tbl"><thead><tr><th>Symbol</th><th>Acquired</th><th class="r">Qty</th><th class="r">Cost Basis</th><th class="r">Current Value</th><th class="r">Gain/Loss</th><th>Term</th><th class="r">Holding Days</th></tr></thead><tbody id="lotsBody"><tr><td colspan="8" style="text-align:center;color:#94a3b8">Loading...</td></tr></tbody></table>
+        </div>
+        <div id="harvestSection"></div>
+    </div>
+    <script src="js/config.js?v=5.5.8"></script>
+    <script>
+    (function(){
+        const token=sessionStorage.getItem('genie_token');
+        if(!token){window.location.href='index.html';return;}
+        const _sv=localStorage.getItem('mg_serverUrl');const cfg={serverUrl:(_sv?JSON.parse(_sv):'http://localhost:8080'),apiVersion:'v1'};
+        const base=cfg.serverUrl+'/api/'+cfg.apiVersion;
+        const $=id=>document.getElementById(id);
+        const money=v=>'$'+Math.abs(v).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+        const cls=v=>v>0?'positive':v<0?'negative':'neutral';
+        fetch(base+'/tax',{headers:{'Authorization':'Bearer '+token}})
+        .then(r=>r.json()).then(d=>{
+            $('taxYear').textContent='Tax Year '+d.tax_year+' | Method: '+d.method;
+            const s=d.summary||{};
+            $('stGains').textContent=money(s.short_term_gains);
+            $('ltGains').textContent=money(s.long_term_gains);
+            $('netGain').textContent=money(s.net_gain);$('netGain').className='value '+cls(s.net_gain);
+            $('estTax').textContent=money(s.estimated_tax);
+            const row=(l,v,c)=>'<div class="metric-row"><span class="metric-label">'+l+'</span><span class="metric-value '+(c||'')+'">'+v+'</span></div>';
+            $('taxSummary').innerHTML=row('Short-Term Gains',money(s.short_term_gains),'positive')+row('Long-Term Gains',money(s.long_term_gains),'positive')+row('Short-Term Losses','-'+money(Math.abs(s.short_term_losses)),'negative')+row('Long-Term Losses','-'+money(Math.abs(s.long_term_losses)),'negative')+row('Net Gain',money(s.net_gain),cls(s.net_gain))+row('Wash Sale Adjustments',money(s.wash_sale_adjustments),'neutral')+row('Estimated Tax',money(s.estimated_tax),'negative');
+            const lots=d.lots||[];
+            $('lotsBody').innerHTML=lots.map(l=>'<tr><td style="font-weight:600">'+l.symbol+'</td><td>'+l.acquired+'</td><td class="r">'+l.qty+'</td><td class="r">'+money(l.cost_basis)+'</td><td class="r">'+money(l.current_value)+'</td><td class="r '+cls(l.gain)+'">'+((l.gain>=0?'+':'-')+money(Math.abs(l.gain)))+'</td><td><span class="badge '+(l.term==='Long'?'long':'short')+'">'+l.term+'</span></td><td class="r">'+l.holding_days+'</td></tr>').join('');
+            const h=d.harvesting||{};
+            if(h.opportunities>0)$('harvestSection').innerHTML='<div class="harvest-card"><h4>Tax-Loss Harvesting Opportunities</h4><div class="metric-row"><span class="metric-label">Opportunities</span><span class="metric-value">'+h.opportunities+'</span></div><div class="metric-row"><span class="metric-label">Potential Savings</span><span class="metric-value positive">'+money(h.potential_savings)+'</span></div></div>';
+        }).catch(()=>{$('lotsBody').innerHTML='<tr><td colspan="8" style="text-align:center;color:#dc2626">Failed to load</td></tr>';});
+    })();
+    </script>
+    <script>
+    /* API endpoint wiring - auto-generated */
+    (function(){
+        const base = (typeof CONFIG !== 'undefined' && CONFIG.API_BASE) ? CONFIG.API_BASE : 'http://localhost:8080';
+        const token = sessionStorage.getItem('genie_token') || localStorage.getItem('genie_token') || '';
+        const headers = token ? {'Authorization':'Bearer '+token} : {};
+        window.genieAPI = window.genieAPI || {};
+        window.genieAPI.tax_lots = function() {
+            return fetch(base+'/api/v1/tax/lots', {headers:headers}).then(r=>r.json());
+        };
+        window.genieAPI.tax_lots_methods = function() {
+            return fetch(base+'/api/v1/tax/lots/methods', {headers:headers}).then(r=>r.json());
+        };
+    })();
+    </script>
+</body>
+</html>

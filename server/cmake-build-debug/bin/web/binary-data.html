@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="img/icon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metis Genie Platform - Binary Data &amp; Compression</title>
+    <link rel="stylesheet" href="css/main.css?v=5.5.8">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0e17; color: #e2e8f0; }
+        .header { background: linear-gradient(135deg, #1a1f2e 0%, #0d1117 100%); padding: 16px 24px; border-bottom: 1px solid #2d3748; display: flex; align-items: center; justify-content: space-between; }
+        .header h1 { font-size: 20px; color: #60a5fa; }
+        .header .version { font-size: 12px; color: #64748b; }
+        .nav { background: #111827; padding: 8px 24px; border-bottom: 1px solid #1e293b; overflow-x: auto; white-space: nowrap; }
+        .nav a { color: #94a3b8; text-decoration: none; padding: 8px 12px; font-size: 13px; border-radius: 6px; margin-right: 4px; display: inline-block; }
+        .nav a:hover, .nav a.active { background: #1e293b; color: #60a5fa; }
+        .container { padding: 24px; max-width: 1400px; margin: 0 auto; }
+        .section-title { font-size: 18px; font-weight: 600; color: #93c5fd; margin: 24px 0 16px; border-bottom: 1px solid #1e293b; padding-bottom: 8px; }
+        .card { background: #111827; border: 1px solid #1e293b; border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .stat { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #1e293b; }
+        .stat:last-child { border-bottom: none; }
+        .stat-label { color: #94a3b8; font-size: 13px; }
+        .stat-value { font-weight: 600; color: #e2e8f0; font-size: 13px; }
+        .badge { padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+        .badge-green { background: #064e3b; color: #34d399; }
+        .badge-blue { background: #1e3a5f; color: #60a5fa; }
+        .badge-yellow { background: #422006; color: #fbbf24; }
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        th { background: #1e293b; color: #94a3b8; padding: 10px 12px; text-align: left; }
+        td { padding: 10px 12px; border-bottom: 1px solid #1e293b; }
+        tr:hover td { background: #1a2332; }
+        code { background: #0d1117; padding: 2px 6px; border-radius: 4px; font-family: monospace; font-size: 12px; color: #34d399; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>&#128230; Binary Data &amp; Response Compression</h1>
+        <span class="version">Metis Genie Platform v5.5.8</span>
+    </div>
+    <div class="nav">
+        <a href="index.html">Dashboard</a>
+        <a href="compute.html">Compute</a>
+        <a href="binary-data.html" class="active">Binary &amp; Compression</a>
+        <a href="metrics.html">Metrics</a>
+        <a href="sse.html">SSE</a>
+    </div>
+    <div class="container">
+
+        <h2 class="section-title">Binary Serializer (METI Format)</h2>
+        <div class="grid">
+            <div class="card">
+                <h3 style="margin-bottom:12px;color:#93c5fd;">Wire Format</h3>
+                <div class="stat"><span class="stat-label">Magic</span><span class="stat-value"><code>0x4D455449</code> ("METI")</span></div>
+                <div class="stat"><span class="stat-label">Version</span><span class="stat-value">1</span></div>
+                <div class="stat"><span class="stat-label">Endianness</span><span class="stat-value">Little-endian</span></div>
+                <div class="stat"><span class="stat-label">Checksum</span><span class="stat-value">CRC-32 (IEEE 802.3)</span></div>
+                <div class="stat"><span class="stat-label">Header size</span><span class="stat-value">10 bytes</span></div>
+                <div class="stat"><span class="stat-label">Footer size</span><span class="stat-value">4 bytes (CRC)</span></div>
+                <div class="stat"><span class="stat-label">External dependency</span><span class="stat-value"><span class="badge badge-green">None (pure C++20)</span></span></div>
+            </div>
+            <div class="card">
+                <h3 style="margin-bottom:12px;color:#93c5fd;">Performance vs JSON</h3>
+                <div class="stat"><span class="stat-label">Serialization speed</span><span class="stat-value">~10x faster</span></div>
+                <div class="stat"><span class="stat-label">Deserialization speed</span><span class="stat-value">~8x faster</span></div>
+                <div class="stat"><span class="stat-label">Wire size (doubles)</span><span class="stat-value">~3x smaller</span></div>
+                <div class="stat"><span class="stat-label">Wire size (strings)</span><span class="stat-value">~2x smaller</span></div>
+                <div class="stat"><span class="stat-label">Hex encoding</span><span class="stat-value">For JSON embedding</span></div>
+                <div class="stat"><span class="stat-label">Status</span><span class="stat-value"><span class="badge badge-green">Active</span></span></div>
+            </div>
+        </div>
+
+        <h2 class="section-title">Supported Type Tags</h2>
+        <div class="card">
+            <table>
+                <thead><tr><th>Tag</th><th>Type</th><th>Use Case</th><th>Element Size</th></tr></thead>
+                <tbody>
+                    <tr><td><code>0x01</code></td><td>DOUBLE_ARRAY</td><td>Price series, returns, VaR paths</td><td>8 bytes</td></tr>
+                    <tr><td><code>0x02</code></td><td>FLOAT_ARRAY</td><td>GPU compute results (single precision)</td><td>4 bytes</td></tr>
+                    <tr><td><code>0x03</code></td><td>INT64_ARRAY</td><td>Timestamps, sequence numbers</td><td>8 bytes</td></tr>
+                    <tr><td><code>0x04</code></td><td>STRING_ARRAY</td><td>Symbol lists, labels</td><td>Variable</td></tr>
+                    <tr><td><code>0x05</code></td><td>MATRIX</td><td>Correlation matrix, factor loadings</td><td>rows×cols×8</td></tr>
+                    <tr><td><code>0x06</code></td><td>PSON_MAP</td><td>Key-value config snapshots</td><td>Variable</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2 class="section-title">Response Compression</h2>
+        <div class="grid">
+            <div class="card">
+                <h3 style="margin-bottom:12px;color:#93c5fd;">Compression Config</h3>
+                <div id="compress-status">
+                    <div class="stat"><span class="stat-label">Enabled</span><span class="stat-value" id="c-enabled">--</span></div>
+                    <div class="stat"><span class="stat-label">Min size (bytes)</span><span class="stat-value" id="c-min">--</span></div>
+                    <div class="stat"><span class="stat-label">Level</span><span class="stat-value" id="c-level">--</span></div>
+                    <div class="stat"><span class="stat-label">zlib available</span><span class="stat-value" id="c-zlib">--</span></div>
+                    <div class="stat"><span class="stat-label">Encoding</span><span class="stat-value" id="c-enc">--</span></div>
+                </div>
+            </div>
+            <div class="card">
+                <h3 style="margin-bottom:12px;color:#93c5fd;">Pure C++20 gzip</h3>
+                <div class="stat"><span class="stat-label">Format</span><span class="stat-value">RFC 1952 gzip</span></div>
+                <div class="stat"><span class="stat-label">Deflate mode</span><span class="stat-value">Store-only (RFC 1951)</span></div>
+                <div class="stat"><span class="stat-label">Header</span><span class="stat-value">10-byte minimal gzip</span></div>
+                <div class="stat"><span class="stat-label">Checksum</span><span class="stat-value">CRC-32 + ISIZE</span></div>
+                <div class="stat"><span class="stat-label">zlib path</span><span class="stat-value">Full deflate when linked</span></div>
+                <div class="stat"><span class="stat-label">Content-Encoding</span><span class="stat-value">gzip / deflate</span></div>
+            </div>
+        </div>
+
+        <h2 class="section-title">Binary Serializer Config</h2>
+        <div class="card" id="binary-config">Loading...</div>
+
+    </div>
+    <script>
+        async function load() {
+            const token = localStorage.getItem('genie_token') || '';
+            const h = { 'Authorization': 'Bearer ' + token };
+            try {
+                const r = await fetch('/api/v1/compute/compression', { headers: h });
+                if (r.ok) {
+                    const d = await r.json();
+                    document.getElementById('c-enabled').textContent = d.enabled ? 'Yes' : 'No';
+                    document.getElementById('c-min').textContent = d.min_size_bytes ?? '--';
+                    document.getElementById('c-level').textContent = d.level ?? '--';
+                    document.getElementById('c-zlib').textContent = d.zlib_available ? 'Yes' : 'No (C++20 store-only)';
+                    document.getElementById('c-enc').textContent = d.encoding ?? '--';
+                }
+            } catch(e) {}
+            try {
+                const r2 = await fetch('/api/v1/config/binary-serialization', { headers: h });
+                if (r2.ok) {
+                    const d2 = await r2.json();
+                    document.getElementById('binary-config').innerHTML =
+                        '<div class="stat"><span class="stat-label">Format</span><span class="stat-value">' + (d2.format||'--') + '</span></div>'
+                        + '<div class="stat"><span class="stat-label">CRC</span><span class="stat-value">' + (d2.crc||'--') + '</span></div>'
+                        + '<div class="stat"><span class="stat-label">Endian</span><span class="stat-value">' + (d2.endian||'--') + '</span></div>'
+                        + '<div class="stat"><span class="stat-label">Status</span><span class="stat-value">' + (d2.status||'--') + '</span></div>';
+                }
+            } catch(e) {}
+        }
+        load();
+    </script>
+</body>
+</html>

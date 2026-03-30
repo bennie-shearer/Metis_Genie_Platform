@@ -1,0 +1,169 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Release-bcb06c8d99cdf8d5800e.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12
+					]
+				}
+			],
+			"name" : "Release",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "Metis_Genie_Platform",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "demo_genie::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-demo_genie-Release-e14e576368011d3da821.json",
+					"name" : "demo_genie",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "example_middleware::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-example_middleware-Release-31542482409d1a4d1220.json",
+					"name" : "example_middleware",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "example_portfolio::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-example_portfolio-Release-4ddfbdecb859b0b5bc7d.json",
+					"name" : "example_portfolio",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "example_rest_api::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-example_rest_api-Release-06160c25a663137b0fa7.json",
+					"name" : "example_rest_api",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "example_tier2_analytics::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-example_tier2_analytics-Release-c1ba296d586e8bd0037c.json",
+					"name" : "example_tier2_analytics",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "example_trading::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-example_trading-Release-e8ab4f8a254b286e1838.json",
+					"name" : "example_trading",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "metis-genie-platform::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-metis-genie-platform-Release-3847538f64b01ea6d3c4.json",
+					"name" : "metis-genie-platform",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "sqlite3_lib::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-sqlite3_lib-Release-dbf8cc07d61e0c8ecd92.json",
+					"name" : "sqlite3_lib",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "sync_web_assets::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-sync_web_assets-Release-42c1af1b898efbc6a3bb.json",
+					"name" : "sync_web_assets",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "test_genie::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-test_genie-Release-f05feb6d59dc4e62b39c.json",
+					"name" : "test_genie",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "test_integration::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-test_integration-Release-8ff4fe5ff499d379ce8d.json",
+					"name" : "test_integration",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "test_rest_endpoints::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-test_rest_endpoints-Release-1d2a568b1765cc65cabf.json",
+					"name" : "test_rest_endpoints",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "test_tier3::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-test_tier3-Release-c3d7a849b9e521683a0b.json",
+					"name" : "test_tier3",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "C:/Users/Benni/CLionProjects/Metis_Genie_Platform/server/cmake-build-release",
+		"source" : "C:/Users/Benni/CLionProjects/Metis_Genie_Platform/server"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}

@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <link rel="icon" type="image/svg+xml" href="img/icon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1a1a2e">
+    <title>Metis Genie Platform v5.5.8 - Operations</title>
+    <link rel="stylesheet" href="css/main.css?v=5.5.8">
+    <link rel="stylesheet" href="css/operations.css?v=5.5.8">
+</head>
+<body data-theme="light">
+
+<nav class="top-nav">
+    <div class="top-nav-left">
+        <a href="index.html" class="top-nav-brand">
+            <img class="brand-icon-sm" src="img/icon.svg" alt="Metis Genie Platform">
+            Metis Genie Platform
+        </a>
+        <span class="top-nav-sep">|</span>
+        <span class="top-nav-page">Operations Center</span>
+    </div>
+    <div class="top-nav-right">
+        <span class="system-uptime" id="systemUptime">Uptime: 14d 6h 23m</span>
+        <a href="index.html" class="btn btn-sm btn-secondary">Dashboard</a>
+        <a href="trading.html" class="btn btn-sm btn-secondary">Trading</a>
+        <a href="security.html" class="btn btn-sm btn-secondary">Security</a>
+    </div>
+</nav>
+
+<div class="ops-layout">
+    <!-- Operations Navigation -->
+    <div class="ops-tabs">
+        <button class="ops-tab active" data-tab="status">System Status</button>
+        <button class="ops-tab" data-tab="health">Health Checks</button>
+        <button class="ops-tab" data-tab="errors">Error Tracking</button>
+        <button class="ops-tab" data-tab="backups">Backups</button>
+        <button class="ops-tab" data-tab="jobs">Background Jobs</button>
+        <button class="ops-tab" data-tab="cache">Cache & Performance</button>
+        <button class="ops-tab" data-tab="deploy">Deployment</button>
+        <button class="ops-tab" data-tab="resilience">Resilience</button>
+        <button class="ops-tab" data-tab="telemetry">Telemetry</button>
+        <button class="ops-tab" data-tab="tenants">Multi-Tenant</button>
+        <button class="ops-tab" data-tab="export">Data Export</button>
+    </div>
+
+    <!-- System Status Dashboard -->
+    <div class="ops-content active" id="tab-status">
+        <div class="ops-header"><h2>System Status Dashboard</h2><span class="auto-refresh">Auto-refresh: 30s</span></div>
+        <!-- Status KPIs -->
+        <div class="status-kpis">
+            <div class="s-kpi healthy"><div class="s-kpi-icon"><svg viewBox="0 0 24 24" width="32"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M9 12l2 2 4-4" fill="none" stroke="currentColor" stroke-width="2"/></svg></div><div class="s-kpi-data"><span class="s-kpi-label">Overall Status</span><span class="s-kpi-value">Healthy</span></div></div>
+            <div class="s-kpi"><div class="s-kpi-icon"><svg viewBox="0 0 24 24" width="32"><path d="M22 12h-4l-3 9L9 3l-3 9H2" fill="none" stroke="currentColor" stroke-width="2"/></svg></div><div class="s-kpi-data"><span class="s-kpi-label">Requests/sec</span><span class="s-kpi-value">1,247</span></div></div>
+            <div class="s-kpi"><div class="s-kpi-icon"><svg viewBox="0 0 24 24" width="32"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 6v6l4 2" fill="none" stroke="currentColor" stroke-width="2"/></svg></div><div class="s-kpi-data"><span class="s-kpi-label">Avg Response</span><span class="s-kpi-value">23ms</span></div></div>
+            <div class="s-kpi"><div class="s-kpi-icon"><svg viewBox="0 0 24 24" width="32"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="9" cy="7" r="4" fill="none" stroke="currentColor" stroke-width="2"/></svg></div><div class="s-kpi-data"><span class="s-kpi-label">Active Sessions</span><span class="s-kpi-value">24</span></div></div>
+            <div class="s-kpi"><div class="s-kpi-icon"><svg viewBox="0 0 24 24" width="32"><rect x="2" y="2" width="20" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><rect x="2" y="14" width="20" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="2"/></svg></div><div class="s-kpi-data"><span class="s-kpi-label">Error Rate</span><span class="s-kpi-value">0.12%</span></div></div>
+        </div>
+
+        <!-- Resource Usage -->
+        <div class="status-grid">
+            <div class="card">
+                <div class="card-head"><h3>CPU Usage</h3><span class="resource-val" id="cpuVal">34%</span></div>
+                <div class="card-body"><div class="progress-bar"><div class="progress-fill" style="width:34%;background:#00d4aa"></div></div><canvas id="cpuChart" height="100"></canvas></div>
+            </div>
+            <div class="card">
+                <div class="card-head"><h3>Memory Usage</h3><span class="resource-val" id="memVal">2.4 / 8 GB</span></div>
+                <div class="card-body"><div class="progress-bar"><div class="progress-fill" style="width:30%;background:#3b82f6"></div></div><canvas id="memChart" height="100"></canvas></div>
+            </div>
+            <div class="card">
+                <div class="card-head"><h3>Disk Usage</h3><span class="resource-val" id="diskVal">127 / 500 GB</span></div>
+                <div class="card-body"><div class="progress-bar"><div class="progress-fill" style="width:25%;background:#8b5cf6"></div></div><canvas id="diskChart" height="100"></canvas></div>
+            </div>
+            <div class="card">
+                <div class="card-head"><h3>Network I/O</h3><span class="resource-val" id="netVal">In: 45 MB/s | Out: 12 MB/s</span></div>
+                <div class="card-body"><canvas id="netChart" height="100"></canvas></div>
+            </div>
+        </div>
+
+        <!-- Component Status -->
+        <div class="card">
+            <div class="card-head"><h3>Component Status</h3></div>
+            <div class="card-body no-pad">
+                <table class="tbl">
+                    <thead><tr><th>Component</th><th>Status</th><th>Response Time</th><th>Last Check</th><th>Uptime</th></tr></thead>
+                    <tbody id="componentStatus">
+                        <tr><td>REST API Server</td><td><span class="badge badge-ok">Healthy</span></td><td>2ms</td><td>5s ago</td><td>99.99%</td></tr>
+                        <tr><td>PostgreSQL Database</td><td><span class="badge badge-ok">Healthy</span></td><td>5ms</td><td>5s ago</td><td>99.97%</td></tr>
+                        <tr><td>Redis Cache</td><td><span class="badge badge-ok">Healthy</span></td><td>1ms</td><td>5s ago</td><td>99.99%</td></tr>
+                        <tr><td>WebSocket Server</td><td><span class="badge badge-ok">Healthy</span></td><td>3ms</td><td>5s ago</td><td>99.95%</td></tr>
+                        <tr><td>Market Data Feed</td><td><span class="badge badge-warn">Degraded</span></td><td>245ms</td><td>5s ago</td><td>98.50%</td></tr>
+                        <tr><td>Backup Service</td><td><span class="badge badge-ok">Healthy</span></td><td>12ms</td><td>30s ago</td><td>99.90%</td></tr>
+                        <tr><td>Job Processor</td><td><span class="badge badge-ok">Healthy</span></td><td>8ms</td><td>5s ago</td><td>99.98%</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Health Checks -->
+    <div class="ops-content" id="tab-health">
+        <div class="ops-header"><h2>Health Check Endpoints</h2><button class="btn btn-primary" id="runHealthCheck">Run All Checks</button></div>
+        <div class="health-cards">
+            <div class="health-card healthy"><h4>Liveness</h4><code>GET /api/v1/health/live</code><span class="health-status">PASS</span><span class="health-time">Response: 1ms</span></div>
+            <div class="health-card healthy"><h4>Readiness</h4><code>GET /api/v1/health/ready</code><span class="health-status">PASS</span><span class="health-time">Response: 8ms</span></div>
+            <div class="health-card healthy"><h4>Database</h4><code>GET /api/v1/health/db</code><span class="health-status">PASS</span><span class="health-time">Response: 5ms</span></div>
+            <div class="health-card warning"><h4>External APIs</h4><code>GET /api/v1/health/external</code><span class="health-status">DEGRADED</span><span class="health-time">Response: 245ms</span></div>
+        </div>
+        <div class="card">
+            <div class="card-head"><h3>Health Check History (24h)</h3></div>
+            <div class="card-body"><canvas id="healthHistoryChart" height="200"></canvas></div>
+        </div>
+    </div>
+
+    <!-- Error Tracking -->
+    <div class="ops-content" id="tab-errors">
+        <div class="ops-header"><h2>Error Rate Monitoring</h2></div>
+        <div class="error-summary">
+            <div class="err-stat"><span class="err-num" id="errTotal">147</span><span class="err-label">Total Errors (24h)</span></div>
+            <div class="err-stat"><span class="err-num" id="errRate">0.12%</span><span class="err-label">Error Rate</span></div>
+            <div class="err-stat"><span class="err-num" id="err5xx">23</span><span class="err-label">5xx Errors</span></div>
+            <div class="err-stat"><span class="err-num" id="err4xx">124</span><span class="err-label">4xx Errors</span></div>
+        </div>
+        <div class="card"><div class="card-head"><h3>Error Rate Over Time</h3></div><div class="card-body"><canvas id="errorRateChart" height="200"></canvas></div></div>
+        <div class="card">
+            <div class="card-head"><h3>Top Errors</h3></div>
+            <div class="card-body no-pad">
+                <table class="tbl">
+                    <thead><tr><th>Status</th><th>Endpoint</th><th>Count</th><th>Last Occurred</th><th>Message</th></tr></thead>
+                    <tbody>
+                        <tr><td><span class="badge badge-err">401</span></td><td>POST /api/v1/auth/login</td><td>89</td><td>2 min ago</td><td>Invalid credentials</td></tr>
+                        <tr><td><span class="badge badge-err">404</span></td><td>GET /api/v1/market/*</td><td>35</td><td>15 min ago</td><td>Symbol not found</td></tr>
+                        <tr><td><span class="badge badge-err">500</span></td><td>POST /api/v1/orders</td><td>12</td><td>1 hour ago</td><td>Internal server error</td></tr>
+                        <tr><td><span class="badge badge-err">429</span></td><td>GET /api/v1/market/quote</td><td>8</td><td>30 min ago</td><td>Rate limit exceeded</td></tr>
+                        <tr><td><span class="badge badge-err">503</span></td><td>GET /api/v1/health/external</td><td>3</td><td>2 hours ago</td><td>Service unavailable</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Backups -->
+    <div class="ops-content" id="tab-backups">
+        <div class="ops-header"><h2>Automatic Backups</h2><button class="btn btn-primary" id="manualBackup">Create Manual Backup</button></div>
+        <div class="backup-config">
+            <div class="form-row"><label>Backup Schedule</label><select class="sel" id="backupSchedule"><option value="hourly">Hourly</option><option value="daily" selected>Daily (2:00 AM)</option><option value="weekly">Weekly (Sunday)</option></select></div>
+            <div class="form-row"><label>Retention Period</label><select class="sel" id="backupRetention"><option value="7">7 days</option><option value="14">14 days</option><option value="30" selected>30 days</option><option value="90">90 days</option></select></div>
+            <div class="form-row"><label>Compression</label><label class="toggle"><input type="checkbox" id="backupCompress" checked><span class="slider"></span></label></div>
+            <div class="form-row"><label>Encryption</label><label class="toggle"><input type="checkbox" id="backupEncrypt" checked><span class="slider"></span></label></div>
+            <button class="btn btn-primary" id="saveBackupConfig">Save Configuration</button>
+        </div>
+        <h3>Backup History</h3>
+        <table class="tbl">
+            <thead><tr><th>ID</th><th>Type</th><th>Started</th><th>Duration</th><th>Size</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="backupList">
+                <tr><td>BK-2026020501</td><td>Full</td><td>2026-02-05 02:00:00</td><td>3m 42s</td><td>1.2 GB</td><td><span class="badge badge-ok">Complete</span></td><td><button class="btn btn-xs btn-secondary">Restore</button> <button class="btn btn-xs btn-secondary">Download</button></td></tr>
+                <tr><td>BK-2026020401</td><td>Incremental</td><td>2026-02-04 02:00:00</td><td>45s</td><td>128 MB</td><td><span class="badge badge-ok">Complete</span></td><td><button class="btn btn-xs btn-secondary">Restore</button> <button class="btn btn-xs btn-secondary">Download</button></td></tr>
+                <tr><td>BK-2026020301</td><td>Full</td><td>2026-02-03 02:00:00</td><td>3m 38s</td><td>1.1 GB</td><td><span class="badge badge-ok">Complete</span></td><td><button class="btn btn-xs btn-secondary">Restore</button> <button class="btn btn-xs btn-secondary">Download</button></td></tr>
+                <tr><td>BK-2026020201</td><td>Incremental</td><td>2026-02-02 02:00:00</td><td>52s</td><td>145 MB</td><td><span class="badge badge-ok">Complete</span></td><td><button class="btn btn-xs btn-secondary">Restore</button> <button class="btn btn-xs btn-secondary">Download</button></td></tr>
+                <tr><td>BK-2026020101</td><td>Full</td><td>2026-02-01 02:00:00</td><td>3m 55s</td><td>1.1 GB</td><td><span class="badge badge-ok">Complete</span></td><td><button class="btn btn-xs btn-secondary">Restore</button> <button class="btn btn-xs btn-secondary">Download</button></td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Background Jobs -->
+    <div class="ops-content" id="tab-jobs">
+        <div class="ops-header"><h2>Background Job Processor</h2></div>
+        <div class="job-stats">
+            <div class="j-stat"><span class="j-num">4</span><span class="j-label">Worker Threads</span></div>
+            <div class="j-stat"><span class="j-num">1,247</span><span class="j-label">Completed (24h)</span></div>
+            <div class="j-stat"><span class="j-num">3</span><span class="j-label">Running</span></div>
+            <div class="j-stat"><span class="j-num">12</span><span class="j-label">Queued</span></div>
+            <div class="j-stat"><span class="j-num">2</span><span class="j-label">Failed (24h)</span></div>
+        </div>
+        <div class="card">
+            <div class="card-head"><h3>Active & Queued Jobs</h3></div>
+            <div class="card-body no-pad">
+                <table class="tbl">
+                    <thead><tr><th>Job ID</th><th>Type</th><th>Priority</th><th>Status</th><th>Started</th><th>Progress</th></tr></thead>
+                    <tbody id="jobList">
+                        <tr><td>JOB-4523</td><td>Market Data Sync</td><td><span class="badge badge-pri-high">HIGH</span></td><td><span class="badge badge-ok">Running</span></td><td>09:15:00</td><td><div class="progress-bar sm"><div class="progress-fill" style="width:67%"></div></div> 67%</td></tr>
+                        <tr><td>JOB-4524</td><td>Report Generation</td><td><span class="badge badge-pri-normal">NORMAL</span></td><td><span class="badge badge-ok">Running</span></td><td>09:14:30</td><td><div class="progress-bar sm"><div class="progress-fill" style="width:45%"></div></div> 45%</td></tr>
+                        <tr><td>JOB-4525</td><td>Price Validation</td><td><span class="badge badge-pri-normal">NORMAL</span></td><td><span class="badge badge-ok">Running</span></td><td>09:15:10</td><td><div class="progress-bar sm"><div class="progress-fill" style="width:12%"></div></div> 12%</td></tr>
+                        <tr><td>JOB-4526</td><td>Email Notification</td><td><span class="badge badge-pri-low">LOW</span></td><td><span class="badge badge-warn">Queued</span></td><td>-</td><td>Waiting</td></tr>
+                        <tr><td>JOB-4527</td><td>Data Cleanup</td><td><span class="badge badge-pri-low">LOW</span></td><td><span class="badge badge-warn">Queued</span></td><td>-</td><td>Waiting</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-head"><h3>Dead Letter Queue</h3><span class="badge badge-err">2 items</span></div>
+            <div class="card-body no-pad">
+                <table class="tbl">
+                    <thead><tr><th>Job ID</th><th>Type</th><th>Failed At</th><th>Attempts</th><th>Error</th><th>Actions</th></tr></thead>
+                    <tbody>
+                        <tr><td>JOB-4501</td><td>Email Send</td><td>08:45:00</td><td>3/3</td><td>SMTP connection timeout</td><td><button class="btn btn-xs btn-secondary">Retry</button> <button class="btn btn-xs btn-danger">Discard</button></td></tr>
+                        <tr><td>JOB-4489</td><td>Data Export</td><td>07:30:00</td><td>3/3</td><td>Disk space insufficient</td><td><button class="btn btn-xs btn-secondary">Retry</button> <button class="btn btn-xs btn-danger">Discard</button></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cache & Performance -->
+    <div class="ops-content" id="tab-cache">
+        <div class="ops-header"><h2>Cache & Performance</h2><button class="btn btn-danger" id="clearCache">Clear All Caches</button></div>
+        <div class="cache-stats">
+            <div class="c-stat"><span class="c-num">94.2%</span><span class="c-label">Cache Hit Rate</span></div>
+            <div class="c-stat"><span class="c-num">8,432</span><span class="c-label">Cached Items</span></div>
+            <div class="c-stat"><span class="c-num">67 MB</span><span class="c-label">Cache Size</span></div>
+            <div class="c-stat"><span class="c-num">342</span><span class="c-label">Evictions (1h)</span></div>
+        </div>
+        <div class="status-grid">
+            <div class="card">
+                <div class="card-head"><h3>Response Cache</h3></div>
+                <div class="card-body">
+                    <div class="cache-detail"><span>Max Size:</span><span>100 MB</span></div>
+                    <div class="cache-detail"><span>Max Items:</span><span>10,000</span></div>
+                    <div class="cache-detail"><span>Default TTL:</span><span>5 min</span></div>
+                    <div class="cache-detail"><span>Hits:</span><span>124,567</span></div>
+                    <div class="cache-detail"><span>Misses:</span><span>7,891</span></div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-head"><h3>Connection Pool</h3></div>
+                <div class="card-body">
+                    <div class="cache-detail"><span>Active Connections:</span><span>6 / 10</span></div>
+                    <div class="cache-detail"><span>Idle Connections:</span><span>4</span></div>
+                    <div class="cache-detail"><span>Wait Queue:</span><span>0</span></div>
+                    <div class="cache-detail"><span>Total Created:</span><span>45</span></div>
+                    <div class="cache-detail"><span>Avg Lifetime:</span><span>12m 34s</span></div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-head"><h3>Query Performance</h3></div>
+                <div class="card-body">
+                    <div class="cache-detail"><span>Avg Query Time:</span><span>3.2ms</span></div>
+                    <div class="cache-detail"><span>Slow Queries (>100ms):</span><span>4</span></div>
+                    <div class="cache-detail"><span>Queries/sec:</span><span>342</span></div>
+                    <div class="cache-detail"><span>Index Hit Rate:</span><span>98.7%</span></div>
+                    <div class="cache-detail"><span>Unindexed Queries:</span><span>2</span></div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-head"><h3>Lazy Loading</h3></div>
+                <div class="card-body">
+                    <div class="cache-detail"><span>Paginated Loaders:</span><span>12</span></div>
+                    <div class="cache-detail"><span>Cached Pages:</span><span>87</span></div>
+                    <div class="cache-detail"><span>Prefetch Hits:</span><span>78%</span></div>
+                    <div class="cache-detail"><span>Streaming Iterators:</span><span>3</span></div>
+                    <div class="cache-detail"><span>Virtual Scroll Views:</span><span>5</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Deployment -->
+    <div class="ops-content" id="tab-deploy">
+        <div class="ops-header"><h2>Deployment Automation</h2></div>
+        <div id="deployData" style="margin-bottom:16px;"></div>
+        <div id="computeData" style="margin-bottom:16px;"></div>
+        <div id="configValidateData" style="margin-bottom:16px;"></div>
+        <div class="deploy-current">
+            <h3>Current Deployment</h3>
+            <div class="deploy-info">
+                <div class="d-row"><span>Version:</span><span>v5.5.8</span></div>
+                <div class="d-row"><span>Environment:</span><span class="badge badge-ok">Production</span></div>
+                <div class="d-row"><span>Deployed:</span><span>2026-02-05 02:15:00 UTC</span></div>
+                <div class="d-row"><span>Commit:</span><span><code>a3f7b2e</code></span></div>
+                <div class="d-row"><span>Status:</span><span class="badge badge-ok">Running</span></div>
+            </div>
+        </div>
+        <div class="deploy-actions">
+            <h3>Quick Actions</h3>
+            <div class="deploy-btns">
+                <button class="btn btn-secondary" id="genDockerCompose">Generate Docker Compose</button>
+                <button class="btn btn-secondary" id="genK8sManifest">Generate Kubernetes YAML</button>
+                <button class="btn btn-secondary" id="genSystemd">Generate Systemd Service</button>
+                <button class="btn btn-secondary" id="genNginxConf">Generate Nginx Config</button>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-head"><h3>Deployment History</h3></div>
+            <div class="card-body no-pad">
+                <table class="tbl">
+                    <thead><tr><th>Version</th><th>Environment</th><th>Deployed By</th><th>Time</th><th>Duration</th><th>Status</th><th>Actions</th></tr></thead>
+                    <tbody>
+                        <tr><td>v5.5.8</td><td>Production</td><td>admin</td><td>2026-02-05 02:15</td><td>2m 18s</td><td><span class="badge badge-ok">Success</span></td><td><span class="badge badge-info">Current</span></td></tr>
+                        <tr><td>v2.23.0</td><td>Production</td><td>admin</td><td>2026-02-01 03:00</td><td>2m 45s</td><td><span class="badge badge-ok">Success</span></td><td><button class="btn btn-xs btn-secondary">Rollback</button></td></tr>
+                        <tr><td>v5.5.8</td><td>Staging</td><td>admin</td><td>2026-02-04 14:00</td><td>1m 52s</td><td><span class="badge badge-ok">Success</span></td><td>-</td></tr>
+                        <tr><td>v2.23.0</td><td>Staging</td><td>admin</td><td>2026-01-30 16:00</td><td>1m 48s</td><td><span class="badge badge-ok">Success</span></td><td>-</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Resilience (Circuit Breaker + Rate Limiter) -->
+    <div class="ops-content" id="tab-resilience">
+        <div class="ops-header"><h2>Circuit Breakers</h2></div>
+        <div id="circuitBreakerData"></div>
+        <div class="status-grid" style="grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin-bottom:24px;">
+            <div class="card"><div class="card-head"><h3>MarketDataFeed</h3><span class="badge badge-ok">Closed</span></div><div class="card-body"><div class="cache-detail"><span>Failures:</span><span>0 / 5</span></div><div class="cache-detail"><span>Reset Timeout:</span><span>60s</span></div><div class="cache-detail"><span>Total Requests:</span><span>12,450</span></div><div class="cache-detail"><span>Total Failures:</span><span>3</span></div></div></div>
+            <div class="card"><div class="card-head"><h3>OrderExecution</h3><span class="badge badge-ok">Closed</span></div><div class="card-body"><div class="cache-detail"><span>Failures:</span><span>1 / 3</span></div><div class="cache-detail"><span>Reset Timeout:</span><span>30s</span></div><div class="cache-detail"><span>Total Requests:</span><span>892</span></div><div class="cache-detail"><span>Total Failures:</span><span>12</span></div></div></div>
+            <div class="card"><div class="card-head"><h3>ExternalAPI</h3><span class="badge badge-ok">Closed</span></div><div class="card-body"><div class="cache-detail"><span>Failures:</span><span>0 / 5</span></div><div class="cache-detail"><span>Reset Timeout:</span><span>120s</span></div><div class="cache-detail"><span>Total Requests:</span><span>5,680</span></div><div class="cache-detail"><span>Total Failures:</span><span>8</span></div></div></div>
+            <div class="card"><div class="card-head"><h3>DatabaseWrite</h3><span class="badge badge-ok">Closed</span></div><div class="card-body"><div class="cache-detail"><span>Failures:</span><span>0 / 3</span></div><div class="cache-detail"><span>Reset Timeout:</span><span>15s</span></div><div class="cache-detail"><span>Total Requests:</span><span>34,200</span></div><div class="cache-detail"><span>Total Failures:</span><span>0</span></div></div></div>
+        </div>
+        <div class="ops-header"><h2>Rate Limits</h2></div>
+        <div id="rateLimitData" style="margin-bottom:12px;"></div>
+        <div class="card"><div class="card-body no-pad"><table class="tbl"><thead><tr><th>Endpoint</th><th>Limit</th><th>Window</th><th>Current Usage</th><th>Utilization</th></tr></thead><tbody>
+            <tr><td>Global</td><td>1,000 req</td><td>60s</td><td>127</td><td><div class="progress-bar" style="width:150px;display:inline-block;"><div class="progress-fill" style="width:12.7%;background:#00d4aa"></div></div> 12.7%</td></tr>
+            <tr><td>/api/v1/orders</td><td>100 req</td><td>60s</td><td>8</td><td><div class="progress-bar" style="width:150px;display:inline-block;"><div class="progress-fill" style="width:8%;background:#00d4aa"></div></div> 8.0%</td></tr>
+            <tr><td>/api/v1/market</td><td>500 req</td><td>60s</td><td>45</td><td><div class="progress-bar" style="width:150px;display:inline-block;"><div class="progress-fill" style="width:9%;background:#00d4aa"></div></div> 9.0%</td></tr>
+            <tr><td>/api/v1/nlq</td><td>30 req</td><td>60s</td><td>2</td><td><div class="progress-bar" style="width:150px;display:inline-block;"><div class="progress-fill" style="width:6.7%;background:#00d4aa"></div></div> 6.7%</td></tr>
+            <tr><td>/api/v1/whatif/run</td><td>20 req</td><td>60s</td><td>0</td><td><div class="progress-bar" style="width:150px;display:inline-block;"><div class="progress-fill" style="width:0%;background:#00d4aa"></div></div> 0.0%</td></tr>
+        </tbody></table></div></div>
+    </div>
+
+    <!-- Telemetry -->
+    <div class="ops-content" id="tab-telemetry">
+        <div class="ops-header"><h2>Telemetry Dashboard</h2></div>
+        <div id="telemetryData" style="margin-bottom:16px;"></div>
+        <div class="status-grid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:24px;">
+            <div class="card"><div class="card-body" style="text-align:center;padding:16px;"><div style="font-size:28px;font-weight:700;color:#60a5fa;">54,150</div><div style="color:#94a3b8;font-size:12px;">Total HTTP Requests</div></div></div>
+            <div class="card"><div class="card-body" style="text-align:center;padding:16px;"><div style="font-size:28px;font-weight:700;color:#4ade80;">12</div><div style="color:#94a3b8;font-size:12px;">Active Connections</div></div></div>
+            <div class="card"><div class="card-body" style="text-align:center;padding:16px;"><div style="font-size:28px;font-weight:700;color:#fbbf24;">256.4 MB</div><div style="color:#94a3b8;font-size:12px;">Memory Usage</div></div></div>
+            <div class="card"><div class="card-body" style="text-align:center;padding:16px;"><div style="font-size:28px;font-weight:700;color:#8b5cf6;">23.1%</div><div style="color:#94a3b8;font-size:12px;">CPU Usage</div></div></div>
+        </div>
+        <div class="card"><div class="card-head"><h3>Request Counters</h3></div><div class="card-body no-pad"><table class="tbl"><thead><tr><th>Metric</th><th>Value</th><th>Labels</th></tr></thead><tbody>
+            <tr><td>http_requests_total</td><td>45,230</td><td>method=GET</td></tr>
+            <tr><td>http_requests_total</td><td>8,920</td><td>method=POST</td></tr>
+            <tr><td>orders_submitted</td><td>1,247</td><td>-</td></tr>
+            <tr><td>orders_filled</td><td>1,189</td><td>-</td></tr>
+        </tbody></table></div></div>
+        <div class="card" style="margin-top:16px;"><div class="card-head"><h3>Request Latency Distribution</h3></div><div class="card-body"><table class="tbl"><thead><tr><th>Metric</th><th>Count</th><th>Avg</th><th>p50</th><th>p95</th><th>p99</th></tr></thead><tbody>
+            <tr><td>request_duration_ms</td><td>54,150</td><td>3.0ms</td><td>1.8ms</td><td>8.2ms</td><td>24.5ms</td></tr>
+        </tbody></table></div></div>
+    </div>
+
+    <!-- Multi-Tenant -->
+    <div class="ops-content" id="tab-tenants">
+        <div class="ops-header"><h2>Multi-Tenant Management</h2></div>
+        <div class="status-grid" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:24px;">
+            <div class="card"><div class="card-body" style="text-align:center;padding:16px;"><div style="font-size:28px;font-weight:700;color:#60a5fa;">3</div><div style="color:#94a3b8;font-size:12px;">Total Tenants</div></div></div>
+            <div class="card"><div class="card-body" style="text-align:center;padding:16px;"><div style="font-size:28px;font-weight:700;color:#4ade80;">24</div><div style="color:#94a3b8;font-size:12px;">Total Users</div></div></div>
+            <div class="card"><div class="card-body" style="text-align:center;padding:16px;"><div style="font-size:28px;font-weight:700;color:#fbbf24;">$3.63B</div><div style="color:#94a3b8;font-size:12px;">Total AUM</div></div></div>
+        </div>
+        <div class="card"><div class="card-head"><h3>Tenant Registry</h3></div><div class="card-body no-pad"><table class="tbl"><thead><tr><th>ID</th><th>Name</th><th>Status</th><th>Users</th><th>Portfolios</th><th>AUM</th></tr></thead><tbody>
+            <tr><td>T-001</td><td>Alpha Capital</td><td><span class="badge badge-ok">Active</span></td><td>12</td><td>8</td><td>$2.4B</td></tr>
+            <tr><td>T-002</td><td>Beta Investments</td><td><span class="badge badge-ok">Active</span></td><td>8</td><td>5</td><td>$890M</td></tr>
+            <tr><td>T-003</td><td>Gamma Fund</td><td><span class="badge badge-ok">Active</span></td><td>4</td><td>3</td><td>$340M</td></tr>
+        </tbody></table></div></div>
+    </div>
+
+    <!-- Data Export -->
+    <div class="ops-content" id="tab-export">
+        <div class="ops-header"><h2>Data Export</h2></div>
+        <div class="card" style="margin-bottom:16px;"><div class="card-head"><h3>Export Data</h3></div><div class="card-body">
+            <div style="display:grid;grid-template-columns:1fr 1fr auto;gap:12px;align-items:end;">
+                <div><label style="display:block;font-size:12px;color:#94a3b8;margin-bottom:4px;">Dataset</label><select id="exportDataset" style="width:100%;padding:8px;background:rgba(0,0,0,0.3);border:1px solid #334155;color:#e2e8f0;border-radius:6px;">
+                    <option value="portfolios">Portfolios</option><option value="positions">Positions</option><option value="orders">Orders</option><option value="risk_metrics">Risk Metrics</option><option value="compliance_checks">Compliance Checks</option><option value="tax_lots">Tax Lots</option><option value="transactions">Transactions</option><option value="esg_scores">ESG Scores</option><option value="ml_signals">ML Signals</option>
+                </select></div>
+                <div><label style="display:block;font-size:12px;color:#94a3b8;margin-bottom:4px;">Format</label><select id="exportFormat" style="width:100%;padding:8px;background:rgba(0,0,0,0.3);border:1px solid #334155;color:#e2e8f0;border-radius:6px;">
+                    <option value="csv">CSV</option><option value="json">JSON</option><option value="xml">XML</option><option value="pdf">PDF</option><option value="xlsx">Excel</option>
+                </select></div>
+                <button class="btn btn-primary" onclick="alert('Export initiated for ' + document.getElementById('exportDataset').value + ' as ' + document.getElementById('exportFormat').value)">Export</button>
+            </div>
+        </div></div>
+        <div class="card"><div class="card-head"><h3>Available Formats</h3></div><div class="card-body no-pad"><table class="tbl"><thead><tr><th>Format</th><th>MIME Type</th><th>Description</th></tr></thead><tbody>
+            <tr><td>CSV</td><td>text/csv</td><td>Comma-separated values - Excel compatible</td></tr>
+            <tr><td>JSON</td><td>application/json</td><td>JavaScript Object Notation</td></tr>
+            <tr><td>XML</td><td>application/xml</td><td>Extensible Markup Language</td></tr>
+            <tr><td>PDF</td><td>application/pdf</td><td>Portable Document Format</td></tr>
+            <tr><td>Excel</td><td>application/vnd.openxmlformats</td><td>Microsoft Excel XLSX</td></tr>
+        </tbody></table></div></div>
+    </div>
+</div>
+
+<script src="js/config.js?v=5.5.8"></script>
+<script src="js/utils.js?v=5.5.8"></script>
+<script src="js/connection.js?v=5.5.8"></script>
+<script src="js/operations.js?v=5.5.8"></script>
+    <script>
+    /* API endpoint wiring - auto-generated */
+    (function(){
+        const base = (typeof CONFIG !== 'undefined' && CONFIG.API_BASE) ? CONFIG.API_BASE : 'http://localhost:8080';
+        const token = sessionStorage.getItem('genie_token') || localStorage.getItem('genie_token') || '';
+        const headers = token ? {'Authorization':'Bearer '+token} : {};
+        window.genieAPI = window.genieAPI || {};
+        window.genieAPI.operations_health = function() {
+            return fetch(base+'/api/v1/operations/health', {headers:headers}).then(r=>r.json());
+        };
+        window.genieAPI.operations_backups = function() {
+            return fetch(base+'/api/v1/operations/backups', {headers:headers}).then(r=>r.json());
+        };
+        window.genieAPI.operations_jobs = function() {
+            return fetch(base+'/api/v1/operations/jobs', {headers:headers}).then(r=>r.json());
+        };
+        window.genieAPI.ops_telemetry = function() {
+            return fetch(base+'/api/v1/ops/telemetry', {headers:headers}).then(r=>r.json());
+        };
+        window.genieAPI.ops_circuit_breakers = function() {
+            return fetch(base+'/api/v1/ops/circuit-breakers', {headers:headers}).then(r=>r.json());
+        };
+        window.genieAPI.ops_rate_limits = function() {
+            return fetch(base+'/api/v1/ops/rate-limits', {headers:headers}).then(r=>r.json());
+        };
+    })();
+    </script>
+</body>
+</html>

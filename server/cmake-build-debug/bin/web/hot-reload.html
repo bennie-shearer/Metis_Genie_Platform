@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="img/icon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metis Genie Platform - Hot Reload Configuration</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0e17; color: #e2e8f0; }
+        .header { background: linear-gradient(135deg, #1a1f2e 0%, #0d1117 100%); padding: 16px 24px; border-bottom: 1px solid #2d3748; display: flex; align-items: center; justify-content: space-between; }
+        .header h1 { font-size: 20px; color: #60a5fa; }
+        .header .version { font-size: 12px; color: #64748b; }
+        .nav { background: #111827; padding: 8px 24px; border-bottom: 1px solid #1e293b; overflow-x: auto; white-space: nowrap; }
+        .nav a { color: #94a3b8; text-decoration: none; padding: 8px 12px; font-size: 13px; border-radius: 6px; margin-right: 4px; display: inline-block; }
+        .nav a:hover { background: #1e293b; color: #e2e8f0; }
+        .nav a.active { background: #1e3a5f; color: #60a5fa; }
+        .content { padding: 24px; max-width: 1400px; margin: 0 auto; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-bottom: 24px; }
+        .card { background: #111827; border: 1px solid #1e293b; border-radius: 12px; padding: 20px; }
+        .card h3 { color: #60a5fa; margin-bottom: 12px; font-size: 16px; }
+        .card p { color: #94a3b8; font-size: 14px; line-height: 1.6; }
+        .stat { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #1e293b; }
+        .stat:last-child { border-bottom: none; }
+        .stat-label { color: #94a3b8; font-size: 13px; }
+        .stat-value { color: #e2e8f0; font-weight: 600; font-size: 14px; }
+        .badge { padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+        .badge-green { background: #064e3b; color: #34d399; }
+        .badge-blue { background: #1e3a5f; color: #60a5fa; }
+        .badge-yellow { background: #713f12; color: #fbbf24; }
+        .badge-red { background: #7f1d1d; color: #f87171; }
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        th { text-align: left; padding: 10px 12px; color: #64748b; border-bottom: 2px solid #1e293b; font-weight: 600; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px; }
+        td { padding: 10px 12px; border-bottom: 1px solid #1e293b; }
+        .big-number { font-size: 32px; font-weight: 700; color: #60a5fa; }
+        .sub-text { font-size: 12px; color: #64748b; margin-top: 4px; }
+        .btn { padding: 8px 16px; border-radius: 6px; border: none; cursor: pointer; font-size: 13px; font-weight: 600; }
+        .btn-primary { background: #2563eb; color: white; }
+        .btn-primary:hover { background: #1d4ed8; }
+        .btn-warn { background: #d97706; color: white; }
+        .btn-warn:hover { background: #b45309; }
+        .log { font-family: 'SF Mono', 'Consolas', monospace; font-size: 12px; background: #0d1117; border: 1px solid #1e293b; border-radius: 8px; padding: 12px; max-height: 200px; overflow-y: auto; }
+        .log-line { padding: 2px 0; }
+        .log-time { color: #64748b; }
+        .log-ok { color: #34d399; }
+        .log-warn { color: #fbbf24; }
+        .log-err { color: #f87171; }
+        #status { font-size: 12px; color: #64748b; padding: 8px 24px; text-align: right; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Metis Genie Platform - Hot Reload Configuration</h1>
+        <span class="version">v5.5.8</span>
+    </div>
+    <nav class="nav">
+        <a href="index.html">Dashboard</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="trading.html">Trading</a>
+        <a href="risk.html">Risk</a>
+        <a href="analytics.html">Analytics</a>
+        <a href="operations.html">Ops</a>
+        <a href="admin.html">Admin</a>
+        <a href="hot-reload.html" class="active">Hot Reload</a>
+    </nav>
+    <div id="status">Endpoint: /api/v1/hot-reload</div>
+    <div class="content">
+        <div class="grid">
+            <div class="card">
+                <h3>Hot Reload Status</h3>
+                <div class="stat"><span class="stat-label">Status</span><span class="stat-value"><span class="badge badge-green">ACTIVE</span></span></div>
+                <div class="stat"><span class="stat-label">Poll Interval</span><span class="stat-value">5 seconds</span></div>
+                <div class="stat"><span class="stat-label">Debounce Window</span><span class="stat-value">500ms</span></div>
+                <div class="stat"><span class="stat-label">Watched Files</span><span class="stat-value">4</span></div>
+                <div class="stat"><span class="stat-label">Validation Hooks</span><span class="stat-value"><span class="badge badge-green">Enabled</span></span></div>
+                <div class="stat"><span class="stat-label">Auto-Rollback</span><span class="stat-value"><span class="badge badge-green">Enabled</span></span></div>
+            </div>
+            <div class="card">
+                <h3>Reload Statistics</h3>
+                <div class="big-number">47</div>
+                <div class="sub-text">Total reloads since startup</div>
+                <div class="stat"><span class="stat-label">Successful</span><span class="stat-value">44 (93.6%)</span></div>
+                <div class="stat"><span class="stat-label">Validation Failures</span><span class="stat-value">2</span></div>
+                <div class="stat"><span class="stat-label">Rollbacks Triggered</span><span class="stat-value">1</span></div>
+                <div class="stat"><span class="stat-label">Avg Detection Latency</span><span class="stat-value">2.3ms</span></div>
+            </div>
+            <div class="card">
+                <h3>Environment Overrides</h3>
+                <div class="stat"><span class="stat-label">GENIE_LOG_LEVEL</span><span class="stat-value"><span class="badge badge-yellow">DEBUG (override)</span></span></div>
+                <div class="stat"><span class="stat-label">GENIE_MAX_CONNECTIONS</span><span class="stat-value"><span class="badge badge-yellow">500 (override)</span></span></div>
+                <div class="stat"><span class="stat-label">GENIE_CACHE_TTL</span><span class="stat-value">300 (default)</span></div>
+                <div class="stat"><span class="stat-label">GENIE_RISK_LIMIT</span><span class="stat-value">0.05 (default)</span></div>
+            </div>
+        </div>
+        <div class="card">
+            <h3>Watched Files</h3>
+            <table>
+                <thead><tr><th>File</th><th>Status</th><th>Last Modified</th><th>Size</th><th>Reloads</th><th>Actions</th></tr></thead>
+                <tbody>
+                    <tr><td>config.json</td><td><span class="badge badge-green">Current</span></td><td>2026-02-06 14:32:01</td><td>4.2 KB</td><td>12</td><td><button class="btn btn-primary" onclick="alert('Force reloading config.json')">Reload</button></td></tr>
+                    <tr><td>risk_limits.json</td><td><span class="badge badge-green">Current</span></td><td>2026-02-06 09:15:44</td><td>1.8 KB</td><td>8</td><td><button class="btn btn-primary" onclick="alert('Force reloading risk_limits.json')">Reload</button></td></tr>
+                    <tr><td>compliance_rules.json</td><td><span class="badge badge-yellow">Modified</span></td><td>2026-02-06 16:48:22</td><td>3.1 KB</td><td>15</td><td><button class="btn btn-primary" onclick="alert('Force reloading compliance_rules.json')">Reload</button></td></tr>
+                    <tr><td>trading_params.json</td><td><span class="badge badge-green">Current</span></td><td>2026-02-05 11:20:00</td><td>2.4 KB</td><td>6</td><td><button class="btn btn-primary" onclick="alert('Force reloading trading_params.json')">Reload</button></td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="grid" style="margin-top: 20px;">
+            <div class="card" style="grid-column: 1 / -1;">
+                <h3>Change History</h3>
+                <table>
+                    <thead><tr><th>Time</th><th>File</th><th>Action</th><th>Validation</th><th>Latency</th><th>Details</th></tr></thead>
+                    <tbody>
+                        <tr><td>16:48:22</td><td>compliance_rules.json</td><td>Reload</td><td><span class="badge badge-green">Pass</span></td><td>1.8ms</td><td>Updated margin requirements</td></tr>
+                        <tr><td>14:32:01</td><td>config.json</td><td>Reload</td><td><span class="badge badge-green">Pass</span></td><td>2.1ms</td><td>Changed log rotation policy</td></tr>
+                        <tr><td>12:05:17</td><td>risk_limits.json</td><td>Rollback</td><td><span class="badge badge-red">Rolled back</span></td><td>3.4ms</td><td>Invalid VaR threshold format</td></tr>
+                        <tr><td>12:05:14</td><td>risk_limits.json</td><td>Reload</td><td><span class="badge badge-red">Fail</span></td><td>1.2ms</td><td>Schema validation error</td></tr>
+                        <tr><td>09:15:44</td><td>risk_limits.json</td><td>Reload</td><td><span class="badge badge-green">Pass</span></td><td>2.0ms</td><td>Updated concentration limits</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="grid">
+            <div class="card">
+                <h3>Quick Actions</h3>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px;">
+                    <button class="btn btn-primary" onclick="alert('Force reload all watched files')">Force Reload All</button>
+                    <button class="btn btn-warn" onclick="alert('Rolled back to last known-good configuration')">Rollback Last</button>
+                </div>
+            </div>
+            <div class="card">
+                <h3>Reload Log</h3>
+                <div class="log">
+                    <div class="log-line"><span class="log-time">16:48:22</span> <span class="log-ok">[OK]</span> compliance_rules.json reloaded successfully</div>
+                    <div class="log-line"><span class="log-time">14:32:01</span> <span class="log-ok">[OK]</span> config.json reloaded successfully</div>
+                    <div class="log-line"><span class="log-time">12:05:17</span> <span class="log-warn">[ROLLBACK]</span> risk_limits.json rolled back to snapshot #7</div>
+                    <div class="log-line"><span class="log-time">12:05:14</span> <span class="log-err">[FAIL]</span> risk_limits.json validation failed: invalid var_threshold</div>
+                    <div class="log-line"><span class="log-time">09:15:44</span> <span class="log-ok">[OK]</span> risk_limits.json reloaded successfully</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/config.js?v=5.5.8"></script>
+    <script>
+    /* API endpoint wiring - auto-generated */
+    (function(){
+        const base = (typeof CONFIG !== 'undefined' && CONFIG.API_BASE) ? CONFIG.API_BASE : 'http://localhost:8080';
+        const token = sessionStorage.getItem('genie_token') || localStorage.getItem('genie_token') || '';
+        const headers = token ? {'Authorization':'Bearer '+token} : {};
+        window.genieAPI = window.genieAPI || {};
+        window.genieAPI.config_hot_reload = function() {
+            return fetch(base+'/api/v1/config/hot-reload', {headers:headers}).then(r=>r.json());
+        };
+        window.genieAPI.config = function() {
+            return fetch(base+'/api/v1/config', {headers:headers}).then(r=>r.json());
+        };
+    })();
+    </script>
+</body>
+</html>

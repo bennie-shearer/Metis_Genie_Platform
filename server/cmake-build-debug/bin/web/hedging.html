@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <link rel="icon" type="image/svg+xml" href="img/icon.svg"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="css/main.css?v=5.5.8">
+<style>
+.pg-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:1.25rem;padding:1.5rem}
+.pg-card{background:var(--card-bg,#fff);border:1px solid var(--border,#e2e8f0);border-radius:12px;overflow:hidden}
+.pg-card .card-head{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.25rem;border-bottom:1px solid var(--border,#e2e8f0)}
+.pg-card .card-head h3{margin:0;font-size:.95rem;font-weight:600}
+.pg-card .card-body{padding:1.25rem}
+.metric-row{display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;border-bottom:1px solid var(--border-light,#f1f5f9)}
+.metric-row:last-child{border-bottom:none}
+.metric-label{font-size:.85rem;color:var(--text-muted,#64748b)}
+.metric-value{font-size:.95rem;font-weight:600;font-variant-numeric:tabular-nums}
+.positive{color:#16a34a}.negative{color:#dc2626}.neutral{color:#2563eb}.future{color:#8b5cf6}
+.page-header{padding:1.5rem 1.5rem 0;display:flex;justify-content:space-between;align-items:center}
+.page-header h2{margin:0;font-size:1.4rem;font-weight:700}
+.badge-tag{display:inline-block;padding:2px 10px;border-radius:12px;font-size:.75rem;font-weight:600}
+.badge-tag.pass{background:#dcfce7;color:#166534}.badge-tag.warn{background:#fef3c7;color:#92400e}
+.back-link{display:inline-flex;align-items:center;gap:.375rem;color:var(--text-muted,#64748b);text-decoration:none;font-size:.85rem;padding:.5rem 0}
+.back-link:hover{color:var(--primary,#2563eb)}
+.back-link svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
+.btn-sm{padding:4px 12px;border:1px solid var(--border,#e2e8f0);border-radius:6px;background:var(--card-bg,#fff);cursor:pointer;font-size:.8rem}
+.btn-sm:hover{background:var(--primary,#2563eb);color:#fff;border-color:var(--primary,#2563eb)}
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th{text-align:left;padding:8px;color:var(--text-muted,#64748b);border-bottom:1px solid var(--border,#e2e8f0);font-weight:600}
+.tbl td{padding:8px;border-bottom:1px solid var(--border-light,#f1f5f9)}
+.status-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}
+.status-dot.green{background:#16a34a}.status-dot.red{background:#dc2626}.status-dot.yellow{background:#eab308}
+</style></head><body>
+<div class="page-header"><div>
+<a href="index.html" class="back-link"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back to Dashboard</a>
+<h2>Cross-Asset Hedging</h2></div><span class="badge-tag warn">Demo Mode</span></div>
+<div class="pg-grid">
+    <div class="pg-card" style="grid-column:1/-1"><div class="card-head"><h3>Hedging Analysis</h3></div><div class="card-body">
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;text-align:center">
+            <div><div style="font-size:1.5rem;font-weight:700">$52.4M</div><div class="metric-label">Portfolio Value</div></div>
+            <div><div style="font-size:1.5rem;font-weight:700;color:#dc2626">$1.72M</div><div class="metric-label">Unhedged VaR (95%)</div></div>
+            <div><div style="font-size:1.5rem;font-weight:700;color:#16a34a">$1.21M</div><div class="metric-label">Hedged VaR (95%)</div></div>
+            <div><div style="font-size:1.5rem;font-weight:700;color:#16a34a">-30.0%</div><div class="metric-label">VaR Reduction</div></div>
+        </div>
+    </div></div>
+    <div class="pg-card" style="grid-column:1/-1"><div class="card-head"><h3>Hedge Recommendations</h3></div><div class="card-body">
+        <table class="tbl"><thead><tr><th>ID</th><th>Type</th><th>Instrument</th><th>Notional</th><th>Cost (bps)</th><th>Risk Reduction</th><th>Urgency</th></tr></thead><tbody>
+        <tr><td>HEDGE-1</td><td>Options Put</td><td>SPX Put 5% OTM 90d</td><td>$15.0M</td><td>35</td><td>18%</td><td><span style="color:#dc2626;font-weight:600">High</span></td></tr>
+        <tr><td>HEDGE-2</td><td>Futures</td><td>10Y Treasury ZN</td><td>$8.2M</td><td>5</td><td>12%</td><td><span style="color:#eab308;font-weight:600">Medium</span></td></tr>
+        <tr><td>HEDGE-3</td><td>FX Forward</td><td>EUR/USD 3M Fwd</td><td>$4.5M</td><td>8</td><td>5%</td><td><span style="color:#eab308;font-weight:600">Medium</span></td></tr>
+        </tbody></table>
+    </div></div>
+    <div class="pg-card"><div class="card-head"><h3>Exposure by Asset Class</h3></div><div class="card-body">
+        <div class="metric-row"><span class="metric-label">Equity</span><span class="metric-value">62%</span></div>
+        <div class="metric-row"><span class="metric-label">Fixed Income</span><span class="metric-value">25%</span></div>
+        <div class="metric-row"><span class="metric-label">FX</span><span class="metric-value">8%</span></div>
+        <div class="metric-row"><span class="metric-label">Commodity</span><span class="metric-value">3%</span></div>
+        <div class="metric-row"><span class="metric-label">Volatility</span><span class="metric-value">2%</span></div>
+    </div></div>
+    <div class="pg-card"><div class="card-head"><h3>Hedge Cost Summary</h3></div><div class="card-body">
+        <div class="metric-row"><span class="metric-label">Total Hedge Cost</span><span class="metric-value">22.5 bps</span></div>
+        <div class="metric-row"><span class="metric-label">Annual Cost ($)</span><span class="metric-value">$117,900</span></div>
+        <div class="metric-row"><span class="metric-label">Cost/VaR Reduction</span><span class="metric-value positive">Efficient</span></div>
+        <div class="metric-row"><span class="metric-label">Last Updated</span><span class="metric-value">2026-02-06</span></div>
+    </div></div></div>
+<script src="js/config.js?v=5.5.8"></script>
+    <script>
+    /* API endpoint wiring - auto-generated */
+    (function(){
+        const base = (typeof CONFIG !== 'undefined' && CONFIG.API_BASE) ? CONFIG.API_BASE : 'http://localhost:8080';
+        const token = sessionStorage.getItem('genie_token') || localStorage.getItem('genie_token') || '';
+        const headers = token ? {'Authorization':'Bearer '+token} : {};
+        window.genieAPI = window.genieAPI || {};
+        window.genieAPI.risk_hedging = function() {
+            return fetch(base+'/api/v1/risk/hedging', {headers:headers}).then(r=>r.json());
+        };
+        window.genieAPI.risk_hedging_strategies = function() {
+            return fetch(base+'/api/v1/risk/hedging/strategies', {headers:headers}).then(r=>r.json());
+        };
+    })();
+    </script>
+</body></html>

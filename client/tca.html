@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="img/icon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metis Genie Platform - Transaction Cost Analysis</title>
+    <link rel="stylesheet" href="css/main.css?v=5.5.8">
+</head>
+<body>
+<nav class="sidebar">
+    <div class="logo"><a href="index.html"><img src="img/logo.svg" alt="Metis Genie Platform" width="32" height="32"> Metis Genie Platform</a></div>
+    <ul>
+        <li><a href="index.html">Dashboard</a></li>
+        <li><a href="portfolio.html">Portfolio</a></li>
+        <li><a href="trading.html">Trading</a></li>
+        <li><a href="risk.html">Risk</a></li>
+        <li><a href="analytics.html">Analytics</a></li>
+        <li><a href="market-data.html">Market Data</a></li>
+        <li><a href="assets.html">Assets</a></li>
+        <li><a href="performance.html">Performance</a></li>
+        <li><a href="compliance.html">Compliance</a></li>
+        <li><a href="reporting.html">Reporting</a></li>
+        <li><a href="tax.html">Tax</a></li>
+        <li><a href="whatif.html">What-If</a></li>
+        <li><a href="operations.html">Operations</a></li>
+        <li><a href="security.html">Security</a></li>
+    </ul>
+    <div class="version-tag">v5.5.8</div>
+</nav>
+<main class="content">
+    <header><h1>Transaction Cost Analysis</h1></header>
+
+    <section class="card">
+        <h2>Cost Summary</h2>
+        <div class="grid-4">
+            <div class="stat-card"><div class="stat-label">Total Costs (bps)</div><div class="stat-value" id="tca-total-cost">--</div></div>
+            <div class="stat-card"><div class="stat-label">Explicit Costs</div><div class="stat-value" id="tca-explicit">--</div></div>
+            <div class="stat-card"><div class="stat-label">Implicit Costs</div><div class="stat-value" id="tca-implicit">--</div></div>
+            <div class="stat-card"><div class="stat-label">Implementation Shortfall</div><div class="stat-value" id="tca-is">--</div></div>
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>Cost Breakdown</h2>
+        <table class="data-table" id="tca-breakdown-table">
+            <thead><tr><th>Component</th><th>Cost (bps)</th><th>% of Total</th><th>Benchmark</th><th>vs Peer</th><th>Trend</th></tr></thead>
+            <tbody></tbody>
+        </table>
+    </section>
+
+    <section class="card">
+        <h2>Broker Analysis</h2>
+        <table class="data-table" id="tca-broker-table">
+            <thead><tr><th>Broker</th><th>Orders</th><th>Volume</th><th>Avg Cost (bps)</th><th>Fill Rate</th><th>Latency (ms)</th><th>Score</th></tr></thead>
+            <tbody></tbody>
+        </table>
+    </section>
+
+    <section class="card">
+        <h2>Market Impact Analysis</h2>
+        <table class="data-table" id="tca-impact-table">
+            <thead><tr><th>Symbol</th><th>Order Size (% ADV)</th><th>Expected Impact</th><th>Actual Impact</th><th>Temporary</th><th>Permanent</th><th>Timing</th></tr></thead>
+            <tbody></tbody>
+        </table>
+    </section>
+
+</main>
+<script src="js/config.js?v=5.5.8"></script>
+<script src="js/connection.js?v=5.5.8"></script>
+<script src="js/utils.js?v=5.5.8"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const page = location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('.sidebar li').forEach(li => {
+        const a = li.querySelector('a');
+        if (a && a.getAttribute('href') === page) li.classList.add('active');
+    });
+    if (typeof initPage === 'function') initPage();
+});
+</script>
+<script>
+    // API bindings for this page (v5.5.8)
+    (function() {
+        const base = (window.Connection && Connection.baseUrl) || localStorage.getItem('serverUrl') || 'http://localhost:8080';
+        const token = (window.Connection && Connection.token) || localStorage.getItem('authToken') || '';
+        const headers = token ? {'Authorization': 'Bearer ' + token} : {};
+        if (!window.genieAPI) window.genieAPI = {};
+        window.genieAPI.tca = function() {
+            return fetch(base+'/api/v1/trading/tca', {headers:headers}).then(r=>r.json());
+        };
+    })();
+
+    // Page initialization
+    document.addEventListener('DOMContentLoaded', () => {
+        // Wait for connection to be ready
+        const initWhenReady = () => {
+            if (window.Connection && (Connection.connected || Connection.demoMode)) {
+                
+    async function loadTCA() {
+        try {
+            const data = Connection.demoMode
+                ? await window.genieAPI.tca()
+                : await Connection.fetchJSON('/trading/tca');
+            const cs = data.cost_summary||{};
+            if (document.getElementById('tca-is')) document.getElementById('tca-is').textContent = (cs.implementation_shortfall_bps||0)+' bps';
+            if (document.getElementById('tca-spread')) document.getElementById('tca-spread').textContent = (cs.spread_cost_bps||0)+' bps';
+            if (document.getElementById('tca-impact')) document.getElementById('tca-impact').textContent = (cs.market_impact_bps||0)+' bps';
+            if (document.getElementById('tca-total')) document.getElementById('tca-total').textContent = (cs.total_cost_bps||0)+' bps';
+            const tbody = document.querySelector('#broker-table tbody');
+            if (tbody) { tbody.innerHTML = ''; (data.broker_scores||[]).forEach(b => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = '<td>'+b.broker+'</td><td>'+b.orders+'</td><td>'+b.avg_is_bps+' bps</td><td>'+b.fill_rate_pct+'%</td><td>'+b.score+'</td>';
+                tbody.appendChild(tr);
+            }); }
+        } catch(e) { console.error('TCA error:', e); }
+    }
+    loadTCA();
+            } else {
+                setTimeout(initWhenReady, 500);
+            }
+        };
+        setTimeout(initWhenReady, 300);
+    });
+    </script>
+</body>
+</html>

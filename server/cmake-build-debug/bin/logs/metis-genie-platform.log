@@ -1,0 +1,34 @@
+[2026-03-30 14:47:21.957] [INFO] Logging configured: console=yes, file=yes, rotation=50MB x 10
+[2026-03-30 14:47:21.957] [INFO] Log file: C:\Users\Benni\CLionProjects\Metis_Genie_Platform\server\cmake-build-debug\bin\logs\metis-genie-platform.log
+2026-03-30 14:47:21.958 [INFO ] [Main] Mode: server, Port: 8080
+2026-03-30 14:47:21.958 [INFO ] [Main] Initializing system...
+2026-03-30 14:47:21.959 [INFO ] [Main] System initialized
+2026-03-30 14:47:21.959 [INFO ] [Main] Application: Metis Genie Platform v5.5.8
+2026-03-30 14:47:21.959 [INFO ] [Main] Logo: img/logo.svg, Icon: img/icon.svg
+2026-03-30 14:47:21.960 [INFO ] [Main] Database: metis-genie-platform.db, WAL=yes, busy_timeout=5000ms
+2026-03-30 14:47:21.960 [INFO ] [Main] Auth: required=yes, demo_users=yes, max_attempts=5, lockout=15min
+2026-03-30 14:47:21.960 [INFO ] [Main] API: rate_limit=100/60s, pagination=50/500
+2026-03-30 14:47:21.960 [INFO ] [Main] Server: max_body=1048576 bytes, workers=4
+2026-03-30 14:47:21.960 [INFO ] [Main] Prices DB: prices.db
+2026-03-30 14:47:21.961 [INFO ] [Main] Backup: enabled=yes, dir=backups, interval=24h, retention=30d
+2026-03-30 14:47:21.961 [INFO ] [Main] Health: interval=60s, disk_warn=85%, mem_warn=90%
+2026-03-30 14:47:21.961 [INFO ] [Main] Enabling persistent storage...
+2026-03-30 14:47:21.971 [INFO ] [UserStore] Seeded default users
+2026-03-30 14:47:21.971 [INFO ] [UserStore] UserStore opened: users.db
+2026-03-30 14:47:21.979 [INFO ] [AuditLog] AuditLog database opened: audit.db
+2026-03-30 14:47:21.979 [INFO ] [AuditLog] AuditLog file opened: logs/audit.log
+2026-03-30 14:47:21.980 [INFO ] [UserStore] Connection configured: WAL=yes, busy_timeout=5000ms, sql_trace=no
+2026-03-30 14:47:21.980 [INFO ] [AuditLog] AuditLog connection configured: WAL=yes, busy_timeout=5000ms, sql_trace=no
+2026-03-30 14:47:21.981 [INFO ] [REST] Persistent storage enabled: users.db, audit.db
+2026-03-30 14:47:21.981 [INFO ] [Main] Persistent storage enabled (users.db, audit.db)
+2026-03-30 14:47:21.982 [INFO ] [Main] Cache: enabled, default_ttl=300s, max_entries=10000
+2026-03-30 14:47:21.982 [INFO ] [Main] Validation: enabled, max_body=1048576 bytes
+2026-03-30 14:47:21.982 [INFO ] [Main] GracefulShutdown: enabled, drain_timeout=30s
+2026-03-30 14:47:21.983 [INFO ] [Main] Compression: enabled, min=1024B, level=6
+2026-03-30 14:47:21.983 [INFO ] [Main] Configuring API...
+2026-03-30 14:47:21.983 [INFO ] [Main] API configured with 144 routes
+2026-03-30 14:47:21.988 [INFO ] [Main] Creating HttpServer on port 8080
+2026-03-30 14:47:21.988 [INFO ] [Main] Static files: web
+2026-03-30 14:47:21.989 [INFO ] [Main] SSE streaming enabled (keep-alive=15s)
+2026-03-30 14:47:21.989 [INFO ] [Main] Starting HttpServer...
+2026-03-30 14:48:24.521 [WARN ] [REST] GET /api/v1/logs -> 401 (0ms)

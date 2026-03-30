@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="img/icon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metis Genie Platform - Smart Order Routing</title>
+    <link rel="stylesheet" href="css/main.css?v=5.5.8">
+</head>
+<body>
+<nav class="sidebar">
+    <div class="logo"><a href="index.html"><img src="img/logo.svg" alt="Metis Genie Platform" width="32" height="32"> Metis Genie Platform</a></div>
+    <ul>
+        <li><a href="index.html">Dashboard</a></li>
+        <li><a href="portfolio.html">Portfolio</a></li>
+        <li><a href="trading.html">Trading</a></li>
+        <li><a href="risk.html">Risk</a></li>
+        <li><a href="analytics.html">Analytics</a></li>
+        <li><a href="market-data.html">Market Data</a></li>
+        <li><a href="assets.html">Assets</a></li>
+        <li><a href="performance.html">Performance</a></li>
+        <li><a href="compliance.html">Compliance</a></li>
+        <li><a href="reporting.html">Reporting</a></li>
+        <li><a href="tax.html">Tax</a></li>
+        <li><a href="whatif.html">What-If</a></li>
+        <li><a href="operations.html">Operations</a></li>
+        <li><a href="security.html">Security</a></li>
+    </ul>
+    <div class="version-tag">v5.5.8</div>
+</nav>
+<main class="content">
+    <header><h1>Smart Order Routing</h1></header>
+
+    <section class="card">
+        <h2>Routing Overview</h2>
+        <div class="grid-4">
+            <div class="stat-card"><div class="stat-label">Orders Routed</div><div class="stat-value" id="sor-total">--</div></div>
+            <div class="stat-card"><div class="stat-label">Avg Improvement</div><div class="stat-value" id="sor-improvement">--</div></div>
+            <div class="stat-card"><div class="stat-label">Fill Rate</div><div class="stat-value" id="sor-fill-rate">--</div></div>
+            <div class="stat-card"><div class="stat-label">Venues Active</div><div class="stat-value" id="sor-venues">--</div></div>
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>Routing Strategy</h2>
+        <table class="data-table" id="sor-strategy-table">
+            <thead><tr><th>Strategy</th><th>Description</th><th>Orders</th><th>Avg Fill Time</th><th>Improvement (bps)</th><th>Status</th></tr></thead>
+            <tbody></tbody>
+        </table>
+    </section>
+
+    <section class="card">
+        <h2>Venue Statistics</h2>
+        <table class="data-table" id="sor-venue-table">
+            <thead><tr><th>Venue</th><th>Type</th><th>Orders</th><th>Volume</th><th>Fill Rate</th><th>Avg Latency</th><th>Rebate/Fee</th><th>Status</th></tr></thead>
+            <tbody></tbody>
+        </table>
+    </section>
+
+    <section class="card">
+        <h2>Algo Execution</h2>
+        <table class="data-table" id="sor-algo-table">
+            <thead><tr><th>Algorithm</th><th>Type</th><th>Active Orders</th><th>Participation</th><th>Slippage (bps)</th><th>VWAP vs Arrival</th></tr></thead>
+            <tbody></tbody>
+        </table>
+    </section>
+
+</main>
+<script src="js/config.js?v=5.5.8"></script>
+<script src="js/connection.js?v=5.5.8"></script>
+<script src="js/utils.js?v=5.5.8"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const page = location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('.sidebar li').forEach(li => {
+        const a = li.querySelector('a');
+        if (a && a.getAttribute('href') === page) li.classList.add('active');
+    });
+    if (typeof initPage === 'function') initPage();
+});
+</script>
+<script>
+    // API bindings for this page (v5.5.8)
+    (function() {
+        const base = (window.Connection && Connection.baseUrl) || localStorage.getItem('serverUrl') || 'http://localhost:8080';
+        const token = (window.Connection && Connection.token) || localStorage.getItem('authToken') || '';
+        const headers = token ? {'Authorization': 'Bearer ' + token} : {};
+        if (!window.genieAPI) window.genieAPI = {};
+        window.genieAPI.trading_routing = function() {
+            return fetch(base+'/api/v1/trading/routing', {headers:headers}).then(r=>r.json());
+        };
+    })();
+
+    // Page initialization
+    document.addEventListener('DOMContentLoaded', () => {
+        // Wait for connection to be ready
+        const initWhenReady = () => {
+            if (window.Connection && (Connection.connected || Connection.demoMode)) {
+                
+    async function loadRouting() {
+        try {
+            const data = Connection.demoMode
+                ? await window.genieAPI.trading_routing()
+                : await Connection.fetchJSON('/trading/routing');
+            if (document.getElementById('default-strategy')) document.getElementById('default-strategy').textContent = data.default_strategy||'SMART';
+            const tbody = document.querySelector('#venues-table tbody');
+            if (tbody) { tbody.innerHTML = ''; (data.venues||[]).forEach(v => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = '<td>'+v.name+'</td><td><span class="badge badge-'+(v.status==='CONNECTED'?'success':'danger')+'">'+v.status+'</span></td><td>'+v.latency_ms+'ms</td><td>'+v.fill_rate_pct+'%</td>';
+                tbody.appendChild(tr);
+            }); }
+        } catch(e) { console.error('Routing error:', e); }
+    }
+    loadRouting();
+            } else {
+                setTimeout(initWhenReady, 500);
+            }
+        };
+        setTimeout(initWhenReady, 300);
+    });
+    </script>
+</body>
+</html>

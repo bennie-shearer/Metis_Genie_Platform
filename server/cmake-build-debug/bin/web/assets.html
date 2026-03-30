@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="img/icon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metis Genie Platform - Assets</title>
+    <link rel="stylesheet" href="css/main.css?v=5.5.8">
+</head>
+<body>
+<nav class="sidebar">
+    <div class="logo"><a href="index.html"><img src="img/logo.svg" alt="Metis Genie Platform" width="32" height="32"> Metis Genie Platform</a></div>
+    <ul>
+        <li><a href="index.html">Dashboard</a></li>
+        <li><a href="portfolio.html">Portfolio</a></li>
+        <li><a href="trading.html">Trading</a></li>
+        <li><a href="risk.html">Risk</a></li>
+        <li><a href="analytics.html">Analytics</a></li>
+        <li><a href="market-data.html">Market Data</a></li>
+        <li><a href="assets.html">Assets</a></li>
+        <li><a href="performance.html">Performance</a></li>
+        <li><a href="compliance.html">Compliance</a></li>
+        <li><a href="reporting.html">Reporting</a></li>
+        <li><a href="tax.html">Tax</a></li>
+        <li><a href="whatif.html">What-If</a></li>
+        <li><a href="operations.html">Operations</a></li>
+        <li><a href="security.html">Security</a></li>
+    </ul>
+    <div class="version-tag">v5.5.8</div>
+</nav>
+<main class="content">
+    <header><h1>Asset Management</h1></header>
+
+    <!-- Private Assets -->
+    <section class="card" id="private-assets-section">
+        <h2>Private Assets</h2>
+        <table class="data-table" id="private-assets-table">
+            <thead><tr><th>Name</th><th>Type</th><th>Vintage</th><th>Committed</th><th>Called</th><th>NAV</th><th>IRR</th><th>TVPI</th><th>Status</th></tr></thead>
+            <tbody></tbody>
+        </table>
+    </section>
+
+    <!-- Equity Holdings -->
+    <section class="card" id="equity-section">
+        <h2>Equity Holdings</h2>
+        <table class="data-table" id="equity-table">
+            <thead><tr><th>Symbol</th><th>Name</th><th>Shares</th><th>Price</th><th>Value</th><th>Weight</th><th>P&L</th><th>Sector</th></tr></thead>
+            <tbody></tbody>
+        </table>
+    </section>
+
+    <!-- Fixed Income -->
+    <section class="card" id="fixed-income-section">
+        <h2>Fixed Income</h2>
+        <table class="data-table" id="fixed-income-table">
+            <thead><tr><th>CUSIP</th><th>Issuer</th><th>Coupon</th><th>Maturity</th><th>Par Value</th><th>Market Value</th><th>Yield</th><th>Duration</th><th>Rating</th></tr></thead>
+            <tbody></tbody>
+        </table>
+    </section>
+
+    <!-- Derivatives -->
+    <section class="card" id="derivatives-section">
+        <h2>Derivatives</h2>
+        <table class="data-table" id="derivatives-table">
+            <thead><tr><th>Contract</th><th>Type</th><th>Underlying</th><th>Strike</th><th>Expiry</th><th>Quantity</th><th>Value</th><th>Delta</th><th>Gamma</th></tr></thead>
+            <tbody></tbody>
+        </table>
+    </section>
+
+    <!-- FX & Commodities -->
+    <section class="card" id="fx-commodity-section">
+        <h2>FX & Commodities</h2>
+        <div class="grid-2">
+            <div>
+                <h3>FX Positions</h3>
+                <table class="data-table" id="fx-table">
+                    <thead><tr><th>Pair</th><th>Notional</th><th>Rate</th><th>P&L</th></tr></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div>
+                <h3>Commodity Positions</h3>
+                <table class="data-table" id="commodity-table">
+                    <thead><tr><th>Contract</th><th>Quantity</th><th>Price</th><th>Value</th><th>P&L</th></tr></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Multi-Tenant -->
+    <section class="card" id="tenant-section">
+        <h2>Multi-Tenant Overview</h2>
+        <table class="data-table" id="tenants-table">
+            <thead><tr><th>Tenant</th><th>Status</th><th>Users</th><th>Portfolios</th><th>AUM</th></tr></thead>
+            <tbody></tbody>
+        </table>
+    </section>
+</main>
+<script src="js/config.js?v=5.5.8"></script>
+<script src="js/connection.js?v=5.5.8"></script>
+<script src="js/utils.js?v=5.5.8"></script>
+<script src="js/assets.js?v=5.5.8"></script>
+    <script>
+    /* API endpoint wiring - auto-generated */
+    (function(){
+        const base = (typeof CONFIG !== 'undefined' && CONFIG.API_BASE) ? CONFIG.API_BASE : 'http://localhost:8080';
+        const token = sessionStorage.getItem('genie_token') || localStorage.getItem('genie_token') || '';
+        const headers = token ? {'Authorization':'Bearer '+token} : {};
+        window.genieAPI = window.genieAPI || {};
+        window.genieAPI.assets_private = function() {
+            return fetch(base+'/api/v1/assets/private', {headers:headers}).then(r=>r.json());
+        };
+        window.genieAPI.positions = function() {
+            return fetch(base+'/api/v1/positions', {headers:headers}).then(r=>r.json());
+        };
+    })();
+    </script>
+</body>
+</html>

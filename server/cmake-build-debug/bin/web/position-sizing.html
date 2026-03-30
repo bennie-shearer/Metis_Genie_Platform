@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="img/icon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metis Genie Platform - Position Sizing</title>
+    <link rel="stylesheet" href="css/main.css?v=5.5.8">
+</head>
+<body>
+<nav class="sidebar">
+    <div class="logo"><a href="index.html"><img src="img/logo.svg" alt="Metis Genie Platform" width="32" height="32"> Metis Genie Platform</a></div>
+    <ul>
+        <li><a href="index.html">Dashboard</a></li>
+        <li><a href="portfolio.html">Portfolio</a></li>
+        <li><a href="trading.html">Trading</a></li>
+        <li><a href="risk.html">Risk</a></li>
+        <li><a href="analytics.html">Analytics</a></li>
+        <li><a href="market-data.html">Market Data</a></li>
+        <li><a href="assets.html">Assets</a></li>
+        <li><a href="performance.html">Performance</a></li>
+        <li><a href="compliance.html">Compliance</a></li>
+        <li><a href="reporting.html">Reporting</a></li>
+        <li><a href="tax.html">Tax</a></li>
+        <li><a href="whatif.html">What-If</a></li>
+        <li><a href="operations.html">Operations</a></li>
+        <li><a href="security.html">Security</a></li>
+    </ul>
+    <div class="version-tag">v5.5.8</div>
+</nav>
+<main class="content">
+    <header><h1>Position Sizing</h1></header>
+
+    <section class="card">
+        <h2>Position Size Calculator</h2>
+        <div class="grid-2">
+            <div>
+                <div class="form-group">
+                    <label for="ps-method">Method</label>
+                    <select id="ps-method" class="form-control">
+                        <option value="kelly">Kelly Criterion</option>
+                        <option value="fractional_kelly">Fractional Kelly (50%)</option>
+                        <option value="fixed_fractional">Fixed Fractional</option>
+                        <option value="volatility">Volatility-Based</option>
+                        <option value="equal_weight">Equal Weight</option>
+                        <option value="risk_parity">Risk Parity</option>
+                        <option value="max_drawdown">Max Drawdown Capped</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="ps-capital">Portfolio Capital ($)</label>
+                    <input type="number" id="ps-capital" class="form-control" value="1000000">
+                </div>
+                <div class="form-group">
+                    <label for="ps-risk-pct">Risk Per Trade (%)</label>
+                    <input type="number" id="ps-risk-pct" class="form-control" value="2" step="0.1">
+                </div>
+                <div class="form-group">
+                    <label for="ps-symbol">Symbol</label>
+                    <input type="text" id="ps-symbol" class="form-control" value="AAPL">
+                </div>
+                <button class="btn btn-primary" id="ps-calc-btn">Calculate</button>
+            </div>
+            <div>
+                <div class="stat-card"><div class="stat-label">Recommended Shares</div><div class="stat-value" id="ps-shares">--</div></div>
+                <div class="stat-card"><div class="stat-label">Position Value</div><div class="stat-value" id="ps-value">--</div></div>
+                <div class="stat-card"><div class="stat-label">Portfolio Weight</div><div class="stat-value" id="ps-weight">--</div></div>
+                <div class="stat-card"><div class="stat-label">Risk Amount</div><div class="stat-value" id="ps-risk-amt">--</div></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>Portfolio Heat Map</h2>
+        <div class="grid-4">
+            <div class="stat-card"><div class="stat-label">Total Heat</div><div class="stat-value" id="ps-total-heat">--</div></div>
+            <div class="stat-card"><div class="stat-label">Max Heat</div><div class="stat-value" id="ps-max-heat">--</div></div>
+            <div class="stat-card"><div class="stat-label">Open Positions</div><div class="stat-value" id="ps-open-pos">--</div></div>
+            <div class="stat-card"><div class="stat-label">Capacity</div><div class="stat-value" id="ps-capacity">--</div></div>
+        </div>
+        <table class="data-table" id="ps-positions-table">
+            <thead><tr><th>Symbol</th><th>Shares</th><th>Entry</th><th>Current</th><th>Stop</th><th>Risk $</th><th>Heat %</th><th>Method</th></tr></thead>
+            <tbody></tbody>
+        </table>
+    </section>
+
+</main>
+<script src="js/config.js?v=5.5.8"></script>
+<script src="js/connection.js?v=5.5.8"></script>
+<script src="js/utils.js?v=5.5.8"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const page = location.pathname.split('/').pop() || 'index.html';
+    document.querySelectorAll('.sidebar li').forEach(li => {
+        const a = li.querySelector('a');
+        if (a && a.getAttribute('href') === page) li.classList.add('active');
+    });
+    if (typeof initPage === 'function') initPage();
+});
+</script>
+<script>
+    // API bindings for this page (v5.5.8)
+    (function() {
+        const base = (window.Connection && Connection.baseUrl) || localStorage.getItem('serverUrl') || 'http://localhost:8080';
+        const token = (window.Connection && Connection.token) || localStorage.getItem('authToken') || '';
+        const headers = token ? {'Authorization': 'Bearer ' + token} : {};
+        if (!window.genieAPI) window.genieAPI = {};
+        window.genieAPI.position_sizing = function() {
+            return fetch(base+'/api/v1/trading/position-sizing', {headers:headers}).then(r=>r.json());
+        };
+    })();
+
+    // Page initialization
+    document.addEventListener('DOMContentLoaded', () => {
+        // Wait for connection to be ready
+        const initWhenReady = () => {
+            if (window.Connection && (Connection.connected || Connection.demoMode)) {
+                
+    async function loadPositionSizing() {
+        try {
+            const data = Connection.demoMode
+                ? await window.genieAPI.position_sizing()
+                : await Connection.fetchJSON('/trading/position-sizing');
+            if (document.getElementById('ps-method')) document.getElementById('ps-method').textContent = data.current_method||'--';
+            if (document.getElementById('ps-equity')) document.getElementById('ps-equity').textContent = '$'+(data.account?.equity||0).toLocaleString();
+            if (document.getElementById('ps-buying-power')) document.getElementById('ps-buying-power').textContent = '$'+(data.account?.buying_power||0).toLocaleString();
+            const tbody = document.querySelector('#ps-signals-table tbody');
+            if (tbody) { tbody.innerHTML = ''; (data.signals||[]).forEach(s => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = '<td>'+s.symbol+'</td><td>'+s.method+'</td><td>'+s.kelly_pct+'%</td><td>'+s.suggested_shares.toLocaleString()+'</td><td>$'+s.suggested_value.toLocaleString()+'</td><td>'+s.reward_risk_ratio.toFixed(1)+'</td>';
+                tbody.appendChild(tr);
+            }); }
+        } catch(e) { console.error('Position sizing error:', e); }
+    }
+    loadPositionSizing();
+            } else {
+                setTimeout(initWhenReady, 500);
+            }
+        };
+        setTimeout(initWhenReady, 300);
+    });
+    </script>
+</body>
+</html>

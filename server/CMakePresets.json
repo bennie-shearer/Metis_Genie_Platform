@@ -1,0 +1,96 @@
+{
+    "version": 6,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 21,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+            "name": "default",
+            "displayName": "Default (Debug, all targets)",
+            "description": "Debug build with tests and examples enabled",
+            "binaryDir": "${sourceDir}/build",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "GENIE_BUILD_TESTS": "ON",
+                "GENIE_BUILD_EXAMPLES": "ON",
+                "GENIE_STATIC_LINK": "ON",
+                "GENIE_INSTALL_CONFIG": "ON"
+            }
+        },
+        {
+            "name": "release",
+            "displayName": "Release (optimized, no tests)",
+            "description": "Optimized release build without test/example targets",
+            "binaryDir": "${sourceDir}/build-release",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "GENIE_BUILD_TESTS": "OFF",
+                "GENIE_BUILD_EXAMPLES": "OFF",
+                "GENIE_STATIC_LINK": "ON",
+                "GENIE_INSTALL_CONFIG": "ON"
+            }
+        },
+        {
+            "name": "dev",
+            "displayName": "Development (Debug, tests only)",
+            "description": "Debug build with tests but no examples",
+            "binaryDir": "${sourceDir}/build-dev",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "GENIE_BUILD_TESTS": "ON",
+                "GENIE_BUILD_EXAMPLES": "OFF",
+                "GENIE_STATIC_LINK": "ON",
+                "GENIE_INSTALL_CONFIG": "OFF"
+            }
+        },
+        {
+            "name": "mingw-release",
+            "displayName": "MinGW Release",
+            "description": "Release build using MinGW Makefiles generator",
+            "generator": "MinGW Makefiles",
+            "binaryDir": "${sourceDir}/build-mingw",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "GENIE_BUILD_TESTS": "ON",
+                "GENIE_BUILD_EXAMPLES": "ON",
+                "GENIE_STATIC_LINK": "ON",
+                "GENIE_INSTALL_CONFIG": "ON"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "default",
+            "configurePreset": "default",
+            "jobs": 18
+        },
+        {
+            "name": "release",
+            "configurePreset": "release",
+            "jobs": 18
+        },
+        {
+            "name": "dev",
+            "configurePreset": "dev",
+            "jobs": 18
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "default",
+            "configurePreset": "default",
+            "output": {
+                "verbosity": "extra"
+            }
+        },
+        {
+            "name": "dev",
+            "configurePreset": "dev",
+            "output": {
+                "verbosity": "extra"
+            }
+        }
+    ]
+}
