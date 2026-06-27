@@ -1,7 +1,7 @@
 /**
  * @file genie.hpp
  * @brief Main header for Metis Genie Platform Emulator
- * @version 5.3.1
+ * @version 5.5.11
  * 
  * Comprehensive investment management platform emulation.
  * Zero external dependencies - pure C++20 implementation.

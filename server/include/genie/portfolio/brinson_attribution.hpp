@@ -1,7 +1,7 @@
 /**
  * @file brinson_attribution.hpp
  * @brief Brinson-Fachler performance attribution model
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Brinson-Hood-Beebower and Brinson-Fachler attribution:

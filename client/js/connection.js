@@ -1,6 +1,6 @@
-// Metis Genie Platform v5.5.8
+// Metis Genie Platform v5.5.11
 /**
- * Metis Genie Platform v5.5.8 - Connection Manager
+ * Metis Genie Platform v5.5.11 - Connection Manager
  * HTTP client for REST API communication
  * @author Bennie Shearer  @copyright 2026
  *

@@ -1,7 +1,7 @@
 /**
  * @file wasm_client.hpp
  * @brief WebAssembly client compilation -- server-side support stub
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * WebAssembly client compilation enables the client/js/ code to be

@@ -1,7 +1,7 @@
 /**
  * @file finnhub_client.hpp
  * @brief Finnhub API client for news, sentiment, and market data
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  * 
  * Finnhub integration providing:

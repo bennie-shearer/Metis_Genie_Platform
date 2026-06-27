@@ -1,7 +1,7 @@
 /**
  * @file request_context.hpp
  * @brief Correlation ID tracing for distributed request tracking
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Provides request context propagation with correlation IDs for

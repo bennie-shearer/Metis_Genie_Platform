@@ -1,7 +1,7 @@
 /**
  * @file api_config_loader.hpp
  * @brief Load API keys from config.json into ApiCredentials vault
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Reads the "api_keys" section of config.json and populates:

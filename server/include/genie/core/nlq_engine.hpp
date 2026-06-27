@@ -1,7 +1,7 @@
 /**
  * @file nlq_engine.hpp
  * @brief Natural Language Query Engine for Metis Genie Platform
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Parses natural language queries about portfolios, risk, and market data

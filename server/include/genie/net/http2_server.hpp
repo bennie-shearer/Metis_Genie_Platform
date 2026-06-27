@@ -1,7 +1,7 @@
 /**
  * @file http2_server.hpp
  * @brief HTTP/2 with multiplexing -- future C++20 native implementation
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Planned implementation: HTTP/2 over TLS (h2) and cleartext (h2c).

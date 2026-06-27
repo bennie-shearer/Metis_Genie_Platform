@@ -1,7 +1,7 @@
 /**
  * @file polygon_client.hpp
  * @brief Polygon.io API and WebSocket client
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  * 
  * Polygon.io integration providing:

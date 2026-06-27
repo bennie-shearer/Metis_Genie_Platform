@@ -1,7 +1,7 @@
 /**
  * @file interactive_charts.hpp
  * @brief Interactive price charts backend support
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  * 
  * TIER 5: User Experience - Interactive price charts

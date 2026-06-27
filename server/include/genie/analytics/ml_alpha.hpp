@@ -1,7 +1,7 @@
 /**
  * @file ml_alpha.hpp
  * @brief Machine Learning Alpha Signal Generation Engine for Metis Genie Platform
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Implements ML-driven alpha signal generation for systematic trading:

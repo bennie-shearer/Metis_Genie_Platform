@@ -1,6 +1,6 @@
-// Metis Genie Platform v5.3.1
+// Metis Genie Platform v5.5.11
 /**
- * Metis Genie Platform v5.3.1 - Widget Management
+ * Metis Genie Platform v5.5.11 - Widget Management
  * Drag-and-drop dashboard customization
  * @author Bennie Shearer  @copyright 2026
  */

@@ -1,7 +1,7 @@
 /**
  * @file static_server.hpp
  * @brief Static File Server - Serve client HTML/JS/CSS directly from C++20 server
- * @version 5.3.1
+ * @version 5.5.11
  *
  * Enables the Metis Genie Platform server to serve the HTML5 client directly,
  * eliminating the need for a separate web server.

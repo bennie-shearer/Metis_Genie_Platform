@@ -1,7 +1,7 @@
 /**
  * @file config.hpp
  * @brief PSON configuration management for Metis Genie Platform
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * PSON (Permissive Structured Object Notation) is JSON extended with:

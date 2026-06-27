@@ -1,7 +1,7 @@
 # Metis Genie Platform
 
 **Enterprise Investment Management Platform Prototype**
-**Version 5.3.2** | C++20 | Zero External Dependencies | MIT License
+**Version 5.5.11** | C++20 | Zero External Dependencies | MIT License
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![C++20](https://img.shields.io/badge/C%2B%2B-20-blue.svg)](https://en.cppreference.com/w/cpp/20)
@@ -32,7 +32,7 @@ One binary. One PSON config file. Open in a browser.
 - **Reporting** -- PDF/CSV/XLSX generation, dashboards, scheduled reports
 - **Market Data** -- Alpha Vantage, IEX Cloud, Polygon, Finnhub, Yahoo Finance, FRED
 
-### Technical Features (v5.3.2)
+### Technical Features (v5.5.11)
 - **Zero external dependencies** -- only SQLite3 bundled; zlib optional
 - **PSON configuration** -- all 120+ parameters in `server/config.pson` with `//` comments
 - **145+ REST endpoints** -- complete API for all financial domains
@@ -115,7 +115,7 @@ Default credentials: `admin` / `demo`
 ## Project Structure
 
 ```
-Metis_Genie_Platform-5.3.2/
+Metis_Genie_Platform-5.5.11/
 |
 +-- server/          <- CLion project (C++20 server only)
 |   +-- include/     <- 266 .hpp files, 17 module directories
@@ -150,7 +150,7 @@ Metis_Genie_Platform-5.3.2/
     +-- BUILD.md
     +-- ARCHITECTURE.md
     +-- TODO.md
-    +-- VERSION.txt  <- 5.3.2
+    +-- VERSION.txt  <- 5.5.11
 ```
 
 ---

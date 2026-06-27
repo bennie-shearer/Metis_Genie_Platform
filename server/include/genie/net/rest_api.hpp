@@ -1,7 +1,7 @@
 /**
  * @file rest_api.hpp
  * @brief Pure REST API framework for Metis Genie Platform
- * @version 5.5.4
+ * @version 5.5.11
  *
  * Self-contained REST API with:
  *   - Route registration (GET, POST, PUT, DELETE)
@@ -1089,12 +1089,24 @@ public:
             cache_key += "|" + req.bearer_token();
             auto cached = response_cache_.get(cache_key);
             if (cached.has_value()) {
-                res.status = 200;
-                res.body = *cached;
-                res.headers["Content-Type"] = "application/json; charset=utf-8";
-                res.headers["X-Cache"] = "HIT";
-                log_request(req, res, start);
-                return res;
+                // Do not serve cached protected content to a request whose
+                // session is no longer valid (e.g. after logout or expiry).
+                // The bearer token is part of the cache key, so this only
+                // blocks the same token once its session ends -- it never
+                // crosses users. Public routes and auth-disabled mode are
+                // served from cache unconditionally.
+                const bool may_serve = is_public_route || !auth_required_ ||
+                    sessions_.validate(req.bearer_token()).has_value();
+                if (may_serve) {
+                    res.status = 200;
+                    res.body = *cached;
+                    res.headers["Content-Type"] = "application/json; charset=utf-8";
+                    res.headers["X-Cache"] = "HIT";
+                    log_request(req, res, start);
+                    return res;
+                }
+                // Stale-authorized token: fall through to normal handling,
+                // which runs require_auth() and returns 401.
             }
             res.headers["X-Cache"] = "MISS";
         }
@@ -1240,6 +1252,15 @@ public:
         req.method = string_to_method(method);
         req.body = body;
         req.headers = headers;
+
+        // Programmatic JSON-convenience form: when a body is supplied but the
+        // caller did not provide a Content-Type, default it to application/json
+        // so the request-validation middleware accepts it. The wire-level HTTP
+        // server always forwards explicit client headers, so real network
+        // requests are unaffected. (Matches the JSON default of Request/Response.)
+        if (!req.body.empty() && req.header("Content-Type").empty()) {
+            req.headers["Content-Type"] = "application/json";
+        }
 
         // Extract internal metadata from headers (set by HTTP server)
         auto rid = req.header("X-Request-Id");

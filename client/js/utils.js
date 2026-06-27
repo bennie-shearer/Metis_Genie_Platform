@@ -1,6 +1,6 @@
-// Metis Genie Platform v5.3.1
+// Metis Genie Platform v5.5.11
 /**
- * Metis Genie Platform v5.3.1 - Utility Functions
+ * Metis Genie Platform v5.5.11 - Utility Functions
  * Pure Vanilla JS
  * @author Bennie Shearer  @copyright 2026
  */

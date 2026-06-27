@@ -1,7 +1,7 @@
 /**
  * @file corporate_actions.hpp
  * @brief Corporate Actions Processing Engine
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Processes corporate actions affecting portfolio positions:

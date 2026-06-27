@@ -1,7 +1,7 @@
 /**
  * @file thread_pool.hpp
  * @brief Dynamic elastic thread pool with parallel execution primitives
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Dynamic/elastic thread pool that grows under load and shrinks when idle:

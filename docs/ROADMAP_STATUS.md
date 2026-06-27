@@ -1,6 +1,6 @@
 # Metis Genie Platform - Roadmap Status
 
-**Version:** 5.5.8
+**Version:** 5.5.11
 
 ## v5.3.2 Additions
 - SSE (Server-Sent Events) -- EventSource-compatible poll bridge
@@ -72,5 +72,5 @@
 
 ---
 
-*This document is part of the Metis Genie Platform v5.3.2 distribution.*
+*This document is part of the Metis Genie Platform v5.5.11 distribution.*
 *Copyright (c) 2026 Bennie Shearer (Retired). MIT License.*

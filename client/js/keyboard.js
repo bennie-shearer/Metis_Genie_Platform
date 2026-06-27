@@ -1,6 +1,6 @@
-// Metis Genie Platform v5.3.1
+// Metis Genie Platform v5.5.11
 /**
- * Metis Genie Platform v5.3.1 - Keyboard Manager
+ * Metis Genie Platform v5.5.11 - Keyboard Manager
  * Shortcuts, table navigation, help modal
  * @author Bennie Shearer  @copyright 2026
  */

@@ -1,7 +1,7 @@
 /**
  * @file pdf_writer.hpp
  * @brief Raw PDF 1.4 file writer - zero external dependencies
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Generates valid PDF 1.4 output directly from C++:

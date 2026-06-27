@@ -1,7 +1,7 @@
 /**
  * @file fred_client.hpp
  * @brief Federal Reserve Economic Data (FRED) API client
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  * 
  * FRED API integration providing:

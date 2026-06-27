@@ -1,7 +1,7 @@
 /**
  * @file trading_calendar.hpp
  * @brief NYSE/NASDAQ trading calendar with US market holidays
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Provides:

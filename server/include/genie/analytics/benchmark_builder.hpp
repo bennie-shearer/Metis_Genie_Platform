@@ -1,7 +1,7 @@
 /**
  * @file benchmark_builder.hpp
  * @brief Custom Benchmark Construction Engine for Metis Genie Platform
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Constructs custom composite benchmarks from weighted blends of indices,

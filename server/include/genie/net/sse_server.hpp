@@ -1,7 +1,7 @@
 /**
  * @file sse_server.hpp
  * @brief Server-Sent Events (SSE) for real-time data push without WebSocket
- * @version 5.5.4
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Two delivery modes:

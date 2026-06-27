@@ -1,7 +1,7 @@
 /**
  * @file lazy_loading.hpp
  * @brief Lazy loading and connection pooling for APIs
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  * 
  * TIER 5: Performance - Lazy loading for large data, connection pooling for APIs

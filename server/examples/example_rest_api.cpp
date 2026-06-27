@@ -1,7 +1,7 @@
 /**
  * @file example_rest_api.cpp
  * @brief REST API usage examples for Metis Genie Platform
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Demonstrates all REST API endpoints without a real HTTP server.

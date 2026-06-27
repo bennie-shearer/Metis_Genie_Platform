@@ -1,7 +1,7 @@
 /**
  * @file notifications.hpp
  * @brief Multi-channel notification service
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  * 
  * TIER 4: Notifications

@@ -1,7 +1,7 @@
 /**
  * @file wash_sale_engine.hpp
  * @brief IRS wash sale rule detection and adjustment engine
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Comprehensive wash sale compliance:

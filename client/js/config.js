@@ -1,7 +1,7 @@
 /**
  * @file config.js
  * @brief Client configuration for Metis Genie Platform
- * @version 5.3.1
+ * @version 5.5.11
  * 
  * Loads configuration from config.pson (PSON format) and provides defaults.
  * Must be loaded BEFORE other JS modules.

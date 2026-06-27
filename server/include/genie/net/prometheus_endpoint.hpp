@@ -1,7 +1,7 @@
 /**
  * @file prometheus_endpoint.hpp
  * @brief Prometheus-compatible /metrics endpoint (text exposition format)
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Exposes server metrics in the Prometheus text format (version 0.0.4).

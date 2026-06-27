@@ -1,6 +1,6 @@
-// Metis Genie Platform v5.3.1
+// Metis Genie Platform v5.5.11
 /**
- * Assets Page - Metis Genie Platform v5.3.1
+ * Assets Page - Metis Genie Platform v5.5.11
  * Handles: private assets, equity, fixed income, derivatives, FX, tenants
  */
 'use strict';

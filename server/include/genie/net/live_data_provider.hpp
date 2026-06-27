@@ -1,7 +1,7 @@
 /**
  * @file live_data_provider.hpp
  * @brief Live data provider bridging engine libraries to REST API endpoints
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Wraps all Metis Genie Platform engine headers and provides JSON-serialized data

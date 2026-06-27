@@ -1,7 +1,7 @@
 /**
  * @file feature_flags.hpp
  * @brief Feature flag system for gradual rollout and A/B testing
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Provides a runtime feature flag system enabling gradual feature rollouts,

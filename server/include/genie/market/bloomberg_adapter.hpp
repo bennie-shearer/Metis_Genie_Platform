@@ -1,7 +1,7 @@
 /**
  * @file bloomberg_adapter.hpp
  * @brief Bloomberg Real-Time Feed Adapter for Metis Genie Platform
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Provides integration with Bloomberg's market data services:

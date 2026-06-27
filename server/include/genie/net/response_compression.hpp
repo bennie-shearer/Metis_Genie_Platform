@@ -1,7 +1,7 @@
 /**
  * @file response_compression.hpp
  * @brief gzip/deflate response compression for REST API responses
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Compresses HTTP responses when the client sends:

@@ -7,7 +7,7 @@
  * - Windows: CreateProcess / Job Objects
  * - Linux: cgroups / namespaces
  * - macOS: sandbox-exec / launchd
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Provides a cross-platform abstraction layer for containerized deployment

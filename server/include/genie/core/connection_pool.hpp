@@ -1,7 +1,7 @@
 /**
  * @file connection_pool.hpp
  * @brief HTTP client connection pooling for external API integrations
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Provides connection pooling for HttpClient instances:

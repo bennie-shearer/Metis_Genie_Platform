@@ -1,7 +1,7 @@
 /**
  * @file test_rest_endpoints.cpp
- * @brief REST API endpoint tests for Metis Genie Platform v5.3.1
- * @version 5.3.1
+ * @brief REST API endpoint tests for Metis Genie Platform v5.5.11
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Exercises all 34 REST API endpoints end-to-end via the RestApi
@@ -520,7 +520,7 @@ void test_logout() {
 
 int main() {
     std::cout << "=============================================\n";
-    std::cout << "  Metis Genie Platform v5.3.1 REST Endpoint Tests\n";
+    std::cout << "  Metis Genie Platform v" << VERSION_STRING << " REST Endpoint Tests\n";
     std::cout << "  Testing all 34 API endpoints\n";
     std::cout << "=============================================\n";
 

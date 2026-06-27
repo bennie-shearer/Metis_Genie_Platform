@@ -1,7 +1,7 @@
 /**
  * @file response_cache.hpp
  * @brief API Response Cache with per-endpoint TTL
- * @version 5.3.1
+ * @version 5.5.11
  *
  * Caches REST API responses to reduce computation for frequently
  * accessed, slow-changing data (portfolios, risk metrics, market summaries).

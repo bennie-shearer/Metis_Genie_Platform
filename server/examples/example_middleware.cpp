@@ -1,7 +1,7 @@
 /**
  * @file example_middleware.cpp
  * @brief REST API middleware, rate limiting, and logging examples
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Demonstrates: Custom middleware, request logging, rate limiting,

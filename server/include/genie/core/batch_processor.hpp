@@ -1,7 +1,7 @@
 /**
  * @file batch_processor.hpp
  * @brief Generic batch processing framework for Metis Genie Platform
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Provides a configurable batch processing pipeline with parallel execution,

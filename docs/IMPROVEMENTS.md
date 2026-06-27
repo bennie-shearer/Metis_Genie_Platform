@@ -1,6 +1,6 @@
 # Metis Genie Platform - Recommended Improvements
 
-**Version:** 5.3.2
+**Version:** 5.5.11
 **Note:** All improvements use C++20 for Windows, Linux, and macOS.
 Excludes Docker, Doxygen, PyTest, GTest, and Jupyter.
 
@@ -100,5 +100,5 @@ Excludes Docker, Doxygen, PyTest, GTest, and Jupyter.
 
 ---
 
-*This document is part of the Metis Genie Platform v5.3.2 distribution.*
+*This document is part of the Metis Genie Platform v5.5.11 distribution.*
 *Copyright (c) 2026 Bennie Shearer (Retired). MIT License.*

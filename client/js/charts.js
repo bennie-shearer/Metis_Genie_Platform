@@ -1,6 +1,6 @@
-// Metis Genie Platform v5.3.1
+// Metis Genie Platform v5.5.11
 /**
- * Metis Genie Platform v5.3.1 - Canvas Charts
+ * Metis Genie Platform v5.5.11 - Canvas Charts
  * Pure Vanilla JS
  * @author Bennie Shearer  @copyright 2026
  */

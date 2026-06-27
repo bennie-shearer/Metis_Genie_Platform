@@ -1,7 +1,7 @@
 /**
  * @file scenario_stress.hpp
  * @brief Scenario-Based Stress Testing Engine for Metis Genie Platform
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Applies predefined and custom stress scenarios to portfolio positions

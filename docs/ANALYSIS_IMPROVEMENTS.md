@@ -21,4 +21,4 @@ The following are excluded by design:
 - PyTest, GTest (native C++20 test framework)
 - Jupyter (web client provides interactive analytics)
 
-*Metis Genie Platform v5.3.2 -- Analysis Improvements*
+*Metis Genie Platform v5.5.11 -- Analysis Improvements*

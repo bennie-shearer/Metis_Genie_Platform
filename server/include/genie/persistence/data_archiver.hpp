@@ -1,7 +1,7 @@
 /**
  * @file data_archiver.hpp
  * @brief Data archival and lifecycle management
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Data lifecycle management:

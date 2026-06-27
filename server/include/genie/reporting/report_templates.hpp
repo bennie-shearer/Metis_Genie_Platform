@@ -1,7 +1,7 @@
 /**
  * @file report_templates.hpp
  * @brief Configurable report templates with parameter binding and formats
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Template-based report generation:

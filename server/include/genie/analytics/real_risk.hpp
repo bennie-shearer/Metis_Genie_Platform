@@ -1,7 +1,7 @@
 /**
  * @file real_risk.hpp
  * @brief Real risk analytics from actual market data
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  * 
  * Production-grade risk calculations using real price data:

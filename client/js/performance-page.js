@@ -1,6 +1,6 @@
-// Metis Genie Platform v5.3.1
+// Metis Genie Platform v5.5.11
 /**
- * Performance Page - Metis Genie Platform v5.3.1
+ * Performance Page - Metis Genie Platform v5.5.11
  * Handles: attribution, benchmarks, regime detection
  */
 'use strict';

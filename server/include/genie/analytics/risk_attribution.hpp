@@ -1,7 +1,7 @@
 /**
  * @file risk_attribution.hpp
  * @brief Risk Factor Attribution Analysis Engine for Metis Genie Platform
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Decomposes portfolio risk into factor-level contributions using a

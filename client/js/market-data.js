@@ -1,6 +1,6 @@
-// Metis Genie Platform v5.3.1
+// Metis Genie Platform v5.5.11
 /**
- * Market Data Page - Metis Genie Platform v5.3.1
+ * Market Data Page - Metis Genie Platform v5.5.11
  * Handles: feeds, corporate actions, order book, market overview
  */
 'use strict';

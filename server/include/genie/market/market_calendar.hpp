@@ -1,7 +1,7 @@
 /**
  * @file market_calendar.hpp
  * @brief Market Calendar and Trading Hours Management for Metis Genie Platform
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Manages exchange trading calendars, holidays, half-days, and session

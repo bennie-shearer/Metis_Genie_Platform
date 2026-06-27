@@ -1,7 +1,7 @@
 /**
  * @file position_sizer.hpp
  * @brief Position sizing algorithms for risk-controlled trade execution
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Multi-method position sizing:

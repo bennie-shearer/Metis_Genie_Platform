@@ -1,7 +1,7 @@
 /**
  * @file test_integration.cpp
- * @brief Integration tests for Metis Genie Platform v5.3.1
- * @version 5.3.1
+ * @brief Integration tests for Metis Genie Platform v5.5.11
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Tests the newly implemented components:
@@ -28,6 +28,7 @@
 
 // Core components
 #include "genie/core/http_client.hpp"
+#include "genie/core/version.hpp"
 #include "genie/core/platform_http.hpp"
 #include "genie/core/platform_websocket.hpp"
 #include "genie/core/api_config_loader.hpp"
@@ -522,7 +523,7 @@ void test_tradier() {
 
 int main() {
     std::cout << "==========================================" << std::endl;
-    std::cout << "  Metis Genie Platform v5.3.1 Integration Tests  " << std::endl;
+    std::cout << "  Metis Genie Platform v" << genie::VERSION_STRING << " Integration Tests  " << std::endl;
     std::cout << "==========================================" << std::endl;
 
     // Try to load config for API key tests

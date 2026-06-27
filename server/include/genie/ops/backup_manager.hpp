@@ -1,7 +1,7 @@
 /**
  * @file backup_manager.hpp
  * @brief Automatic backups and system status dashboard
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  * 
  * TIER 5: Operations - Implement automatic backups, create system status dashboard

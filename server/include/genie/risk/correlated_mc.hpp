@@ -1,7 +1,7 @@
 /**
  * @file correlated_mc.hpp
  * @brief Correlated Monte Carlo simulation for Metis Genie Platform
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Cholesky decomposition of correlation matrix to generate

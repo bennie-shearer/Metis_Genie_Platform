@@ -1,7 +1,7 @@
 /**
  * @file portfolio_constraints.hpp
  * @brief Portfolio Constraint Validation Engine for Metis Genie Platform
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Validates portfolio positions and proposed trades against configurable

@@ -1,6 +1,6 @@
-# Metis Genie Platform REST API Reference v5.3.2
+# Metis Genie Platform REST API Reference v5.5.11
 
-**145+ REST Endpoints** | Version 5.3.2 | February 2026
+**145+ REST Endpoints** | Version 5.5.11 | February 2026
 
 ## Authentication
 
@@ -208,4 +208,4 @@ Authorization header.
 
 ## Total: 145+ endpoints
 
-*Metis Genie Platform v5.3.2 -- API Reference*
+*Metis Genie Platform v5.5.11 -- API Reference*

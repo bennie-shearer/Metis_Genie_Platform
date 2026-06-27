@@ -36,4 +36,4 @@
 - Include guards: #pragma once + #ifndef in all HPP
 - Client-server parity: All 61 HTML pages wired to REST API
 
-*Metis Genie Platform v5.3.2 -- Project Analysis*
+*Metis Genie Platform v5.5.11 -- Project Analysis*

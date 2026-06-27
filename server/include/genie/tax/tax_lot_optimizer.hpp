@@ -1,7 +1,7 @@
 /**
  * @file tax_lot_optimizer.hpp
  * @brief Tax Lot Selection and Optimization Engine for Metis Genie Platform
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Optimizes tax lot selection for trade execution to minimize tax liability

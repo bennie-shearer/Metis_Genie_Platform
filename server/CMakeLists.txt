@@ -1,5 +1,5 @@
 # ==========================================================================
-# Metis Genie Platform v5.5.8
+# Metis Genie Platform v5.5.11
 # CMakeLists.txt -- CLion server project (C++20)
 # Version read from server/VERSION.txt (single source of truth)
 # ==========================================================================
@@ -297,7 +297,7 @@ if(GENIE_INSTALL_CONFIG AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/config.pson")
     )
 endif()
 
-install(DIRECTORY docs/
+install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../docs/"
     DESTINATION ${CMAKE_INSTALL_DOCDIR}
     OPTIONAL
     FILES_MATCHING PATTERN "*.md"

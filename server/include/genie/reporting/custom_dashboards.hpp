@@ -1,7 +1,7 @@
 /**
  * @file custom_dashboards.hpp
  * @brief Custom dashboard builder for Metis Genie Platform
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Enables users to create, save, and share custom dashboard layouts with

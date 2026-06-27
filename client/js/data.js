@@ -1,6 +1,6 @@
-// Metis Genie Platform v5.3.1
+// Metis Genie Platform v5.5.11
 /**
- * Metis Genie Platform v5.3.1 - Data Layer
+ * Metis Genie Platform v5.5.11 - Data Layer
  * Fetches live data from server REST API with demo fallback
  * @author Bennie Shearer  @copyright 2026
  */

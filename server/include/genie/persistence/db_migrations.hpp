@@ -1,7 +1,7 @@
 /**
  * @file db_migrations.hpp
  * @brief Database schema migration framework
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Implements enterprise-grade database migrations:

@@ -1,7 +1,7 @@
 /**
  * @file smtp_client.hpp
  * @brief Real SMTP email client with STARTTLS support
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Implements SMTP protocol over TCP with STARTTLS:

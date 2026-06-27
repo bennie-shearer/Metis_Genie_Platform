@@ -1,7 +1,7 @@
 /**
  * @file currency_hedger.hpp
  * @brief FX hedging strategy with rolling forwards and cost estimation
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Currency risk management:

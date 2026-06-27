@@ -1,7 +1,7 @@
 /**
  * @file rate_limiter.hpp
  * @brief Token Bucket rate limiting for API endpoints
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Implements token bucket algorithm for API rate limiting.

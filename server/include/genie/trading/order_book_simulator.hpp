@@ -1,7 +1,7 @@
 /**
  * @file order_book_simulator.hpp
  * @brief Order Book Simulator for Market Microstructure Analysis
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Simulated limit order book for algorithm testing and education:

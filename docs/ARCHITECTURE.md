@@ -1,4 +1,4 @@
-# Architecture - Metis Genie Platform v5.3.2
+# Architecture - Metis Genie Platform v5.5.11
 
 ## Server (C++20 / CLion)
 
@@ -62,4 +62,4 @@ Client (HTML5) -> REST API (130+ endpoints) -> Module Layer -> Data Layer
 6. GPU, Kubernetes, and Containers are stubs for future C++20 implementation
 7. Cross-platform: Windows (MinGW/MSVC), Linux (GCC/Clang), macOS (Apple Clang)
 
-*Metis Genie Platform v5.3.2 -- Architecture*
+*Metis Genie Platform v5.5.11 -- Architecture*

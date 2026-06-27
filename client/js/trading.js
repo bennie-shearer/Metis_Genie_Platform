@@ -1,5 +1,5 @@
-// Metis Genie Platform v5.3.1
-/* Metis Genie Platform Trading Page JavaScript v5.3.1 */
+// Metis Genie Platform v5.5.11
+/* Metis Genie Platform Trading Page JavaScript v5.5.11 */
 'use strict';
 
 const Trading = {

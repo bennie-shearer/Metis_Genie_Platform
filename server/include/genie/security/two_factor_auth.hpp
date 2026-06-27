@@ -1,7 +1,7 @@
 /**
  * @file two_factor_auth.hpp
  * @brief Two-factor authentication and session management
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  * 
  * TIER 5: Security - Two-factor authentication and session timeout handling

@@ -1,7 +1,7 @@
 /**
  * @file connection_resilience.hpp
  * @brief Connection resilience with retry and exponential backoff
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Resilient connection management for external services:

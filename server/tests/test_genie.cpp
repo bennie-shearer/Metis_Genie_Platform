@@ -1,7 +1,7 @@
 /**
  * @file test_genie.cpp
  * @brief Comprehensive test suite for Metis Genie Platform Emulator
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  */
 #include "../include/genie/genie.hpp"
@@ -22,7 +22,14 @@ static int tests_run = 0, tests_passed = 0;
 #define ASSERT_EQ(a, b) if ((a) != (b)) throw std::runtime_error("Assertion failed: " #a " == " #b)
 #define ASSERT_NEAR(a, b, t) if (std::abs((a) - (b)) > (t)) throw std::runtime_error("Assertion failed: " #a " ~= " #b)
 
-TEST(test_version) { ASSERT_EQ(VERSION_MAJOR, 4); ASSERT_EQ(VERSION_MINOR, 22); ASSERT_EQ(VERSION_PATCH, 0); ASSERT_TRUE(std::string(PROJECT_NAME) == "Metis Genie Platform"); }
+TEST(test_version) {
+    ASSERT_TRUE(VERSION_MAJOR >= 1 && VERSION_MINOR >= 0 && VERSION_PATCH >= 0);
+    std::string composed = std::to_string(VERSION_MAJOR) + "." +
+                           std::to_string(VERSION_MINOR) + "." +
+                           std::to_string(VERSION_PATCH);
+    ASSERT_TRUE(std::string(VERSION_STRING) == composed);
+    ASSERT_TRUE(std::string(PROJECT_NAME) == "Metis Genie Platform");
+}
 TEST(test_money) { Money m1(100, "USD"), m2(50, "USD"); ASSERT_NEAR((m1 + m2).amount, 150, 0.01); ASSERT_NEAR((m1 * 2).amount, 200, 0.01); }
 TEST(test_uuid) { auto u1 = UuidGenerator::generate(), u2 = UuidGenerator::generate(); ASSERT_EQ(u1.length(), 36u); ASSERT_TRUE(u1 != u2); }
 TEST(test_statistics) { std::vector<double> d = {1,2,3,4,5}; ASSERT_NEAR(math::mean(d), 3.0, 0.001); ASSERT_NEAR(math::stddev(d), 1.5811, 0.01); }
@@ -55,7 +62,7 @@ TEST(test_fx) { auto fx = assets::create_fx_pair("EUR", "USD"); fx->update_spot(
 TEST(test_commodity) { auto gold = assets::gold(); ASSERT_TRUE(gold->is_commodity()); ASSERT_TRUE(gold->spot_price() > 0); }
 TEST(test_risk_metrics) { std::vector<double> r = {0.01, -0.02, 0.03, 0.01, -0.01, 0.02}; risk::RiskAnalyzer ra; auto m = ra.analyze(r); ASSERT_TRUE(m.volatility > 0); ASSERT_TRUE(m.sharpe_ratio != 0); }
 TEST(test_blotter) { trading::TradeBlotter b; auto id = b.record_trade("O1", "P1", "AAPL", "Apple", true, 100, 175.0); ASSERT_TRUE(id.find("TRD-") != std::string::npos); ASSERT_EQ(b.trade_count(), 1u); }
-TEST(test_cli) { cli::CLI c; auto r = c.execute("version"); ASSERT_TRUE(r.find("5.3.1") != std::string::npos); }
+TEST(test_cli) { cli::CLI c; auto r = c.execute("version"); ASSERT_TRUE(r.find(std::string(VERSION_STRING)) != std::string::npos); }
 
 // v2.6.0 New Module Tests
 TEST(test_timeseries) { std::vector<double> d = {1,2,3,4,5,6,7,8,9,10}; auto ma = timeseries::sma(d, 3); ASSERT_TRUE(ma.size() == 8); ASSERT_NEAR(ma[0], 2.0, 0.01); }
@@ -133,7 +140,7 @@ TEST(test_rest_health) {
     api.configure_defaults();
     auto res = api.handle("GET", "/api/v1/health");
     ASSERT_TRUE(res.status == 200);
-    ASSERT_TRUE(res.body.find("5.3.1") != std::string::npos);
+    ASSERT_TRUE(res.body.find(std::string(VERSION_STRING)) != std::string::npos);
     ASSERT_TRUE(res.body.find("\"status\":\"healthy\"") != std::string::npos);
 }
 TEST(test_rest_login) {
@@ -1423,7 +1430,7 @@ TEST(test_multi_user_datastore) {
 }
 
 int main() {
-    std::cout << "\n" << std::string(60, '=') << "\nMetis Genie Platform v5.3.1 - Test Suite\n" << std::string(60, '=') << "\n\n";
+    std::cout << "\n" << std::string(60, '=') << "\nMetis Genie Platform v" << VERSION_STRING << " - Test Suite\n" << std::string(60, '=') << "\n\n";
     RUN_TEST(test_version); RUN_TEST(test_money); RUN_TEST(test_uuid);
     RUN_TEST(test_statistics); RUN_TEST(test_percentile); RUN_TEST(test_correlation);
     RUN_TEST(test_black_scholes); RUN_TEST(test_bond_price);

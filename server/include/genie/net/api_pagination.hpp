@@ -1,7 +1,7 @@
 /**
  * @file api_pagination.hpp
  * @brief API pagination and filtering support
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Implements REST API pagination and filtering:

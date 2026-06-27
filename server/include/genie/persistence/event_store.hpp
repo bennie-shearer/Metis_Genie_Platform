@@ -1,7 +1,7 @@
 /**
  * @file event_store.hpp
  * @brief Event sourcing and CQRS for Metis Genie Platform
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Immutable event log, point-in-time state reconstruction,

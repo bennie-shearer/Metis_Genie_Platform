@@ -1,7 +1,7 @@
 /**
  * @file reconciliation.hpp
  * @brief Automated portfolio reconciliation engine for Metis Genie Platform
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Compares portfolio positions against custodian records, broker statements,

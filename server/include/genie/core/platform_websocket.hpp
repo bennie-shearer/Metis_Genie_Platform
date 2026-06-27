@@ -1,7 +1,7 @@
 /**
  * @file platform_websocket.hpp
  * @brief RFC 6455 WebSocket client - zero external dependencies
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Implements a real WebSocket client using platform-native TLS:

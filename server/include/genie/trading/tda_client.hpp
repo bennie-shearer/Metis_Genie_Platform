@@ -1,7 +1,7 @@
 /**
  * @file tda_client.hpp
  * @brief TD Ameritrade / Charles Schwab API integration with OAuth
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  * 
  * TD Ameritrade API integration (now Schwab) providing:

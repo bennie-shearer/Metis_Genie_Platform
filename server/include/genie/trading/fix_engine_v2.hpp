@@ -1,7 +1,7 @@
 /**
  * @file fix_engine_v2.hpp
  * @brief FIX 4.4 / 5.0 protocol engine -- full session and message handling
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Implements the FIX Protocol session layer (FIXT 1.1) and application layer

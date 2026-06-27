@@ -1,7 +1,7 @@
 /**
  * @file rebalance_optimizer.hpp
  * @brief Target-weight portfolio rebalancing with tax-aware trade minimization
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Portfolio rebalancing engine:

@@ -1,7 +1,7 @@
 /**
  * @file fix_engine.hpp
  * @brief FIX 4.2/4.4 Protocol Engine for Metis Genie Platform
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Financial Information eXchange (FIX) protocol implementation providing

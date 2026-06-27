@@ -1,7 +1,7 @@
 /**
  * @file data_normalizer.hpp
  * @brief Market data normalization layer across providers
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Unified market data format across multiple providers:

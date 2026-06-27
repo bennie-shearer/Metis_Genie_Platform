@@ -1,7 +1,7 @@
 /**
  * @file instrument_master.hpp
  * @brief Comprehensive security master with identifiers and reference data
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Security master database for instrument reference data:

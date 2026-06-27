@@ -1,7 +1,7 @@
 /**
  * @file compute_device.hpp
  * @brief Compute device abstraction for future GPU/accelerator support
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * This header provides the abstraction layer for compute devices.

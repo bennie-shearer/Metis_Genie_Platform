@@ -1,7 +1,7 @@
 /**
  * @file accrued_interest.hpp
  * @brief Bond accrued interest with day count conventions and clean/dirty pricing
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Fixed income accrued interest calculation:

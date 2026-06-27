@@ -1,7 +1,7 @@
 /**
  * @file json_logger.hpp
  * @brief Structured JSON logging for machine-parseable log output
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Produces JSON-formatted log entries with timestamp, level, component,

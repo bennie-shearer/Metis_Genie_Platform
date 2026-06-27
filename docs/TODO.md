@@ -1,4 +1,4 @@
-# Metis Genie Platform v5.5.8 - TODO and Recommended Improvements
+# Metis Genie Platform v5.5.11 - TODO and Recommended Improvements
 
 ## Completed in v5.3.2 (Near-Term v5.x)
 - [x] Server-Sent Events (SSE) -- SseChannel + EventSource-compatible poll bridge
@@ -102,4 +102,4 @@
 - [ ] Fuzz tests for PSON parser and binary deserializer
 - [ ] Cross-platform CI script (bash + PowerShell)
 
-*Metis Genie Platform v5.3.2 -- TODO.md*
+*Metis Genie Platform v5.5.11 -- TODO.md*

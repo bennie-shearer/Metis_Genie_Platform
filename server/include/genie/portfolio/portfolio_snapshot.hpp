@@ -1,7 +1,7 @@
 /**
  * @file portfolio_snapshot.hpp
  * @brief Point-in-time portfolio versioning for audit and replay
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Portfolio snapshot and versioning system:

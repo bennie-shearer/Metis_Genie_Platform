@@ -1,7 +1,7 @@
 /**
  * @file tax_optimization.hpp
  * @brief Tax-loss harvesting and optimization for Metis Genie Platform
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Wash sale detection (30-day rule), lot selection strategies,

@@ -1,7 +1,7 @@
 /**
  * @file private_assets.hpp
  * @brief Private Assets Management Engine (PE, Real Estate, Infrastructure)
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Comprehensive private assets management framework supporting private equity,

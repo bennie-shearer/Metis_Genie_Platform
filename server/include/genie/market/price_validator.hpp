@@ -1,7 +1,7 @@
 /**
  * @file price_validator.hpp
  * @brief Price data validation (range, gaps, outliers)
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  * 
  * Validates market data quality:

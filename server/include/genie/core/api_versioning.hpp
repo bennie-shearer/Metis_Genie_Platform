@@ -1,7 +1,7 @@
 /**
  * @file api_versioning.hpp
  * @brief API versioning framework for Metis Genie Platform
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Manages API version lifecycle including routing, deprecation notices,

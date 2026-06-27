@@ -1,7 +1,7 @@
 /**
  * @file data_export.hpp
  * @brief CSV, JSON, and XML data export framework
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Provides a unified interface for exporting tabular data to CSV, JSON,

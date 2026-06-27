@@ -1,7 +1,7 @@
 /**
  * @file config_manager.hpp
  * @brief Configuration management with hot-reload and validation
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Hierarchical configuration management:

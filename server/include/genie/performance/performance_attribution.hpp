@@ -1,7 +1,7 @@
 /**
  * @file performance_attribution.hpp
  * @brief Brinson-Fachler return attribution with multi-level decomposition
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Performance attribution framework:

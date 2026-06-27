@@ -4,8 +4,8 @@
     <link rel="icon" type="image/svg+xml" href="img/icon.svg">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deployment - Metis Genie Platform v5.5.8</title>
-    <link rel="stylesheet" href="css/main.css?v=5.5.8">
+    <title>Deployment - Metis Genie Platform v5.5.11</title>
+    <link rel="stylesheet" href="css/main.css?v=5.5.11">
     <style>
         .deploy-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:1.25rem;padding:1.5rem}
         .dp-card{background:var(--card-bg,#fff);border:1px solid var(--border,#e2e8f0);border-radius:12px;overflow:hidden}
@@ -53,9 +53,9 @@
         <div class="dp-card"><div class="card-head"><h3>Build Configuration</h3></div><div class="card-body" id="buildConfig"><span class="metric-label">Loading...</span></div></div>
         <div class="dp-card"><div class="card-head"><h3>Platform Support</h3></div><div class="card-body" id="platformSupport"><span class="metric-label">Loading...</span></div></div>
     </div>
-    <script src="js/utils.js?v=5.5.8"></script>
-    <script src="js/config.js?v=5.5.8"></script>
-    <script src="js/connection.js?v=5.5.8"></script>
+    <script src="js/utils.js?v=5.5.11"></script>
+    <script src="js/config.js?v=5.5.11"></script>
+    <script src="js/connection.js?v=5.5.11"></script>
     <script>
     (function() {
         const token = sessionStorage.getItem('genie_token');
@@ -77,7 +77,7 @@
 
         function renderDemo() {
             document.getElementById('deployStatus').innerHTML =
-                '<div class="metric-row"><span class="metric-label">Current Version</span><span class="metric-value neutral">v5.5.8</span></div>' +
+                '<div class="metric-row"><span class="metric-label">Current Version</span><span class="metric-value neutral">v5.5.11</span></div>' +
                 '<div class="metric-row"><span class="metric-label">Deploy Mode</span><span class="metric-value">Native Binary</span></div>' +
                 '<div class="metric-row"><span class="metric-label">Uptime</span><span class="metric-value positive">48h 23m</span></div>' +
                 '<div class="metric-row"><span class="metric-label">Last Deploy</span><span class="metric-value">Feb 6, 2026 22:00</span></div>' +

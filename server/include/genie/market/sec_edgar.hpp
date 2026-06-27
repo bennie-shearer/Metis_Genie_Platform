@@ -1,7 +1,7 @@
 /**
  * @file sec_edgar.hpp
  * @brief SEC EDGAR API client for filing retrieval
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  * 
  * SEC EDGAR integration providing:

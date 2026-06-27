@@ -1,7 +1,7 @@
 /**
  * @file main.cpp
  * @brief Metis Genie Platform Investment Management Platform - Production Entry Point
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Configuration: All settings in config.pson (see config.pson.template)
@@ -1042,7 +1042,11 @@ public:
         test("System initialized", system_.is_initialized());
         test("Routes configured (> 0)", api_.route_count() > 0);
         test("Config loaded (> 0 settings)", config().size() > 0);
-        test("Version string set", genie::VERSION_MAJOR == 3 && genie::VERSION_MINOR == 3);
+        test("Version string set", !genie::VERSION_STRING.empty() &&
+             std::string(genie::VERSION_STRING) ==
+                 std::to_string(genie::VERSION_MAJOR) + "." +
+                 std::to_string(genie::VERSION_MINOR) + "." +
+                 std::to_string(genie::VERSION_PATCH));
 
         // REST API endpoints
         auto check_endpoint = [&](const std::string& method, const std::string& path, int expected_status) {

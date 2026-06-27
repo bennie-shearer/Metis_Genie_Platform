@@ -1,7 +1,7 @@
 /**
  * @file crypto_trading.hpp
  * @brief Cryptocurrency trading module
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Implements cryptocurrency trading capabilities:

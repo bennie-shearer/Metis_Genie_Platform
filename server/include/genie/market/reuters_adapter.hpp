@@ -1,7 +1,7 @@
 /**
  * @file reuters_adapter.hpp
  * @brief Reuters/Refinitiv Real-Time Feed Adapter for Metis Genie Platform
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Production-grade adapter for Refinitiv (formerly Thomson Reuters) real-time

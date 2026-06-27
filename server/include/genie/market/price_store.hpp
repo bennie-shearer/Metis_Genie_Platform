@@ -1,7 +1,7 @@
 /**
  * @file price_store.hpp
  * @brief SQLite-based price storage with OHLCV schema
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  * 
  * Provides persistent storage for market data:

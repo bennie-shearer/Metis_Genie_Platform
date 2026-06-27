@@ -1,7 +1,7 @@
 /**
  * @file math_utils.hpp
  * @brief Mathematical utilities for Metis Genie Platform Emulator
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  */
 #pragma once

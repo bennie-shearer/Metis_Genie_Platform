@@ -1,7 +1,7 @@
 /**
  * @file position_sync.hpp
  * @brief Position synchronization between broker and internal portfolio
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  * 
  * Provides synchronization between broker accounts and internal tracking:

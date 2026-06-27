@@ -1,7 +1,7 @@
 /**
  * @file fix_certification.hpp
  * @brief FIX Protocol Certification Testing Framework for Metis Genie Platform
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Comprehensive FIX certification test harness that validates a FIX engine

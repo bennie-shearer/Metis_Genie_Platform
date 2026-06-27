@@ -1,7 +1,7 @@
 /**
  * @file pretrade_compliance.hpp
  * @brief Pre-trade compliance check pipeline
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Rule-based pre-trade compliance checking:

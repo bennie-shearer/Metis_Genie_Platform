@@ -1,4 +1,4 @@
-# Metis Genie Platform v5.5.8
+# Metis Genie Platform v5.5.11
 
 **Enterprise Investment Management Platform**  
 C++20 · Zero External Dependencies · MIT License · Windows / Linux / macOS
@@ -75,7 +75,7 @@ Metis_Genie_Platform/
 ├── server/                 ← CLion project (C++20 server)
 │   ├── CMakeLists.txt      ← CMake root (reads version from VERSION.txt)
 │   ├── CMakePresets.json
-│   ├── VERSION.txt         ← 5.5.8 (single source of truth for CMake)
+│   ├── VERSION.txt         ← 5.5.11 (single source of truth for CMake)
 │   ├── config.pson         ← 240 server parameters (PSON format)
 │   ├── include/genie/      ← 266 header files, 17 module directories
 │   ├── src/main.cpp        ← Single translation unit
@@ -98,7 +98,7 @@ Metis_Genie_Platform/
     ├── BUILD.md            ← Detailed build instructions
     ├── ARCHITECTURE.md     ← System architecture
     ├── TODO.md             ← Roadmap
-    └── VERSION.txt         ← 5.5.8
+    └── VERSION.txt         ← 5.5.11
 ```
 
 > **Why is `CMakeLists.txt` inside `server/` and not at the repo root?**  

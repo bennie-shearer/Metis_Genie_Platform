@@ -1,7 +1,7 @@
 /**
  * @file job_processor.hpp
  * @brief Background job processing system
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  * 
  * TIER 5: Performance - Create background job processing

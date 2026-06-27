@@ -1,7 +1,7 @@
 /**
  * @file distributed_pool.hpp
  * @brief Distributed compute framework for Metis Genie Platform
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Job serialization, worker node management, task dispatch,

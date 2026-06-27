@@ -1,5 +1,5 @@
-// Metis Genie Platform v5.3.1
-/* Metis Genie Platform Operations Page JavaScript v5.3.1 */
+// Metis Genie Platform v5.5.11
+/* Metis Genie Platform Operations Page JavaScript v5.5.11 */
 'use strict';
 
 const Operations = {
@@ -132,7 +132,7 @@ const Operations = {
         const d = this.deploymentData;
         el.innerHTML =
             '<div class="cache-detail"><span>Environment</span><span>' + (d.environment || 'development') + '</span></div>' +
-            '<div class="cache-detail"><span>Version</span><span>' + (d.version || '5.3.1') + '</span></div>' +
+            '<div class="cache-detail"><span>Version</span><span>' + (d.version || '5.5.11') + '</span></div>' +
             '<div class="cache-detail"><span>Host</span><span>' + (d.hostname || 'localhost') + '</span></div>' +
             '<div class="cache-detail"><span>Container Ready</span><span>' + (d.container_ready ? 'Yes' : 'No') + '</span></div>' +
             '<div class="cache-detail"><span>K8s Ready</span><span>' + (d.kubernetes_ready ? 'Yes' : 'No') + '</span></div>';

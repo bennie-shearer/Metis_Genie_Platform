@@ -1,7 +1,7 @@
 /**
  * @file benchmark_tracker.hpp
  * @brief Benchmark return tracking, tracking error, and information ratio
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Benchmark tracking framework:

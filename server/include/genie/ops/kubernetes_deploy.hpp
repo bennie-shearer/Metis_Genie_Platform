@@ -5,7 +5,7 @@
  * @note Kubernetes deployment is currently a prototype stub returning sample data.
  * Future C++20 implementation will use the HTTP client to communicate
  * with the Kubernetes API server for cross-platform cluster management.
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Provides programmatic Kubernetes deployment management including:

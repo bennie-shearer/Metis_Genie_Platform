@@ -1,7 +1,7 @@
 /**
  * @file config_validator.hpp
  * @brief Configuration file validator for startup checks
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Validates config.json for required fields, valid port ranges,

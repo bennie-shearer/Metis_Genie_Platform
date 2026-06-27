@@ -1,7 +1,7 @@
 /**
  * @file health_dashboard.hpp
  * @brief System health dashboard aggregation
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Centralized health status for all platform components:

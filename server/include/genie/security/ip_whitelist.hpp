@@ -1,7 +1,7 @@
 /**
  * @file ip_whitelist.hpp
  * @brief IP whitelist for API access and enhanced audit logging
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  * 
  * TIER 5: Security - IP whitelist for API access, audit logging for all actions

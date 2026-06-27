@@ -1,7 +1,7 @@
 /**
  * @file margin_calculator.hpp
  * @brief Reg-T and portfolio margin with maintenance call detection
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Margin calculation engine:

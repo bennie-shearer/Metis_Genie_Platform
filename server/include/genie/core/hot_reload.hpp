@@ -1,7 +1,7 @@
 /**
  * @file hot_reload.hpp
  * @brief Configuration hot-reload manager for Metis Genie Platform
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Watches configuration files for changes and applies updates without restart.

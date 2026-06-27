@@ -1,7 +1,7 @@
 /**
  * @file response_cache.hpp
  * @brief Response caching system with multiple backends
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  * 
  * TIER 5: Performance - Implement response caching

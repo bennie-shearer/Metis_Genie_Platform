@@ -1,7 +1,7 @@
 /**
  * @file enhanced_orders.hpp
  * @brief Enhanced order management for prototype trading
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  * 
  * Provides advanced order management features:

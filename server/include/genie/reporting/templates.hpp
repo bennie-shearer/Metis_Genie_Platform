@@ -1,7 +1,7 @@
 /**
  * @file templates.hpp
  * @brief JSON-based Report Templates
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Implements template-based report generation:

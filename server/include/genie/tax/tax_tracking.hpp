@@ -1,7 +1,7 @@
 /**
  * @file tax_tracking.hpp
  * @brief Tax lot tracking and cost basis calculations
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  * 
  * Comprehensive tax tracking functionality:

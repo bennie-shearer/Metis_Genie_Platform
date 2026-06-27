@@ -1,7 +1,7 @@
 /**
  * @file binary_serializer.hpp
  * @brief Binary serialization for large internal datasets
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Provides a compact binary wire format for position arrays, price series,

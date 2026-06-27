@@ -1,7 +1,7 @@
 /**
  * @file live_valuation.hpp
  * @brief Real-time portfolio valuation and P&L calculation
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  * 
  * Provides real-time portfolio analytics:

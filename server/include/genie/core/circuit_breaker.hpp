@@ -1,7 +1,7 @@
 /**
  * @file circuit_breaker.hpp
  * @brief Circuit Breaker pattern for resilient external service calls
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Implements the Circuit Breaker pattern to prevent cascading failures

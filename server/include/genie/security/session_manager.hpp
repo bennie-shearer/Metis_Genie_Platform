@@ -1,7 +1,7 @@
 /**
  * @file session_manager.hpp
  * @brief User session lifecycle with token management and concurrency limits
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Enterprise session management:

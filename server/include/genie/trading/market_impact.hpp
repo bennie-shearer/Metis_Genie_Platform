@@ -1,7 +1,7 @@
 /**
  * @file market_impact.hpp
  * @brief Market Impact Model (Almgren-Chriss)
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Implements the Almgren-Chriss optimal execution model:

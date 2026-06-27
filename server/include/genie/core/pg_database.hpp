@@ -1,7 +1,7 @@
 /**
  * @file pg_database.hpp
  * @brief PostgreSQL database backend for Metis Genie Platform
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Optional PostgreSQL backend implementing the same DataStore interface as

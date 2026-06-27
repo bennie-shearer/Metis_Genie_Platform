@@ -1,7 +1,7 @@
 /**
  * @file auth_provider.hpp
  * @brief OAuth2/SSO authentication provider for Metis Genie Platform
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * JWT-like token validation, role-based access control, API key auth,

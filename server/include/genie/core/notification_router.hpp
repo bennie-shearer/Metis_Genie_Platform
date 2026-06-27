@@ -1,7 +1,7 @@
 /**
  * @file notification_router.hpp
  * @brief Multi-channel notification dispatch with routing rules
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Enterprise notification system:

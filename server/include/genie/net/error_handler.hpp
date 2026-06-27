@@ -1,7 +1,7 @@
 /**
  * @file error_handler.hpp
  * @brief Structured Error Handling with Trace IDs for REST API
- * @version 5.3.1
+ * @version 5.5.11
  *
  * Provides consistent error response formatting across all API endpoints
  * with unique trace IDs for debugging and log correlation.

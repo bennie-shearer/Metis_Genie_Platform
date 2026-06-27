@@ -1,7 +1,7 @@
 /**
  * @file data_quality.hpp
  * @brief Data quality and corporate action handling
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  * 
  * Production-grade data quality management:

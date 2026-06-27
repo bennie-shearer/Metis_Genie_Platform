@@ -1,6 +1,6 @@
 # Metis Genie Platform - Build Instructions
 
-**Version:** 5.3.2
+**Version:** 5.5.11
 **Platforms:** Windows (MinGW/MSVC), Linux (GCC/Clang), macOS (Apple Clang)
 
 ## Prerequisites
@@ -64,4 +64,4 @@ All 100+ parameters are documented in the template file.
 
 ---
 
-*Metis Genie Platform v5.3.2 -- Build Instructions*
+*Metis Genie Platform v5.5.11 -- Build Instructions*

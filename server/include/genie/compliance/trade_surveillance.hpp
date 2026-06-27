@@ -1,7 +1,7 @@
 /**
  * @file trade_surveillance.hpp
  * @brief Trade Surveillance and Pattern Detection Engine for Metis Genie Platform
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Monitors trading activity for 7 suspicious patterns, regulatory

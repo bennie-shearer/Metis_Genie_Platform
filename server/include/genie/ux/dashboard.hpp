@@ -1,7 +1,7 @@
 /**
  * @file dashboard.hpp
  * @brief Dashboard customization and keyboard shortcuts
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  * 
  * TIER 5: User Experience - Dashboard customization and keyboard shortcuts

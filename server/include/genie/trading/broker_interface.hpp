@@ -1,7 +1,7 @@
 /**
  * @file broker_interface.hpp
  * @brief Common broker interface for trading integrations
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  * 
  * Provides abstraction layer for broker APIs:

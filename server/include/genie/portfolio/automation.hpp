@@ -1,7 +1,7 @@
 /**
  * @file automation.hpp
  * @brief Portfolio automation - rebalancing, tax-loss harvesting, drift, dividends
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  * 
  * TIER 4: Automation

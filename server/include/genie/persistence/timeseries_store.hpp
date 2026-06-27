@@ -1,7 +1,7 @@
 /**
  * @file timeseries_store.hpp
  * @brief Purpose-built time-series storage for financial data
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * In-memory time-series database optimized for financial data:

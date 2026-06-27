@@ -1,7 +1,7 @@
 /**
  * @file platform_http.hpp
  * @brief Platform-native HTTP/HTTPS client - zero external dependencies
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Implements real outbound HTTP/HTTPS using OS-native TLS:

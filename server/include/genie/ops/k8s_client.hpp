@@ -1,7 +1,7 @@
 /**
  * @file k8s_client.hpp
  * @brief Kubernetes API client via HttpClient -- native C++20, no kubectl
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Speaks directly to the Kubernetes REST API using the existing HttpClient

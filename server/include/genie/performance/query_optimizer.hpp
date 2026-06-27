@@ -1,7 +1,7 @@
 /**
  * @file query_optimizer.hpp
  * @brief Database query optimization with indexes
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  * 
  * TIER 5: Performance - Database query optimization indexes

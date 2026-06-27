@@ -1,7 +1,7 @@
 /**
  * @file yahoo_finance.hpp
  * @brief Yahoo Finance data scraper for historical prices
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  * 
  * Provides historical price data from Yahoo Finance:

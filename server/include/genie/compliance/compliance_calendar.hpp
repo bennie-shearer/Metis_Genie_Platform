@@ -1,7 +1,7 @@
 /**
  * @file compliance_calendar.hpp
  * @brief Regulatory compliance deadline and filing calendar
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Compliance calendar and deadline management:

@@ -1,7 +1,7 @@
 /**
  * @file request_trace.hpp
  * @brief Request ID generation and tracing for end-to-end request tracking
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Generates a unique request ID for each API call, included in response

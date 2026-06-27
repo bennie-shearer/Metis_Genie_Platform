@@ -1,7 +1,7 @@
 /**
  * @file settlement.hpp
  * @brief Settlement and clearing engine for Metis Genie Platform
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * T+1/T+2 settlement, business day calendar, cash projection,

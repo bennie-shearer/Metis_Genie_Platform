@@ -1,7 +1,7 @@
 /**
  * @file task_scheduler.hpp
  * @brief Cron-like task scheduling with execution history and retry
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Enterprise task scheduling:

@@ -1,7 +1,7 @@
 /**
  * @file price_cache.hpp
  * @brief Price cache with staleness detection and TTL
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  * 
  * Provides high-performance price caching:

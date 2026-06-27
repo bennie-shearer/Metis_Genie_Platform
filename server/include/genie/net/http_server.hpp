@@ -1,7 +1,7 @@
 /**
  * @file http_server.hpp
  * @brief Production-grade HTTP/1.1 server for Metis Genie Platform
- * @version 5.5.4
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Self-contained cross-platform TCP/HTTP server that bridges browser requests

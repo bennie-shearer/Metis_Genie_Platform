@@ -1,7 +1,7 @@
 /**
  * @file peer_comparison.hpp
  * @brief Peer group comparison with percentile ranking and style analysis
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Peer group performance analysis:

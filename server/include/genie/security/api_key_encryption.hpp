@@ -1,7 +1,7 @@
 /**
  * @file api_key_encryption.hpp
  * @brief API key encryption with AES-256
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  * 
  * TIER 5: Security - Implement API key encryption (AES-256)

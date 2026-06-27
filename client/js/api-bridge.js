@@ -1,7 +1,7 @@
-// Metis Genie Platform v5.3.1
+// Metis Genie Platform v5.5.11
 /**
  * api-bridge.js - Full Server Endpoint Coverage
- * Metis Genie Platform v5.3.1
+ * Metis Genie Platform v5.5.11
  *
  * Provides client-side functions for ALL server REST API endpoints,
  * ensuring complete feature parity between server and client.

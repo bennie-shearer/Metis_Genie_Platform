@@ -1,11 +1,11 @@
-// Metis Genie Platform v5.3.1
+// Metis Genie Platform v5.5.11
 /**
- * Metis Genie Platform v5.3.1 - Main Application
+ * Metis Genie Platform v5.5.11 - Main Application
  * Pure Vanilla JS
  * @author Bennie Shearer  @copyright 2026
  */
 const App = {
-    version: '5.3.1',
+    version: '5.5.11',
     page: 'dashboard',
 
     init() {

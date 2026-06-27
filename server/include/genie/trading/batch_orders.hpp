@@ -1,7 +1,7 @@
 /**
  * @file batch_orders.hpp
  * @brief Batch order execution engine for Metis Genie Platform
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Processes bulk order submissions with validation, pre-trade compliance

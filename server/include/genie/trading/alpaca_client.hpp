@@ -1,7 +1,7 @@
 /**
  * @file alpaca_client.hpp
  * @brief Alpaca Markets API client for paper and live trading
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  * 
  * Provides complete Alpaca API integration:

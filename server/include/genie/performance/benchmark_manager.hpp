@@ -1,7 +1,7 @@
 /**
  * @file benchmark_manager.hpp
  * @brief Index tracking, benchmark comparison, and tracking error analysis
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Benchmark management for portfolio performance analysis:

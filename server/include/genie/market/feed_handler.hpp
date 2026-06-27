@@ -1,7 +1,7 @@
 /**
  * @file feed_handler.hpp
  * @brief Real-time market data feed handler for Metis Genie Platform
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Multi-provider feed handler that subscribes to real-time and delayed

@@ -1,7 +1,7 @@
 /**
  * @file symbol_autocomplete.hpp
  * @brief Symbol autocomplete with database integration
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  * 
  * TIER 5: User Experience - Symbol autocomplete from database

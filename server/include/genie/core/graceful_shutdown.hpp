@@ -1,7 +1,7 @@
 /**
  * @file graceful_shutdown.hpp
  * @brief Graceful Shutdown Manager with Request Draining
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Manages orderly server shutdown:

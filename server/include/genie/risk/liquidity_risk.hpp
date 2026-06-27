@@ -1,7 +1,7 @@
 /**
  * @file liquidity_risk.hpp
  * @brief Liquidity Risk Analysis Engine
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Provides comprehensive liquidity risk measurement and monitoring:

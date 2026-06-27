@@ -1,7 +1,7 @@
 /**
  * @file route_table.hpp
  * @brief Compile-time route table generation using constexpr
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Provides a constexpr-friendly route descriptor array that the compiler

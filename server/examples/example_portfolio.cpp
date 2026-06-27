@@ -1,7 +1,7 @@
 /**
  * @file example_portfolio.cpp
  * @brief Portfolio management, risk analysis, and trading examples
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Demonstrates: Portfolio creation, position management, risk metrics,

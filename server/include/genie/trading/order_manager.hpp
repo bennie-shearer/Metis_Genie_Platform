@@ -1,7 +1,7 @@
 /**
  * @file order_manager.hpp
  * @brief Enhanced order management with validation, preview, and monitoring
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  * 
  * Comprehensive order management system:

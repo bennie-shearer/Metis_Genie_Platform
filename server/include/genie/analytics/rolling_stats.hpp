@@ -1,7 +1,7 @@
 /**
  * @file rolling_stats.hpp
  * @brief Rolling window statistics for time series analysis
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Implements rolling window calculations:

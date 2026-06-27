@@ -1,3 +1,88 @@
+## [5.5.11] - 2026-06-01
+
+### Added
+- Root `CMakeLists.txt` aggregator at the repository top level. Opening the
+  repo root in CLion now configures the whole project: it reads the same
+  single-source `server/VERSION.txt` and forwards into the backend via
+  `add_subdirectory(server)`. The `server/` directory still builds standalone
+  if opened directly, so existing workflows are unchanged.
+
+### Fixed
+- `server/CMakeLists.txt` docs install rule pointed at a non-existent
+  `server/docs/` (silently skipped due to OPTIONAL). Now references `../docs/`
+  so documentation actually installs.
+
+### Notes
+- Directory layout (`server/` + `client/` + `docs/`) is unchanged and predates
+  this work (introduced in v5.2.0). Runtime architecture is unchanged: the
+  client communicates with the server exclusively over REST. The root
+  aggregator adds no build-time coupling between client and server.
+
+## [5.5.10] - 2026-06-01
+
+### Packaging
+- Normalized all distribution file modification timestamps to a single value.
+  In 5.5.9 the edited files (CMakeLists.txt, VERSION.txt) carried a newer mtime
+  than the rest of the tree; on extraction this could make Ninja see CMake's
+  configure-time inputs as newer than the generated build.ninja, triggering an
+  endless "manifest 'build.ninja' still dirty after N tries" reconfigure loop.
+  Uniform timestamps prevent this. (No source changes; the loop was never a
+  code error -- CMake configured cleanly every iteration.)
+
+### Changed (version-reference consistency)
+- Swept every per-file @version tag to the release version (was a mix of
+  5.3.1 / 5.5.4 / 5.5.9). All 277 source tags now match VERSION.txt.
+- Client: all cache-bust query strings (?v=), version-tag badges, HTML version
+  comments, CSS header comments, the app.js version constant, and
+  client/config.pson "version" updated to the release version.
+- Docs: current-release stamps (READMEs, ROADMAP, API reference, distribution
+  footers, frontmatter Version fields) updated to the release version.
+  Historical references are intentionally preserved verbatim: CHANGELOG entry
+  headers, feature-origin annotations (e.g. "-- v5.5.8"), feature-completion
+  tables, "Completed/Implemented in vX" milestones, version-comparison columns,
+  and "(originally v2.x)" notes -- these are facts about the past, not claims
+  about the current version.
+
+### Verified
+- No Docker, Doxygen, PyTest, GTest, or Jupyter usage anywhere (0 Dockerfiles,
+  0 Doxyfile, no doxygen in CMake, no gtest/gmock, no pytest, no .ipynb, and in
+  fact no .py files). Tests are the custom C++20 harness; containers/GPU remain
+  documented no-daemon stubs.
+
+## [5.5.9] - 2026-06-01
+
+### Fixed
+- **server/include/genie/net/rest_api.hpp** — `handle(method, path, body)`
+  convenience overload now defaults `Content-Type: application/json` when a
+  non-empty body is supplied without one. Previously such calls (programmatic
+  and test callers) were rejected with HTTP 415 by the request-validation
+  middleware, cascading into 401s on every authenticated endpoint. The
+  wire-level HTTP server always forwards explicit client headers, so real
+  network requests were never affected.
+- **server/include/genie/net/rest_api.hpp** — Response cache no longer serves
+  cached protected content to a bearer token whose session has ended. The
+  cache read ran before auth enforcement, so a logged-out or expired token
+  could still receive a cached 200 (the token is part of the cache key, so
+  this never crossed users). Protected-route cache hits are now gated on a
+  live session; public routes and auth-disabled mode are unchanged. After
+  logout/expiry, protected GETs correctly return 401.
+
+### Changed (single source of truth)
+- **server/include/genie/core/cli.hpp** — Removed hardcoded
+  `#define GENIE_CLI_VERSION "5.3.1"`; the `version` command now reports
+  `VERSION_STRING` from version.hpp.
+- **server/src/main.cpp** — Self-test "Version string set" no longer asserts
+  fixed major/minor numbers; it verifies `VERSION_STRING` matches the
+  composed `MAJOR.MINOR.PATCH`, so it never breaks on a version bump.
+- **server/tests/** — `test_version`, `test_cli`, and `test_rest_health` now
+  derive expectations from `VERSION_STRING` instead of the literal "5.3.1".
+  All four test-suite banners print the live `VERSION_STRING`.
+
+### Tests
+- test_genie: 128/128 (multi-core). test_rest_endpoints: 39/39 (was 7/20).
+  test_tier3: 131/131. test_integration: compiles clean (network tests
+  require connectivity / API keys).
+
 ## [5.5.8] - 2026-03-30
 
 ### Fixed
@@ -1099,7 +1184,7 @@ All notable changes documented in [Keep a Changelog](https://keepachangelog.com/
 
 ---
 
-*Metis Genie Platform v5.0.1 -- Server Changelog*
+*Metis Genie Platform v5.5.11 -- Server Changelog*
 
 ## v5.0.1 (2026-02-08)
 

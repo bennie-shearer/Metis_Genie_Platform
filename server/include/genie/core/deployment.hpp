@@ -1,7 +1,7 @@
 /**
  * @file deployment.hpp
  * @brief Deployment abstractions for future container/orchestration support
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * This header provides abstractions for deployment environments.

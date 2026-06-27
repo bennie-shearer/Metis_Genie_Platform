@@ -1,10 +1,31 @@
 /**
  * @file version.hpp
  * @brief Version information for Metis Genie Platform
- * @version 5.3.2
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  * 
  * Version History:
+ * - 5.5.11: Added a thin root CMakeLists.txt aggregator so the whole repository
+ *           (server/ + client/ + docs/) opens as one CMake project in CLion via
+ *           add_subdirectory(server); server/ still builds standalone. Fixed the
+ *           docs install path (server/CMakeLists referenced a non-existent
+ *           server/docs/; now ../docs/). Runtime architecture unchanged --
+ *           client still talks to the server only over REST.
+ * - 5.5.10: Repackaging + version-reference consistency pass. Normalized all
+ *           distribution file timestamps to a single value (fixes a Ninja
+ *           "manifest still dirty" reconfigure loop caused by configure-time
+ *           inputs carrying a newer mtime than the rest of the tree). Swept all
+ *           per-file @version tags, client cache-bust/version stamps, and doc
+ *           distribution footers to the current release so every version
+ *           reference matches VERSION.txt. No functional code changes vs 5.5.9.
+ * - 5.5.9: Test/auth fixes. Convenience handle(method,path,body) overload now
+ *          defaults Content-Type to application/json when a body is supplied
+ *          without one (fixes 415 cascade in programmatic/test callers; wire
+ *          path unaffected). Response cache no longer serves cached protected
+ *          content to a token whose session has ended (post-logout/expiry now
+ *          correctly returns 401). Removed hardcoded version literals: CLI
+ *          version command, main.cpp self-test, and test banners/assertions
+ *          now derive from VERSION_STRING (single source of truth).
  * - 5.3.1: PSON configuration (all parameters in config.pson), response caching
  *          wired into RestApi (ApiCache with per-endpoint TTL), request validation
  *          middleware (JSON body + Content-Type checks), structured error responses
@@ -104,9 +125,9 @@ namespace genie {
 
 inline constexpr int VERSION_MAJOR = 5;
 inline constexpr int VERSION_MINOR = 5;
-inline constexpr int VERSION_PATCH = 8;
-inline constexpr std::string_view VERSION_STRING = "5.5.8";
-inline constexpr std::string_view VERSION_FULL = "Metis Genie Platform v5.5.8";
+inline constexpr int VERSION_PATCH = 11;
+inline constexpr std::string_view VERSION_STRING = "5.5.11";
+inline constexpr std::string_view VERSION_FULL = "Metis Genie Platform v5.5.11";
 inline constexpr std::string_view PROJECT_NAME = "Metis Genie Platform";
 
 #if defined(_WIN32) || defined(_WIN64)

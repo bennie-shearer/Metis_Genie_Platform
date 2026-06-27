@@ -1,7 +1,7 @@
 /**
  * @file cli.hpp
  * @brief Command-line interface for Metis Genie Platform Emulator
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  */
 #pragma once
@@ -18,9 +18,7 @@
 #include <algorithm>
 #include <fstream>
 
-#ifndef GENIE_CLI_VERSION
-#define GENIE_CLI_VERSION "5.3.1"
-#endif
+#include "version.hpp"  // single source of truth for VERSION_STRING
 
 namespace genie {
 namespace cli {
@@ -186,7 +184,7 @@ private:
         
         register_command("version", "Show version information", "version",
             [](const std::vector<std::string>&) -> std::string {
-                return std::string("Metis Genie Platform Emulator v") + std::string(GENIE_CLI_VERSION) + "\nCopyright 2026 Bennie Shearer\n";
+                return std::string("Metis Genie Platform Emulator v") + std::string(VERSION_STRING) + "\nCopyright 2026 Bennie Shearer\n";
             });
         
         register_command("clear", "Clear the screen", "clear",

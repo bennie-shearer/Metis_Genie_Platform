@@ -1,7 +1,7 @@
 /**
  * @file stress_testing.hpp
  * @brief Stress testing framework for Metis Genie Platform Emulator
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  */
 #pragma once

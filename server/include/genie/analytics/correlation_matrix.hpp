@@ -1,7 +1,7 @@
 /**
  * @file correlation_matrix.hpp
  * @brief Cross-asset correlation analysis for Metis Genie Platform
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Computes and manages correlation matrices across financial instruments

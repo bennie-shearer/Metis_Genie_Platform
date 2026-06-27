@@ -1,7 +1,7 @@
 /**
  * @file test_tier3.cpp
  * @brief Comprehensive test suite for TIER 3 components
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  * 
  * Tests for:
@@ -17,6 +17,8 @@
 #include <vector>
 #include <map>
 #include <cmath>
+
+#include "genie/core/version.hpp"
 
 // Enhanced Data Clients
 #include "genie/market/iex_cloud.hpp"
@@ -1050,7 +1052,7 @@ void test_html_builder() {
 int main() {
     std::cout << "\n";
     std::cout << "================================================================" << std::endl;
-    std::cout << "      TIER 3 COMPREHENSIVE TEST SUITE - Metis Genie Platform v5.3.1    " << std::endl;
+    std::cout << "      TIER 3 COMPREHENSIVE TEST SUITE - Metis Genie Platform v" << VERSION_STRING << "    " << std::endl;
     std::cout << "================================================================" << std::endl;
     
     // Enhanced Data Clients

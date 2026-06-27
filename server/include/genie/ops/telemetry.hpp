@@ -1,7 +1,7 @@
 /**
  * @file telemetry.hpp
  * @brief Prometheus-compatible metrics export and structured telemetry
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Provides structured metrics collection and export in Prometheus

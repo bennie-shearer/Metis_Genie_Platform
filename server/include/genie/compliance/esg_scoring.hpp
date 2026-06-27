@@ -1,7 +1,7 @@
 /**
  * @file esg_scoring.hpp
  * @brief ESG (Environmental, Social, Governance) Scoring and Integration Engine
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  *
  * Comprehensive ESG analysis framework for portfolio-level and security-level

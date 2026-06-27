@@ -1,7 +1,7 @@
 /**
  * @file ibkr_client.hpp
  * @brief Interactive Brokers Client Portal API integration
- * @version 5.3.1
+ * @version 5.5.11
  * @copyright (c) 2026 Bennie Shearer (Retired). MIT License.
  * 
  * IBKR Client Portal API integration providing:
